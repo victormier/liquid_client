@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 IMAGE_REPO=victormier/mvp2_client
 IMAGE_VERSION=v1.0
 IMAGE=$IMAGE_REPO:$IMAGE_VERSION

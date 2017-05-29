@@ -1,8 +1,16 @@
-[![Build Status](http://jut02.vas-server.cz:8081/buildStatus/icon?job=ReactReduxApolloGraphQLHotBoilerplate)](http://jut02.vas-server.cz:8081/job/ReactReduxApolloGraphQLHotBoilerplate/)
+# MVP2 Client
 
-# React Redux Apollo GraphQL Hot Boilerplate
+Based on [this boilerplate](https://github.com/developer239/ReactReduxApolloGraphQLHotBoilerplate/).
 
-You can try this app **[here](http://react-redux-apollographql-hot-boilerplate.jut02.vas-server.cz)**.
+## Docker dev enviornment installation
+
+```bash
+./scripts/development.sh
+```
+
+---
+
+## Getting started
 
 ## About
 
@@ -19,6 +27,7 @@ Backend is provided by **[graph.cool](https://www.graph.cool/)**.
 * [Jest](https://github.com/facebook/jest)
 * [Enzyme](https://github.com/airbnb/enzyme)
 * [Redux Dev Tools](https://github.com/gaearon/redux-devtools)
+* Docker with hot reloading
 
 ## Installation
 

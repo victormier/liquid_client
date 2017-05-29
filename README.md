@@ -1,5 +1,7 @@
 # MVP2 Client
 
+[![CircleCI](https://circleci.com/gh/isernmier/mvp2_client.svg?style=svg&circle-token=a2da33263ba777c1f69feba78c8884d6c9186dce)]
+
 Based on [this boilerplate](https://github.com/developer239/ReactReduxApolloGraphQLHotBoilerplate/).
 
 ## Docker dev enviornment installation

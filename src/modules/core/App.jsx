@@ -2,6 +2,7 @@ import React from 'react';
 import 'normalize.css';
 import PropTypes from 'prop-types';
 import Navigation from 'components/layout/Navigation';
+import 'styles/base/mobile-reset.scss';
 import styles from './styles.scss';
 
 const App = props => (

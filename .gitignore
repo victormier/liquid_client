@@ -4,3 +4,4 @@ coverage/
 dist/**/*
 !dist/index.html
 !dist/.htaccess
+jest_0

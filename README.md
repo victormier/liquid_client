@@ -7,7 +7,7 @@ Based on [this boilerplate](https://github.com/developer239/ReactReduxApolloGrap
 ## Docker dev enviornment installation
 
 ```bash
-./scripts/development.sh
+docker-compose up
 ```
 
 ---
@@ -58,7 +58,7 @@ production:build
 ## Running tests
 
 ```bash
-npm run test
+docker-compose run web test
 ```
 
 ## To do

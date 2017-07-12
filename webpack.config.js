@@ -77,7 +77,7 @@ module.exports = (env) => {
         },
         {
           test: /\.(scss|css)$/,
-          loaders: ['style-loader', 'css-loader?modules', 'sass-loader'],
+          loaders: ['style-loader', 'css-loader?modules', 'sass-loader', 'postcss-loader'],
         },
         {
           test: /\.(js|jsx)$/,

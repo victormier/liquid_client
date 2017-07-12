@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "apollo-client": "^1.2.2",
+    "autoprefixer": "^7.1.2",
     "babel": "^6.5.2",
     "babel-core": "^6.13.2",
     "babel-eslint": "^7.1.1",

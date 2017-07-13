@@ -76,8 +76,23 @@ module.exports = (env) => {
           },
         },
         {
-          test: /\.scss$/,
-          loaders: ['style-loader', 'css-loader?modules', 'sass-loader'],
+          test: /(\.scss|\.css)$/,
+          loaders: [
+            'style-loader',
+            'css-loader?modules',
+            'postcss-loader',
+          ],
+          include: /flexboxgrid/,
+        },
+        {
+          test: /(\.scss|\.css)$/,
+          loaders: [
+            'style-loader',
+            'css-loader?modules',
+            'postcss-loader',
+            'sass-loader',
+          ],
+          exclude: /flexboxgrid/,
         },
         {
           test: /\.(js|jsx)$/,

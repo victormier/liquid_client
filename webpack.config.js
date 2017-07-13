@@ -79,7 +79,7 @@ module.exports = (env) => {
           test: /(\.scss|\.css)$/,
           loaders: [
             'style-loader',
-            'css-loader?modules',
+            'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]',
             'postcss-loader',
           ],
           include: /flexboxgrid/,
@@ -88,7 +88,7 @@ module.exports = (env) => {
           test: /(\.scss|\.css)$/,
           loaders: [
             'style-loader',
-            'css-loader?modules',
+            'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]',
             'postcss-loader',
             'sass-loader',
           ],

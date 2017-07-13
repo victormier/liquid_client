@@ -1,32 +1,11 @@
 import React from 'react';
 import 'normalize.css';
 import PropTypes from 'prop-types';
-import Navigation from 'components/layout/Navigation';
 import 'styles/base/mobile-reset.scss';
-import styles from './styles.scss';
+import styles from 'styles/base/base.scss';
 
 const App = props => (
-  <div className={styles.base}>
-    <Navigation
-      title="Boilerplate"
-      links={[
-        {
-          id: 1,
-          label: 'Counter',
-          href: '/counter',
-        },
-        {
-          id: 2,
-          label: 'Posts',
-          href: '/posts',
-        },
-        {
-          id: 3,
-          label: 'About',
-          href: '/about',
-        },
-      ]}
-    />
+  <div className={styles.mainContainer}>
     { props.children }
   </div>
 );

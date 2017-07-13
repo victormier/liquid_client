@@ -1,14 +1,14 @@
 import React from 'react';
-import { Jumbotron, Grid } from 'react-bootstrap';
-import exampleImagePath from './example-image.png';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
 const Home = () => (
-  <Grid>
-    <Jumbotron>
-      <h1>Boilerplate</h1>
-    </Jumbotron>
-    <img style={{ width: '100%' }} alt="Example" role="presentation" src={exampleImagePath} />
+  <Grid fluid>
+    <Row>
+      <Col xs={6} md={3}>
+        Hello, world!!
+      </Col>
+    </Row>
   </Grid>
 );
 

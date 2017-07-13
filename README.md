@@ -1,6 +1,6 @@
 # Liquid Client
 
-![CircleCI](https://circleci.com/gh/helloliquid/liquid_client.svg?style=svg&circle-token=a2da33263ba777c1f69feba78c8884d6c9186dce)
+[![CircleCI](https://circleci.com/gh/helloliquid/mvp2_client.svg?style=svg&circle-token=a2da33263ba777c1f69feba78c8884d6c9186dce)]
 
 Based on [this boilerplate](https://github.com/developer239/ReactReduxApolloGraphQLHotBoilerplate/).
 

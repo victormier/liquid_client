@@ -1,8 +1,9 @@
+@import 'base/helpers';
+
 .button {
-  padding: 25px 40px;
+  @extend .roundedBlock;
+
+  padding: 2.8rem 4rem;
   background: white;
   color: black;
-  border: none;
-  width: 100%;
-  border-radius: 60px;
 }

@@ -86,11 +86,18 @@ module.exports = (env) => {
         },
         {
           test: /(\.scss|\.css)$/,
-          loaders: [
-            'style-loader',
-            'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]',
-            'postcss-loader',
-            'sass-loader',
+          use: [{
+            loader: 'style-loader',
+          }, {
+            loader: 'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]',
+          }, {
+            loader: 'postcss-loader',
+          }, {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [resolve(__dirname, 'src/styles')],
+            },
+          },
           ],
           exclude: /flexboxgrid/,
         },

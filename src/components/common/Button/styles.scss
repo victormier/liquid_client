@@ -1,9 +1,24 @@
 @import 'base/helpers';
+@import 'base/colors';
 
-.button {
+.default {
   @extend .roundedBlock;
 
   padding: 2.8rem 4rem;
   background: white;
   color: black;
+}
+
+.blue {
+  composes: default;
+
+  background: transparentize($blueDark, 0.5);
+  color: white;
+}
+
+.transparent {
+  composes: default;
+
+  background: transparentize(white, 0.5);
+  color: white;
 }

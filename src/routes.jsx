@@ -40,6 +40,16 @@ const AppRouter = props => (
           }
         />
         <Route
+          path={'/login'}
+          getComponent={
+            (location, cb) => {
+              System.import('modules/sessions/pages/Login')
+                .then(loadRoute(cb))
+                .catch(err => errorLoading(err));
+            }
+          }
+        />
+        <Route
           path={'/posts'}
           getComponent={
             (location, cb) => {

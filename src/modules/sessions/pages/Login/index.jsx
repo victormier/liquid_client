@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
+import { auth } from 'actions/auth';
+import ErrorBar from 'components/layout/ErrorBar';
 import SessionForm from '../../forms/Session';
 import styles from './styles.scss';
 
 class Login extends Component {
   handleFormSubmit(data) {
-    return this.props.submit(data)
-      .then((response) => {
-        console.log('success!!!');
-        console.log(response);
-      })
-      .catch(() => this.setState({ errorText: 'There was an error while creating your post.' }));
+    return auth(data.email, data.password);
   }
 
   render() {
     return (
       <Grid fluid className={gridStyles.mainGrid}>
+        <ErrorBar />
+
         <Row center="xs" className={styles.logo} >
           <Col xs>
             <img alt="Logo" src={logo} />
@@ -36,7 +35,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  submit: PropTypes.func,
+  // submit: PropTypes.func,
   // router: PropTypes.shape({
   //   push: PropTypes.func.isRequired,
   // }).isRequired,

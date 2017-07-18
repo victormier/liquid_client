@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
+import viewStore from 'stores/ViewStore';
+import sessionStore from 'stores/SessionStore';
 
 // Makes hot module replacement possible
 import { AppContainer } from 'react-hot-loader';
@@ -7,11 +10,20 @@ import { AppContainer } from 'react-hot-loader';
 // This is our App with ApolloProvider and Router
 import AppRouter from 'routes';
 
+// Mobx stores (everything not held by Apollo)
+// such as view state and session
+const stores = {
+  viewStore,
+  sessionStore,
+};
+
 
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <Provider {...stores} >
+        <Component />
+      </Provider>
     </AppContainer>,
     document.getElementById('root')
   );

@@ -1,0 +1,21 @@
+@import 'base/variables';
+@import 'base/colors';
+
+.errorContainer {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.errorList {
+  list-style: none;
+  background: $blueDark;
+  width: 100%;
+}
+
+.errorListItem {
+  padding: $base-grid-gutter $base-grid-gutter*2;
+  color: white;
+}

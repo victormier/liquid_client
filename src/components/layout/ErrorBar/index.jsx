@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
+import styles from './styles.scss';
 
 @inject('viewStore') @observer
 class ErrorBar extends React.Component {
@@ -9,9 +10,9 @@ class ErrorBar extends React.Component {
     if (!errors.length) return null;
 
     return (
-      <div>
-        <ul>
-          { errors.map(errorMessage => <li>{errorMessage}</li>) }
+      <div className={styles.errorContainer} >
+        <ul className={styles.errorList} >
+          { errors.map(errorMessage => <li className={styles.errorListItem} >{errorMessage}</li>) }
         </ul>
       </div>
     );

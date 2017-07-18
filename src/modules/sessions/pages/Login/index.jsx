@@ -9,7 +9,7 @@ import SessionForm from '../../forms/Session';
 import styles from './styles.scss';
 
 class Login extends Component {
-  handleFormSubmit(data) {
+  static handleFormSubmit(data) {
     return auth(data.email, data.password);
   }
 

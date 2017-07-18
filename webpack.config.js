@@ -18,6 +18,7 @@ module.exports = (env) => {
 
   if (isProd) {
     entry = [
+      'whatwg-fetch',
       './index.jsx',
     ];
     plugins.push(
@@ -45,6 +46,7 @@ module.exports = (env) => {
     );
   } else {
     entry = [
+      'whatwg-fetch',
       'react-hot-loader/patch',
       'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/only-dev-server',

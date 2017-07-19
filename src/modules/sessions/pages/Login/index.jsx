@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-// import PropTypes from 'prop-types';
+import { withApollo } from 'react-apollo';
+import PropTypes from 'prop-types';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import { auth } from 'actions/auth';
@@ -10,8 +11,11 @@ import styles from './styles.scss';
 
 class Login extends Component {
   handleFormSubmit(data) {
-    console.log(this);
-    return auth(data.email, data.password);
+    return auth(data.email, data.password)
+            .then(() => {
+              this.props.client.resetStore();
+              this.props.router.push('/settings');
+            });
   }
 
   render() {
@@ -37,9 +41,12 @@ class Login extends Component {
 
 Login.propTypes = {
   // submit: PropTypes.func,
-  // router: PropTypes.shape({
-  //   push: PropTypes.func.isRequired,
-  // }).isRequired,
+  router: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  client: PropTypes.shape({
+    resetStore: PropTypes.func.isRequired,
+  }),
 };
 
-export default Login;
+export default withApollo(Login);

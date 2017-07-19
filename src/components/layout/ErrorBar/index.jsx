@@ -12,14 +12,14 @@ class ErrorBar extends React.Component {
     return (
       <div className={styles.errorContainer} >
         <ul className={styles.errorList} >
-          { errors.map(errorMessage => <li className={styles.errorListItem} >{errorMessage}</li>) }
+          { errors.map(errorMessage => <li className={styles.errorListItem} key={errorMessage.id} >{errorMessage.message}</li>) }
         </ul>
       </div>
     );
   }
 }
 
-ErrorBar.propTypes = {
+ErrorBar.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     errors: PropTypes.array,
   }).isRequired,

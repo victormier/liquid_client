@@ -1,9 +1,8 @@
 import restFetch from 'restApi';
-import sessionStore from 'stores/SessionStore';
 import { addError } from 'actions/Errors';
 
 export function auth(email, password) {
-  restFetch('/login', {
+  return restFetch('/login', {
     method: 'POST',
     body: JSON.stringify({
       email,
@@ -29,11 +28,9 @@ export function auth(email, password) {
     })
     .then((data) => {
       localStorage.setItem('auth_token', data.auth_token);
-      sessionStore.auth_token = data.auth_token;
     });
 }
 
 export function logout() {
-  sessionStore.reset();
   localStorage.removeItem('auth_token');
 }

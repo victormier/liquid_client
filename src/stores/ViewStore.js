@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, extendObservable, action } from 'mobx';
 
 class ViewStore {
   @observable language = 'en_US';
@@ -6,7 +6,7 @@ class ViewStore {
   @observable errors = [];
 
   constructor() {
-    this.errors = [];
+    this.reset();
   }
 
   @computed get appIsInSync() {
@@ -17,10 +17,10 @@ class ViewStore {
     this.errors = [];
   }
 
-  resetSession() {
-    this.page = null;
-    this.errors = [];
-    this.showTransferModal = false;
+  @action reset() {
+    extendObservable(this, {
+      errors: [],
+    });
   }
 }
 export default new ViewStore();

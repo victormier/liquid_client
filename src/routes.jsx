@@ -50,6 +50,16 @@ const AppRouter = props => (
           }
         />
         <Route
+          path={'/settings'}
+          getComponent={
+            (location, cb) => {
+              System.import('modules/core/pages/Settings')
+                .then(loadRoute(cb))
+                .catch(err => errorLoading(err));
+            }
+          }
+        />
+        <Route
           path={'/posts'}
           getComponent={
             (location, cb) => {

@@ -107,9 +107,6 @@ module.exports = (env) => {
           test: /\.(js|jsx)$/,
           use: {
             loader: 'babel-loader',
-            options: {
-              plugins: ['transform-decorators-legacy'],
-            },
           },
           exclude: /node_modules/,
         },

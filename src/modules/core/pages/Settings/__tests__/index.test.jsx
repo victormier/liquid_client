@@ -13,7 +13,7 @@ describe('component', () => {
 
   beforeEach(function () {
     mocks = {
-      sessionStore: { reset: sinon.spy() },
+      sessionStore: { reset: sinon.spy(), logout: sinon.spy() },
       viewStore: { reset: sinon.spy() },
       client: { resetStore: sinon.spy() },
       router: { push: sinon.spy() },
@@ -41,8 +41,8 @@ describe('component', () => {
       const container = mount(component);
       container.find('button').simulate('click');
 
+      expect(mocks.sessionStore.logout.called).toBe(true);
       expect(mocks.client.resetStore.called).toBe(true);
-      expect(mocks.sessionStore.reset.called).toBe(true);
       expect(mocks.viewStore.reset.called).toBe(true);
       expect(window.localStorage.removeItem.calledWith('auth_token'));
       expect(mocks.router.push.calledWith('/'));

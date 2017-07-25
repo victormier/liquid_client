@@ -5,7 +5,6 @@ import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/Button';
 import gridStyles from 'styles/base/grid.scss';
-import { logout } from 'actions/auth';
 
 @inject(
   'viewStore',
@@ -14,10 +13,9 @@ import { logout } from 'actions/auth';
 export class Settings extends Component {
   onLogout = (e) => {
     e.preventDefault();
-    logout();
+    this.props.sessionStore.logout();
     this.props.client.resetStore();
     this.props.viewStore.reset();
-    this.props.sessionStore.reset();
     this.props.router.push('/');
   }
 
@@ -50,6 +48,7 @@ Settings.wrappedComponent.propTypes = {
   }).isRequired,
   sessionStore: PropTypes.shape({
     reset: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
   }).isRequired,
 };
 

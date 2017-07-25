@@ -56,5 +56,10 @@ class SessionStore {
       }));
   }
 
+  @action logout() {
+    window.localStorage.removeItem('auth_token');
+    this.reset();
+  }
+
 }
 export default SessionStore;

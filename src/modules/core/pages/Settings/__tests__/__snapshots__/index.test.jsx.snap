@@ -14,6 +14,7 @@ exports[`component renders 1`] = `
   }
   sessionStore={
     Object {
+      "logout": [Function],
       "reset": [Function],
     }
   }

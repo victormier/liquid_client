@@ -8,14 +8,16 @@ import gridStyles from 'styles/base/grid.scss';
 import { logout } from 'actions/auth';
 
 @inject(
-  'viewStore'
+  'viewStore',
+  'sessionStore'
 )
-class Settings extends Component {
+export class Settings extends Component {
   onLogout = (e) => {
     e.preventDefault();
     logout();
     this.props.client.resetStore();
     this.props.viewStore.reset();
+    this.props.sessionStore.reset();
     this.props.router.push('/');
   }
 
@@ -25,7 +27,7 @@ class Settings extends Component {
         <Row>
           <Col xs={12}>
             <h1>Settings</h1>
-            <Button text="Log out" color="transparent" onClick={this.onLogout} />
+            <Button id="logoutButton" text="Log out" color="transparent" onClick={this.onLogout} />
           </Col>
         </Row>
       </Grid>
@@ -44,6 +46,9 @@ Settings.propTypes = {
 
 Settings.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
+    reset: PropTypes.func.isRequired,
+  }).isRequired,
+  sessionStore: PropTypes.shape({
     reset: PropTypes.func.isRequired,
   }).isRequired,
 };

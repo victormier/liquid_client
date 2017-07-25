@@ -1,7 +1,7 @@
 import restFetch from 'restApi';
 import { addError } from 'actions/Errors';
 
-export function auth(email, password) {
+export function auth(email, password, sessionStore) {
   return restFetch('/login', {
     method: 'POST',
     body: JSON.stringify({
@@ -28,6 +28,10 @@ export function auth(email, password) {
     })
     .then((data) => {
       window.localStorage.setItem('auth_token', data.auth_token);
+      sessionStore.currentSession = {  // should this be in an action??
+        authToken: data.auth_token,
+        userId: data.user_id,
+      };
     });
 }
 

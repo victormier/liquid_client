@@ -4,6 +4,8 @@ import { ApolloProvider } from 'react-apollo';
 import store, { history } from 'store';
 import client from 'config/apolloClient';
 import App from 'modules/core/App';
+import PrivateRoutes from 'components/common/PrivateRoutes';
+import PublicRoutes from 'components/common/PublicRoutes';
 
 
 // Makes dynamic route loading more convenient
@@ -18,42 +20,48 @@ const AppRouter = props => (
   <ApolloProvider {...props} store={store} client={client}>
     <Router history={history}>
       <Route path={'/'} component={App}>
-        <IndexRoute
-          getComponent={
-            (location, cb) => {
-              System.import('modules/core/pages/Home')
-                .then(loadRoute(cb))
-                .catch((err) => {
-                  errorLoading(err);
-                });
+        <Route component={PublicRoutes}>
+          <IndexRoute
+            getComponent={
+              (location, cb) => {
+                System.import('modules/core/pages/Home')
+                  .then(loadRoute(cb))
+                  .catch((err) => {
+                    errorLoading(err);
+                  });
+              }
             }
-          }
-        />
+          />
+          <Route
+            path={'/login'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/sessions/pages/Login')
+                .then(loadRoute(cb))
+                .catch(err => errorLoading(err));
+              }
+            }
+          />
+        </Route>
+
+        <Route component={PrivateRoutes}>
+          <Route
+            path={'/settings'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/core/pages/Settings')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+              }
+            }
+          />
+        </Route>
+
         <Route
           path={'/counter'}
           getComponent={
             (location, cb) => {
               System.import('modules/counter/containers/Base')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/login'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/sessions/pages/Login')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/settings'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/core/pages/Settings')
                 .then(loadRoute(cb))
                 .catch(err => errorLoading(err));
             }

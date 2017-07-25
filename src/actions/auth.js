@@ -27,10 +27,10 @@ export function auth(email, password) {
       }
     })
     .then((data) => {
-      localStorage.setItem('auth_token', data.auth_token);
+      window.localStorage.setItem('auth_token', data.auth_token);
     });
 }
 
 export function logout() {
-  localStorage.removeItem('auth_token');
+  window.localStorage.removeItem('auth_token');
 }

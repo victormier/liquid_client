@@ -1,0 +1,24 @@
+@import 'base/mixins';
+
+.default {
+  @include roundedBlock;
+
+  padding-left: 4rem;
+  padding-right: 4rem;
+  background: white;
+  color: black;
+}
+
+.blue {
+  composes: default;
+  @include blueBackground;
+
+  color: white;
+}
+
+.transparent {
+  composes: default;
+  @include transparentBackground;
+
+  color: white;
+}

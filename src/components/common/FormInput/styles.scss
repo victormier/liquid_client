@@ -1,0 +1,13 @@
+@import 'base/variables';
+@import 'base/mixins';
+
+.input {
+  @include roundedBlock;
+  @include blueBackground;
+  margin-bottom: $base-grid-gutter/2;
+  color: white;
+
+  &::placeholder {
+    color: white;
+  }
+}

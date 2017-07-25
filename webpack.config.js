@@ -18,6 +18,7 @@ module.exports = (env) => {
 
   if (isProd) {
     entry = [
+      'whatwg-fetch',
       './index.jsx',
     ];
     plugins.push(
@@ -45,6 +46,7 @@ module.exports = (env) => {
     );
   } else {
     entry = [
+      'whatwg-fetch',
       'react-hot-loader/patch',
       'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/only-dev-server',
@@ -79,26 +81,33 @@ module.exports = (env) => {
           test: /(\.scss|\.css)$/,
           loaders: [
             'style-loader',
-            'css-loader?modules',
+            'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]',
             'postcss-loader',
           ],
           include: /flexboxgrid/,
         },
         {
           test: /(\.scss|\.css)$/,
-          loaders: [
-            'style-loader',
-            'css-loader?modules',
-            'postcss-loader',
-            'sass-loader',
+          use: [{
+            loader: 'style-loader',
+          }, {
+            loader: 'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]',
+          }, {
+            loader: 'postcss-loader',
+          }, {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [resolve(__dirname, 'src/styles')],
+            },
+          },
           ],
           exclude: /flexboxgrid/,
         },
         {
           test: /\.(js|jsx)$/,
-          use: [
-            'babel-loader',
-          ],
+          use: {
+            loader: 'babel-loader',
+          },
           exclude: /node_modules/,
         },
         {

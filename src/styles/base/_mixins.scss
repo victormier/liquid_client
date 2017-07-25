@@ -1,0 +1,16 @@
+@import 'base/colors';
+
+@mixin blueBackground {
+  background: transparentize($blueDark, 0.5);
+}
+
+@mixin transparentBackground {
+  background: transparentize(white, 0.5);
+}
+
+@mixin roundedBlock {
+  border: none;
+  width: 100%;
+  border-radius: 50px;
+  padding: 2.8rem 2.8rem;
+}

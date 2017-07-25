@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component renders 1`] = `
+<Settings
+  client={
+    Object {
+      "resetStore": [Function],
+    }
+  }
+  router={
+    Object {
+      "push": [Function],
+    }
+  }
+  sessionStore={
+    Object {
+      "logout": [Function],
+      "reset": [Function],
+    }
+  }
+  viewStore={
+    Object {
+      "reset": [Function],
+    }
+  }
+/>
+`;

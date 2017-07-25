@@ -34,6 +34,9 @@
       "functions": "never"
     }],
     "object-curly-spacing": [2, "always"],
-    "max-len": ["warn", 80]
+    "max-len": ["warn", 80],
+    "no-debugger": ["warn"],
+    "react/forbid-prop-types": 0,
+    "no-param-reassign": ["warn"]
   }
 }

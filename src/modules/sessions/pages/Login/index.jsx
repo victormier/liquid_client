@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
-import { auth } from 'actions/auth';
 import ErrorBar from 'components/layout/ErrorBar';
 import SessionForm from '../../forms/Session';
 import styles from './styles.scss';
@@ -14,7 +13,8 @@ import styles from './styles.scss';
         'viewStore')
 class Login extends Component {
   handleFormSubmit(data) {
-    return auth(data.email, data.password, this.props.sessionStore, this.props.viewStore)
+    return this.props.sessionStore
+            .auth(data.email, data.password, this.props.viewStore)
             .then(() => {
               this.props.client.resetStore();
               this.props.router.push('/settings');
@@ -55,6 +55,7 @@ Login.propTypes = {
 Login.wrappedComponent.propTypes = {
   sessionStore: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
+    auth: PropTypes.func.isRequired,
   }).isRequired,
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,

@@ -10,10 +10,11 @@ import ErrorBar from 'components/layout/ErrorBar';
 import SessionForm from '../../forms/Session';
 import styles from './styles.scss';
 
-@inject('sessionStore')
+@inject('sessionStore',
+        'viewStore')
 class Login extends Component {
   handleFormSubmit(data) {
-    return auth(data.email, data.password, this.props.sessionStore)
+    return auth(data.email, data.password, this.props.sessionStore, this.props.viewStore)
             .then(() => {
               this.props.client.resetStore();
               this.props.router.push('/settings');
@@ -54,6 +55,10 @@ Login.propTypes = {
 Login.wrappedComponent.propTypes = {
   sessionStore: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
+  }).isRequired,
+  viewStore: PropTypes.shape({
+    addError: PropTypes.func.isRequired,
+    removeError: PropTypes.func.isRequired,
   }).isRequired,
 };
 

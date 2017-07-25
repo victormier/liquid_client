@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
-import viewStore from 'stores/ViewStore';
-import sessionStore from 'stores/SessionStore';
+import ViewStore from 'stores/ViewStore';
+import SessionStore from 'stores/SessionStore';
 
 // Makes hot module replacement possible
 import { AppContainer } from 'react-hot-loader';
@@ -13,8 +13,8 @@ import AppRouter from 'routes';
 // Mobx stores (everything not held by Apollo)
 // such as view state
 const stores = {
-  viewStore,
-  sessionStore,
+  viewStore: new ViewStore(),
+  sessionStore: new SessionStore(),
 };
 
 

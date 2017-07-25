@@ -1,7 +1,6 @@
 import restFetch from 'restApi';
-import { addError } from 'actions/Errors';
 
-export function auth(email, password, sessionStore) {
+export function auth(email, password, sessionStore, viewStore) {
   return restFetch('/login', {
     method: 'POST',
     body: JSON.stringify({
@@ -15,10 +14,10 @@ export function auth(email, password, sessionStore) {
         response.json().then((data) => {
           if (data.errors.length) {
             data.errors.forEach((message) => {
-              addError(message);
+              viewStore.addError(message);
             });
           } else {
-            addError("We couldn't log you in");
+            viewStore.addError("We couldn't log you in");
           }
         });
         throw Error(response.statusText);

@@ -7,7 +7,7 @@ import { API_URL } from './index';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: API_URL,
+    uri: `${API_URL}/graphql`,
   }),
   queryTransformer: addTypeName,
   dataIdFromObject: o => o.id,

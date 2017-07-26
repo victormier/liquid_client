@@ -10,7 +10,9 @@ const Home = () => (
       <Col xs={6}>
         <Link to="/login"><Button text="Log in" color="blue" /></Link>
       </Col>
-      <Col xs={6}><Button text="Sign up" color="transparent" /></Col>
+      <Col xs={6}>
+        <Link to="/signup"><Button text="Sign up" color="transparent" /></Link>
+      </Col>
     </Row>
   </Grid>
 );

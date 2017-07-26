@@ -24,10 +24,16 @@ exports[`component renders 1`] = `
     <Col
       xs={6}
     >
-      <Button
-        color="transparent"
-        text="Sign up"
-      />
+      <Link
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/signup"
+      >
+        <Button
+          color="transparent"
+          text="Sign up"
+        />
+      </Link>
     </Col>
   </Row>
 </Grid>

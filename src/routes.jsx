@@ -42,6 +42,26 @@ const AppRouter = props => (
               }
             }
           />
+          <Route
+            path={'/signup'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/signup/pages/Signup')
+                .then(loadRoute(cb))
+                .catch(err => errorLoading(err));
+              }
+            }
+          />
+          <Route
+            path={'/signup/success'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/signup/pages/SignupSuccess')
+                .then(loadRoute(cb))
+                .catch(err => errorLoading(err));
+              }
+            }
+          />
         </Route>
 
         <Route component={PrivateRoutes}>

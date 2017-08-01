@@ -3,6 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
+import { Link } from 'react-router';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
@@ -32,9 +33,12 @@ class Login extends Component {
           </Col>
         </Row>
 
-        <Row center="xs" className={styles.formRow} >
+        <Row center="xs" >
           <Col xs>
             <SessionForm onSubmit={data => this.handleFormSubmit(data)} />
+            <div className={styles.resetPasswordLink} >
+              <Link to="/users/request_reset_password">I lost my password</Link>
+            </div>
           </Col>
         </Row>
       </Grid>

@@ -42,6 +42,18 @@ const AppRouter = props => (
               }
             }
           />
+
+          <Route
+            path={'/users/request_reset_password'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/sessions/pages/RequestResetPassword')
+                .then(loadRoute(cb))
+                .catch(err => errorLoading(err));
+              }
+            }
+          />
+
           <Route
             path={'/signup'}
             getComponent={

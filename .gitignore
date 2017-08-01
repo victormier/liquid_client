@@ -5,3 +5,4 @@ dist/**/*
 !dist/index.html
 !dist/.htaccess
 jest_0
+.DS_Store

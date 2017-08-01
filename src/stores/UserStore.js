@@ -44,6 +44,7 @@ class UserStore {
       }))
       .catch((error) => {
         viewStore.addError('There was a problem fetching that error token');
+        throw Error(error);
       });
   }
 }

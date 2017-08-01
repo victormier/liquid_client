@@ -10,3 +10,12 @@ body {
 h1 {
   font-size: 3.6rem;
 }
+
+a {
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+  }
+}

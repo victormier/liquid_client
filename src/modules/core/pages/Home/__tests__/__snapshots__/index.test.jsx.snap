@@ -4,37 +4,58 @@ exports[`component renders 1`] = `
 <Grid
   fluid={true}
 >
-  <Row
-    bottom="xs"
-  >
-    <Col
-      xs={6}
+  <Row>
+    <Row
+      top="xs"
     >
-      <Link
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/login"
+      <Col
+        xs={8}
       >
-        <Button
-          color="blue"
-          text="Log in"
+        <img
+          alt="Logo"
+          src="pathToImage"
         />
-      </Link>
-    </Col>
-    <Col
-      xs={6}
+        <h1>
+          The simplest way
+          <br />
+          to take back control
+          <br />
+          of your cashflow
+        </h1>
+      </Col>
+    </Row>
+    <Row
+      bottom="xs"
     >
-      <Link
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/signup"
+      <Col
+        xs={6}
       >
-        <Button
-          color="transparent"
-          text="Sign up"
-        />
-      </Link>
-    </Col>
+        <Link
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="/login"
+        >
+          <Button
+            color="blue"
+            text="Log in"
+          />
+        </Link>
+      </Col>
+      <Col
+        xs={6}
+      >
+        <Link
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="/signup"
+        >
+          <Button
+            color="transparent"
+            text="Sign up"
+          />
+        </Link>
+      </Col>
+    </Row>
   </Row>
 </Grid>
 `;

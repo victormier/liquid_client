@@ -14,16 +14,20 @@ const EmailInput = componentProps => (
     placeholder="Email"
   />);
 
-const UserForm = (props) => {
+const ResetPassword = (props) => {
   const { handleSubmit, submitting } = props;
 
   return (
     <form onSubmit={handleSubmit}>
       <Field name="email" type="text" component={EmailInput} />
-      <Row center="xs" className={styles.formRow} >
-        <Col xs={4}>
+      <Row center="xs">
+        <Col xs={8}>
           <div className={styles.submitBlock}>
-            <Button text="Sign Up" type="submit" disabled={submitting} />
+            <Button
+              text="Request Password Reset"
+              type="submit"
+              disabled={submitting}
+            />
           </div>
         </Col>
       </Row>
@@ -31,11 +35,11 @@ const UserForm = (props) => {
   );
 };
 
-UserForm.propTypes = {
+ResetPassword.propTypes = {
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
 };
 
 export default reduxForm({
   form: 'post',
-})(UserForm);
+})(ResetPassword);

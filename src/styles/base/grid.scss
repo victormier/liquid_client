@@ -8,6 +8,11 @@
   min-height: 100%;
 }
 
+.fullWidth {
+  width: 100%;
+  min-width: 100%;
+}
+
 .mainGrid {
   @extend .fullHeight;
 

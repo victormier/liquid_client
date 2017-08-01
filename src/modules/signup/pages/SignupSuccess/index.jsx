@@ -8,14 +8,14 @@ const SignupSuccess = () => (
   <Grid fluid className={gridStyles.mainGrid}>
     <Row center="xs">
       <Col xs={12}>
-        <h1>
-          User created successfully.
+        <h2>
+          User created successfully. Please, confirm your email.
           <br />
           There&apos;s an email on the way!
-        </h1>
+        </h2>
       </Col>
       <Col xs={4}>
-        <Link to="/login"><Button text="Log in" /></Link>
+        <Link to="/"><Button text="Back home" /></Link>
       </Col>
     </Row>
   </Grid>

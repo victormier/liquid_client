@@ -3,11 +3,16 @@
 
 .input {
   @include roundedBlock;
-  @include blueBackground;
-  margin-bottom: $base-grid-gutter/2;
+  @include transparentBlueBackground;
+  margin-bottom: $base-grid-gutter/4;
   color: white;
 
   &::placeholder {
     color: white;
+  }
+
+  &:disabled {
+    background: transparent;
+    border: 1px solid transparentize(white, 0.5);
   }
 }

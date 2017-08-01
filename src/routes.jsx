@@ -62,6 +62,16 @@ const AppRouter = props => (
               }
             }
           />
+          <Route
+            path={'/signup/set_password'}
+            getComponent={
+            (location, cb) => {
+              System.import('modules/signup/pages/ResetPassword')
+              .then(loadRoute(cb))
+              .catch(err => errorLoading(err));
+            }
+          }
+          />
         </Route>
 
         <Route component={PrivateRoutes}>

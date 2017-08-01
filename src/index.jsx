@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 import ViewStore from 'stores/ViewStore';
 import SessionStore from 'stores/SessionStore';
+import UserStore from 'stores/UserStore';
 
 // Makes hot module replacement possible
 import { AppContainer } from 'react-hot-loader';
@@ -15,8 +16,8 @@ import AppRouter from 'routes';
 const stores = {
   viewStore: new ViewStore(),
   sessionStore: new SessionStore(),
+  userStore: new UserStore(),
 };
-
 
 const render = (Component) => {
   ReactDOM.render(

@@ -47,18 +47,20 @@ class SessionStore {
           return response.json();
         }
       })
-      .then(action('setCurrentSession', (data) => {
-        window.localStorage.setItem('auth_token', data.auth_token);
-        this.currentSession = {
-          authToken: data.auth_token,
-          userId: data.user_id,
-        };
-      }));
+      .then(this.setCurrentSession.bind(this));
   }
 
   @action logout() {
     window.localStorage.removeItem('auth_token');
     this.reset();
+  }
+
+  @action setCurrentSession(data) {
+    window.localStorage.setItem('auth_token', data.auth_token);
+    this.currentSession = {
+      authToken: data.auth_token,
+      userId: data.user_id,
+    };
   }
 
 }

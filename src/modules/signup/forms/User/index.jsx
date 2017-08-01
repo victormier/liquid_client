@@ -14,38 +14,16 @@ const EmailInput = componentProps => (
     placeholder="Email"
   />);
 
-const PasswordInput = componentProps => (
-  <FormInput
-    value={componentProps.input.value}
-    onChange={componentProps.input.onChange}
-    type="password"
-    placeholder="Password"
-  />);
-
-const PasswordConfirmationInput = componentProps => (
-  <FormInput
-    value={componentProps.input.value}
-    onChange={componentProps.input.onChange}
-    type="password"
-    placeholder="Repeat Password"
-  />);
-
 const UserForm = (props) => {
   const { handleSubmit, submitting } = props;
 
   return (
     <form onSubmit={handleSubmit}>
       <Field name="email" type="text" component={EmailInput} />
-      <Field name="password" type="password" component={PasswordInput} />
-      <Field
-        name="password_confirmation"
-        type="password"
-        component={PasswordConfirmationInput}
-      />
       <Row center="xs" className={styles.formRow} >
         <Col xs={4}>
           <div className={styles.submitBlock}>
-            <Button text="Log In" type="submit" disabled={submitting} />
+            <Button text="Sign Up" type="submit" disabled={submitting} />
           </div>
         </Col>
       </Row>

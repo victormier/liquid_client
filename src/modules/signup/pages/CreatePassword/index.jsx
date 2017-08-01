@@ -13,12 +13,14 @@ import styles from './styles.scss';
 @inject('viewStore')
 class Signup extends Component {
   handleFormSubmit(dataValues) {
-    const { email } = dataValues;
+    const { email, password, password_confirmation } = dataValues;
 
     return restFetch('/users', {
       method: 'POST',
       body: JSON.stringify({
         email,
+        password,
+        password_confirmation,
       }),
     })
       .then((response) => {
@@ -35,7 +37,7 @@ class Signup extends Component {
           });
           throw Error(response.statusText);
         } else {
-          this.props.router.push('/signup/success');
+          this.props.router.push('/settings');
         }
       });
   }

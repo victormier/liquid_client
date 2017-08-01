@@ -63,7 +63,7 @@ const AppRouter = props => (
             }
           />
           <Route
-            path={'/signup/set_password'}
+            path={'/users/reset_password'}
             getComponent={
             (location, cb) => {
               System.import('modules/signup/pages/ResetPassword')

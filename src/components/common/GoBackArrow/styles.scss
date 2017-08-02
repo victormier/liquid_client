@@ -1,0 +1,9 @@
+@import 'base/variables';
+
+.container {
+  display: block;
+  position: fixed;
+  top: $base-grid-gutter;
+  left: $base-grid-gutter;
+  z-index: 10;
+}

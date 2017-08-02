@@ -4,6 +4,9 @@
     "name": "Victor Mier",
     "email": "victormier@gmail.com"
   },
+  "engines": {
+    "node": "7.10"
+  },
   "license": "UNLICENSED",
   "private": true,
   "babel": {

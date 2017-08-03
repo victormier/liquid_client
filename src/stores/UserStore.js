@@ -16,7 +16,8 @@ class UserStore {
   }
 
   @action getUserFromResetPasswordToken(resetPasswordToken, viewStore) {
-    return restFetch(`/users/from_reset_password_token?reset_password_token=${resetPasswordToken}`, {
+    const url = '/users/from_reset_password_token';
+    return restFetch(`${url}?reset_password_token=${resetPasswordToken}`, {
       method: 'GET',
     })
       .then((response) => {

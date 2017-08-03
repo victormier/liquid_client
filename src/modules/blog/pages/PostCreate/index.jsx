@@ -17,8 +17,14 @@ class PostCreate extends Component {
 
   handleFormSubmit(data) {
     return this.props.submit(data)
-      .then(response => this.props.router.push(`/posts/${response.data.createPost.id}`))
-      .catch(() => this.setState({ errorText: 'There was an error while creating your post.' }));
+      .then(response => (
+        this.props.router.push(`/posts/${response.data.createPost.id}`)
+      ))
+      .catch(() => (
+        this.setState({
+          errorText: 'There was an error while creating your post.',
+        })
+      ));
   }
 
   handleOnDismissAlert() {

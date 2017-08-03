@@ -25,7 +25,13 @@ export class Settings extends Component {
         <Row>
           <Col xs={12}>
             <h1>Settings</h1>
-            <Button id="logoutButton" text="Log out" color="transparent" onClick={this.onLogout} />
+            <Button
+              id="logoutButton"
+              text="Log
+              out"
+              color="transparent"
+              onClick={this.onLogout}
+            />
           </Col>
         </Row>
       </Grid>

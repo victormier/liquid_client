@@ -10,7 +10,8 @@ import { IS_DEVELOP } from 'config';
 // https://github.com/reactjs/react-router-redux/issues/305
 const isClient = typeof document !== 'undefined';
 
-// Initial state, I prefer to have this empty and initialize state in reducers themselves
+// Initial state, I prefer to have this empty
+// and initialize state in reducers themselves
 const initialState = {};
 
 const routingMiddleware = routerMiddleware(browserHistory);

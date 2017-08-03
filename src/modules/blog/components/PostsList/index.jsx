@@ -21,7 +21,12 @@ export const PostListComponent = ({ items, client }) => {
             <h3>{item.title}</h3>
             <p>{nl2br(item.text)}</p>
             <Link to={`/posts/${item.id}`}>
-              <Button onMouseOver={() => prefetchDetail(item.id)} bsStyle="primary">Detail</Button>
+              <Button
+                onMouseOver={() => prefetchDetail(item.id)}
+                bsStyle="primary"
+              >
+                Detail
+              </Button>
             </Link>
           </Col>
         </Row>

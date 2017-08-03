@@ -14,7 +14,7 @@ exports[`component renders 1`] = `
     <strong>
       Error!
     </strong>
-     Fetching data from GraphQl server was not successful.
+    Fetching data from GraphQl server was not successful.
   </Alert>
 </Grid>
 `;

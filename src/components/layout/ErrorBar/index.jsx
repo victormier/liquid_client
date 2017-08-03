@@ -12,7 +12,13 @@ class ErrorBar extends React.Component {
     return (
       <div className={styles.errorContainer} >
         <ul className={styles.errorList} >
-          { errors.map(errorMessage => <li className={styles.errorListItem} key={errorMessage.id} >{errorMessage.message}</li>) }
+          {
+            errors.map(errorMessage => (
+              <li className={styles.errorListItem} key={errorMessage.id} >
+                {errorMessage.message}
+              </li>
+            ))
+          }
         </ul>
       </div>
     );

@@ -7,7 +7,12 @@ import PropTypes from 'prop-types';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import LoadingError from '../../components/LoadingError';
 import PostForm from '../../forms/Post';
-import { queryAllPosts, queryPostDetail, updatePost, deletePost } from '../../qql';
+import {
+  queryAllPosts,
+  queryPostDetail,
+  updatePost,
+  deletePost,
+} from '../../qql';
 
 
 class PostsBaseContainer extends Component {
@@ -22,14 +27,26 @@ class PostsBaseContainer extends Component {
 
   handleFormSubmit(data) {
     return this.props.updatePost({ variables: data })
-      .then(() => this.setState({ successText: 'Your update request was successful.' }))
-      .catch(() => this.setState({ errorText: 'There was an error while editing your post.' }));
+      .then(() => (
+        this.setState({ successText: 'Your update request was successful.' }))
+      )
+      .catch(() => (
+          this.setState({
+            errorText: 'There was an error while editing your post.',
+          })
+        )
+      );
   }
 
   handleDeleteButtonClick() {
     return this.props.deletePost({ id: this.props.data.Post.id })
       .then(() => this.props.router.push('/posts'))
-      .catch(() => this.setState({ errorText: 'There was an error while deleting your post.' }));
+      .catch(() => (
+          this.setState({
+            errorText: 'There was an error while deleting your post.',
+          }
+        )
+      ));
   }
 
   handleOnDismissAlert(type) {
@@ -60,12 +77,18 @@ class PostsBaseContainer extends Component {
     return (
       <Grid>
         {errorText &&
-        <Alert bsStyle="danger" onDismiss={() => this.handleOnDismissAlert('error')}>
+        <Alert
+          bsStyle="danger"
+          onDismiss={() => this.handleOnDismissAlert('error')}
+        >
           {errorText}
         </Alert>
         }
         {successText &&
-        <Alert bsStyle="success" onDismiss={() => this.handleOnDismissAlert('success')}>
+        <Alert
+          bsStyle="success"
+          onDismiss={() => this.handleOnDismissAlert('success')}
+        >
           {successText}
         </Alert>
         }
@@ -128,7 +151,9 @@ const PostsBaseContainerWithGraphQL = compose(
             if (mutationResult.data) {
               const postIndex = previousResult
                 .allPosts
-                .findIndex(item => item.id === mutationResult.data.deletePost.id);
+                .findIndex(item => (
+                  item.id === mutationResult.data.deletePost.id
+                ));
               return update(previousResult, {
                 allPosts: {
                   $unshift: [[postIndex]],

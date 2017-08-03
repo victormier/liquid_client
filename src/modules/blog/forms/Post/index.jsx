@@ -44,7 +44,12 @@ const PostForm = (props) => {
       <Field name="title" type="text" component={TitleInput} />
       <Field name="text" type="text" component={TextInput} />
 
-      <Button className={styles.button} type="submit" bsStyle="primary" disabled={submitting}>
+      <Button
+        className={styles.button}
+        type="submit"
+        bsStyle="primary"
+        disabled={submitting}
+      >
         {submitting ? 'Saving...' : 'Save changes'}
       </Button>
       {!!handleDelete &&

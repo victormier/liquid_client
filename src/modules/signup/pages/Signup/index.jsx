@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
+import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
 import UserForm from '../../forms/User';
 import styles from './styles.scss';
@@ -43,6 +44,7 @@ class Signup extends Component {
   render() {
     return (
       <Grid fluid className={gridStyles.mainGrid}>
+        <GoBackArrow to="/" />
         <ErrorBar />
 
         <Row center="xs" className={styles.logo} >

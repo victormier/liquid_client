@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
+import GoBackArrow from 'components/common/GoBackArrow';
 import SessionForm from '../../forms/Session';
 import styles from './styles.scss';
 
@@ -25,6 +26,7 @@ class Login extends Component {
   render() {
     return (
       <Grid fluid className={gridStyles.mainGrid}>
+        <GoBackArrow to="/" />
         <ErrorBar />
 
         <Row center="xs" className={styles.logo} >

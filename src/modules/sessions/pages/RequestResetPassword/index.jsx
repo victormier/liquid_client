@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
+import GoBackArrow from 'components/common/GoBackArrow';
 import ResetPasswordForm from '../../forms/ResetPassword';
 import styles from './styles.scss';
 
@@ -32,6 +33,8 @@ class RequestResetPassword extends Component {
   render() {
     return (
       <Grid fluid className={gridStyles.mainGrid}>
+        <GoBackArrow />
+
         <Row center="xs" className={styles.logo} >
           <Col xs>
             <img alt="Logo" src={logo} />

@@ -97,6 +97,16 @@ const AppRouter = props => (
               }
             }
           />
+          <Route
+            path={'/connect/select_bank'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/connect_bank/pages/SelectBank')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+              }
+            }
+          />
         </Route>
 
         <Route

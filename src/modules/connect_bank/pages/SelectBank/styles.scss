@@ -1,0 +1,15 @@
+@import 'base/mixins';
+@import 'base/variables';
+
+.bankList {
+  list-style: none;
+}
+.bankItem {
+  @include roundedBlock;
+  @include transparentBlueBackground;
+
+  margin-bottom: $base-grid-gutter/4;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  color: white;
+}

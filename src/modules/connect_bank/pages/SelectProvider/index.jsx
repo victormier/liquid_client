@@ -9,14 +9,20 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { queryAllSaltedgeProviders } from 'qql';
 import _ from 'lodash';
 import { getCountryName } from 'utils/iso-countries';
+import { Link } from 'react-router';
 import styles from './styles.scss';
 
 const BankItem = props => (
-  <li className={styles.bankItem}>{ props.saltedgeProvider.name }</li>
+  <li className={styles.bankItem}>
+    <Link to={`/connect/providers/${props.saltedgeProvider.id}`}>
+      { props.saltedgeProvider.name }
+    </Link>
+  </li>
 );
 BankItem.propTypes = {
   saltedgeProvider: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
 };
 
@@ -28,7 +34,7 @@ const BankNameInput = componentProps => (
     placeholder="Your Bank"
   />);
 
-class SelectBank extends Component {
+class SelectProvider extends Component {
   handleOnChange() {
     console.log(this);
   }
@@ -85,7 +91,7 @@ class SelectBank extends Component {
   }
 }
 
-SelectBank.propTypes = {
+SelectProvider.propTypes = {
   data: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.object,
@@ -100,19 +106,19 @@ SelectBank.propTypes = {
   bankName: PropTypes.string,
 };
 
-const SelectBankWithGraphQL = graphql(
+const SelectProviderWithGraphQL = graphql(
   queryAllSaltedgeProviders,
   {}
-)(SelectBank);
+)(SelectProvider);
 
-const SelectBankWithGraphQLReduxForm = reduxForm({
-  form: 'selectBank',
-})(SelectBankWithGraphQL);
+const SelectProviderWithGraphQLReduxForm = reduxForm({
+  form: 'SelectProvider',
+})(SelectProviderWithGraphQL);
 
 // Decorate with connect to read input value
-const selector = formValueSelector('selectBank');
-const ConnectedSelectBank = connect(state => ({
+const selector = formValueSelector('SelectProvider');
+const ConnectedSelectProvider = connect(state => ({
   bankName: selector(state, 'bankName'),
-}))(SelectBankWithGraphQLReduxForm);
+}))(SelectProviderWithGraphQLReduxForm);
 
-export default ConnectedSelectBank;
+export default ConnectedSelectProvider;

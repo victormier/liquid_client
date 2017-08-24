@@ -9,4 +9,13 @@ export const queryAllSaltedgeProviders = gql`query allSaltedgeProviders{
 }
 `;
 
+export const querySaltedgeProvider = gql`query saltedgeProvider($id: ID!){
+  saltedge_provider(id: $id){
+    id
+    country_code
+    name
+  }
+}
+`;
+
 export default queryAllSaltedgeProviders;

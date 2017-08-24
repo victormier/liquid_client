@@ -98,10 +98,20 @@ const AppRouter = props => (
             }
           />
           <Route
-            path={'/connect/select_bank'}
+            path={'/connect/providers'}
             getComponent={
               (location, cb) => {
-                System.import('modules/connect_bank/pages/SelectBank')
+                System.import('modules/connect_bank/pages/SelectProvider')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+              }
+            }
+          />
+          <Route
+            path={'/connect/providers/:saltedgeProviderId'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/connect_bank/pages/NewProviderLogin')
                   .then(loadRoute(cb))
                   .catch(err => errorLoading(err));
               }

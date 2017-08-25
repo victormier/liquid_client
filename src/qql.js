@@ -14,6 +14,13 @@ export const querySaltedgeProvider = gql`query saltedgeProvider($id: ID!){
     id
     country_code
     name
+    required_fields {
+      localized_name
+      name
+      nature
+      optional
+      position
+    }
   }
 }
 `;

@@ -37,5 +37,5 @@ UserForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'post',
+  form: 'signup',
 })(UserForm);

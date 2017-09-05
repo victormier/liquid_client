@@ -1,3 +1,5 @@
+@import 'base/colors';
+
 html, body {
   height: 100%;
 }
@@ -18,4 +20,13 @@ a {
   &:hover {
     color: white;
   }
+}
+
+hr {
+  border-color: transparentize($gray, 0.8);
+}
+
+label {
+  width: 100%;
+  font-size: 2rem;
 }

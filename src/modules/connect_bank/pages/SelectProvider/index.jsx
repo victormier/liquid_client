@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
@@ -34,62 +34,55 @@ const BankNameInput = componentProps => (
     placeholder="Your Bank"
   />);
 
-class SelectProvider extends Component {
-  handleOnChange() {
-    console.log(this);
+const SelectProvider = (props) => {
+  let bankItems;
+  const { data } = props;
+
+  if (data.loading) {
+    return <p>Loading...</p>;
+  }
+  if (data.error) {
+    return <p>Error!</p>;
   }
 
-  render() {
-    let bankItems;
-    const { data } = this.props;
-
-    if (data.loading) {
-      return <p>Loading...</p>;
-    }
-    if (data.error) {
-      return <p>Error!</p>;
-    }
-
-    if (this.props.bankName && this.props.bankName.length >= 2) {
-      const regex = new RegExp(this.props.bankName, 'i');
-      const filteredProviders = _.filter(data.all_saltedge_providers,
-                                  sp => (regex.test(sp.name)));
-      const groupedProviders = _.groupBy(filteredProviders, 'country_code');
-      bankItems = Object.keys(groupedProviders).map(countryCode => (
-        <div key={countryCode}>
-          <h2>{getCountryName(countryCode)}</h2>
-          <ul className={styles.bankList}>
-            { groupedProviders[countryCode].map(
-                sp => <BankItem key={sp.id} saltedgeProvider={sp} />
-              )
-            }
-          </ul>
-        </div>
-      ));
-    }
-
-    return (
-      <Grid fluid className={gridStyles.mainGrid}>
-        <Row>
-          <Col xs={12}>
-            <h1>Search for your bank</h1>
-            <Field
-              name="bankName"
-              type="text"
-              onChange={this.handleOnChange}
-              component={BankNameInput}
-            />
-            <hr />
-            {
-              bankItems &&
-                <ul className={styles.bankList}>{bankItems}</ul>
-            }
-          </Col>
-        </Row>
-      </Grid>
-    );
+  if (props.bankName && props.bankName.length >= 2) {
+    const regex = new RegExp(props.bankName, 'i');
+    const filteredProviders = _.filter(data.all_saltedge_providers,
+                                sp => (regex.test(sp.name)));
+    const groupedProviders = _.groupBy(filteredProviders, 'country_code');
+    bankItems = Object.keys(groupedProviders).map(countryCode => (
+      <div key={countryCode}>
+        <h2>{getCountryName(countryCode)}</h2>
+        <ul className={styles.bankList}>
+          { groupedProviders[countryCode].map(
+              sp => <BankItem key={sp.id} saltedgeProvider={sp} />
+            )
+          }
+        </ul>
+      </div>
+    ));
   }
-}
+
+  return (
+    <Grid fluid className={gridStyles.mainGrid}>
+      <Row>
+        <Col xs={12}>
+          <h1>Search for your bank</h1>
+          <Field
+            name="bankName"
+            type="text"
+            component={BankNameInput}
+          />
+          <hr />
+          {
+            bankItems &&
+              <ul className={styles.bankList}>{bankItems}</ul>
+          }
+        </Col>
+      </Row>
+    </Grid>
+  );
+};
 
 SelectProvider.propTypes = {
   data: PropTypes.shape({

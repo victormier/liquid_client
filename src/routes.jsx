@@ -117,6 +117,16 @@ const AppRouter = props => (
               }
             }
           />
+          <Route
+            path={'/accounts'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/main/pages/ListAccounts')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+              }
+            }
+          />
         </Route>
 
         <Route

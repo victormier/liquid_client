@@ -49,4 +49,11 @@ export const querySaltedgeLogin = gql`
   }
 `;
 
+export const queryAllAccounts = gql`query allAccounts{
+  all_accounts {
+    id
+  }
+}
+`;
+
 export default queryAllSaltedgeProviders;

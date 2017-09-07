@@ -1,31 +1,20 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
-import gridStyles from 'styles/base/grid.scss';
-import { Grid, Row, Col } from 'react-flexbox-grid';
 import { queryAllAccounts } from 'qql';
 import { Link } from 'react-router';
 import { withApollo } from 'react-apollo';
-import Spinner from 'components/common/Spinner';
+import SpinnerBlock from 'components/common/SpinnerBlock';
 import Button from 'components/common/Button';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
 
 const ListAccounts = (props) => {
   const { data } = props;
 
-  if (data.loading) {
-    return (
-      <Grid fluid className={gridStyles.mainGrid}>
-        <Row>
-          <Col className={baseStyles.marginCentered}>
-            <Spinner />
-          </Col>
-        </Row>
-      </Grid>);
-  }
-  if (data.error) {
-    return <p>Error!</p>;
-  }
+  if (data.loading) return <SpinnerBlock />;
+  if (data.error) return <p>Error!</p>;
 
   const accounts = data.all_accounts.map(account => (
     <Link to={`/accounts/${account.id}/transactions`} key={account.id}>

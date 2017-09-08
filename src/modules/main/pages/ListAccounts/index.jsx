@@ -16,7 +16,7 @@ const ListAccounts = (props) => {
 
   const accounts = data.all_accounts.map(account => (
     <Link to={`/accounts/${account.id}`} key={account.id}>
-      <Button text="Account" color="transparent" />
+      <Button text={account.name} color="transparent" />
     </Link>
   ));
 
@@ -39,6 +39,7 @@ ListAccounts.propTypes = {
     allAccounts: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
       })
     ),
   }).isRequired,

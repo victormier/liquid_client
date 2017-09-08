@@ -61,6 +61,8 @@ export const queryAccount = gql`
     account(id: $id) {
       id,
       currency_code,
+      name,
+      balance,
       transactions {
         id,
         amount,

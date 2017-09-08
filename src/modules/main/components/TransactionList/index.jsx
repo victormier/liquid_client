@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import baseStyles from 'styles/base/base.scss';
+import { toCurrency } from 'utils/currencies';
 import styles from './styles.scss';
 
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -10,10 +11,7 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 
 const TransactionItem = ({ transaction, currencyCode }) => {
   const date = new Date(transaction.made_on);
-  const amount = transaction.amount.toLocaleString('en-US', {
-    style: 'currency',
-    currency: currencyCode,
-  });
+  const amount = toCurrency(transaction.amount, currencyCode);
 
   return (
     <li className={styles.transaction}>

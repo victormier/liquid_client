@@ -56,4 +56,22 @@ export const queryAllAccounts = gql`query allAccounts{
 }
 `;
 
+export const queryAccount = gql`
+  query account($id: ID!) {
+    account(id: $id) {
+      id,
+      currency_code,
+      transactions {
+        id,
+        amount,
+        made_on,
+        type,
+        description,
+        category,
+        created_at
+      }
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

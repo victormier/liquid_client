@@ -127,6 +127,16 @@ const AppRouter = props => (
               }
             }
           />
+          <Route
+            path={'/accounts/:accountId'}
+            getComponent={
+              (location, cb) => {
+                System.import('modules/main/pages/ShowAccount')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+              }
+            }
+          />
         </Route>
 
         <Route

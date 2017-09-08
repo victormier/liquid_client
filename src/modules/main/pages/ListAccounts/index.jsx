@@ -1,14 +1,12 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { queryAllAccounts } from 'qql';
 import { Link } from 'react-router';
-import { withApollo } from 'react-apollo';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import Button from 'components/common/Button';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
-import baseStyles from 'styles/base/base.scss';
 
 const ListAccounts = (props) => {
   const { data } = props;
@@ -17,7 +15,7 @@ const ListAccounts = (props) => {
   if (data.error) return <p>Error!</p>;
 
   const accounts = data.all_accounts.map(account => (
-    <Link to={`/accounts/${account.id}/transactions`} key={account.id}>
+    <Link to={`/accounts/${account.id}`} key={account.id}>
       <Button text="Account" color="transparent" />
     </Link>
   ));

@@ -128,6 +128,8 @@
     "test": "set BABEL_DISABLE_CACHE=1 && set NODE_ENV=test && jest",
     "test:update_snapshot": "set BABEL_DISABLE_CACHE=1 && set NODE_ENV=test && jest --updateSnapshot",
     "flow": "flow",
-    "lint": "lint"
+    "lint": "lint",
+    "postinstall": "set NODE_ENV=production && webpack --env.prod=true",
+    "start": "set NODE_ENV=production && webpack-dev-server --env.prod=true"
   }
 }

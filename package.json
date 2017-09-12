@@ -5,7 +5,8 @@
     "email": "victormier@gmail.com"
   },
   "engines": {
-    "node": "7.10"
+    "node": "7.10",
+    "npm": "5.0.3"
   },
   "license": "UNLICENSED",
   "private": true,

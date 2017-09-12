@@ -59,13 +59,4 @@ class RequestResetPassword extends Component {
   }
 }
 
-RequestResetPassword.propTypes = {
-  router: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  client: PropTypes.shape({
-    resetStore: PropTypes.func.isRequired,
-  }),
-};
-
 export default withApollo(RequestResetPassword);

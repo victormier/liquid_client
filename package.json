@@ -133,6 +133,6 @@
     "flow": "flow",
     "lint": "lint",
     "start": "set NODE_ENV=production && ./node_modules/.bin/webpack-dev-server --env.prod=true",
-    "heroku-postbuild": "npm install"
+    "heroku-prebuild": "rm package-lock.json"
   }
 }

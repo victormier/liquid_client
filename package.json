@@ -132,7 +132,7 @@
     "test:update_snapshot": "set BABEL_DISABLE_CACHE=1 && set NODE_ENV=test && jest --updateSnapshot",
     "flow": "flow",
     "lint": "lint",
-    "start": "set NODE_ENV=production && ./node_modules/.bin/webpack-dev-server --env.prod=true",
+    "start": "set NODE_ENV=production && webpack-dev-server --env.prod=true",
     "heroku-prebuild": "rm package-lock.json"
   }
 }

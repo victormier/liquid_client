@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, withApollo } from 'react-apollo';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -63,18 +63,18 @@ class PollProviderLogin extends Component {
   }
 }
 
-PollProviderLogin.propTypes = {
-  data: PropTypes.shape({
-    loading: PropTypes.bool,
-    error: PropTypes.object,
-    saltedge_login: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
-      active: PropTypes.bool.isRequired,
-      finished_connecting: PropTypes.bool.isRequired,
-    }),
-  }),
-};
+// PollProviderLogin.propTypes = {
+//   data: PropTypes.shape({
+//     loading: PropTypes.bool,
+//     error: PropTypes.object,
+//     saltedge_login: PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       status: PropTypes.string.isRequired,
+//       active: PropTypes.bool.isRequired,
+//       finished_connecting: PropTypes.bool.isRequired,
+//     }),
+//   }),
+// };
 
 
 const PollProviderLoginWithGraphQL = graphql(querySaltedgeLogin, {

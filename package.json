@@ -134,6 +134,7 @@
     "flow": "flow",
     "lint": "lint",
     "heroku-prebuild": "rm package-lock.json",
+    "postinstall": "set NODE_ENV=production && webpack --env.prod=true",
     "start": "NODE_ENV=production node ./src/server.js"
   }
 }

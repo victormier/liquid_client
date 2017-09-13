@@ -85,7 +85,6 @@ const AppRouter = props => (
           }
           />
         </Route>
-
         <Route component={PrivateRoutes}>
           <Route
             path={'/settings'}
@@ -138,67 +137,6 @@ const AppRouter = props => (
             }
           />
         </Route>
-
-        <Route
-          path={'/counter'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/counter/containers/Base')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/posts'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/blog/pages/ListPosts')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/posts/create'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/blog/pages/PostCreate')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/posts/:postId'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/blog/pages/PostDetail')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/posts/:postId/edit'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/blog/pages/PostEdit')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
-        <Route
-          path={'/about'}
-          getComponent={
-            (location, cb) => {
-              System.import('modules/core/pages/About')
-                .then(loadRoute(cb))
-                .catch(err => errorLoading(err));
-            }
-          }
-        />
       </Route>
       <Route
         path="*"

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Router, Route, IndexRoute } from 'react-router';
 import { ApolloProvider } from 'react-apollo';
 import { inject } from 'mobx-react';
@@ -159,5 +160,11 @@ class AppRouter extends Component {
     );
   }
 }
+
+AppRouter.wrappedComponent.propTypes = {
+  sessionStore: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired,
+  }).isRequired,
+};
 
 export default AppRouter;

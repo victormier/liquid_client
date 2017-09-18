@@ -10,7 +10,6 @@ import gridStyles from 'styles/base/grid.scss';
 
 const ListAccounts = (props) => {
   const { data } = props;
-
   if (data.loading) return <SpinnerBlock />;
   if (data.error) return <p>Error!</p>;
 

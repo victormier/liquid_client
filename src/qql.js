@@ -77,4 +77,17 @@ export const queryAccount = gql`
   }
 `;
 
+export const queryUser = gql`
+  query user {
+    user {
+      id,
+      accounts {
+        id,
+        balance,
+        name
+      }
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

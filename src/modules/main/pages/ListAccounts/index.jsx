@@ -44,6 +44,8 @@ ListAccounts.propTypes = {
   }).isRequired,
 };
 
-const ListAccountsWithGraphQL = graphql(queryAllAccounts)(ListAccounts);
+const ListAccountsWithGraphQL = graphql(queryAllAccounts, {
+  options: { fetchPolicy: 'cache-and-network' },
+})(ListAccounts);
 
 export default withApollo(ListAccountsWithGraphQL);

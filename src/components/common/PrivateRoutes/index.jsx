@@ -3,18 +3,26 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { queryUser } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
+import { inject, observer } from 'mobx-react';
 
+@inject('sessionStore')
+@observer
 class PrivateRoutes extends Component {
   componentWillMount() {
-    if (!this.props.route.authenticated) {
-      this.props.router.push('/login');
-    }
+    this.ensureAuthentication(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    // direct to connect path if bank not connected
+    this.ensureAuthentication(newProps);
+
+    // refetch user if finished connecting
+    if (this.props.location.pathname.includes('connect') &&
+        !newProps.location.pathname.includes('connect')) {
+      this.props.data.refetch();
+      return;
+    }
+
     if (!newProps.data.loading &&
-        newProps.route.authenticated &&
         newProps.data.user &&
         !newProps.data.user.accounts.length &&
         !newProps.location.pathname.includes('connect') &&
@@ -23,15 +31,22 @@ class PrivateRoutes extends Component {
     }
   }
 
+  ensureAuthentication(props) {
+    if (!props.sessionStore.authenticated ||
+        (props.data &&
+        !props.data.loading &&
+        !props.data.user)) {
+      this.props.router.push('/login');
+    }
+  }
+
   render() {
     const { data } = this.props;
+
     if (data.loading) return <SpinnerBlock />;
     if (data.error) return <div>Error!</div>;
 
-    if (this.props.route.authenticated) {
-      return this.props.children;
-    }
-    return null;
+    return this.props.children;
   }
 }
 
@@ -40,13 +55,13 @@ PrivateRoutes.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  route: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired,
-  }),
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }),
   data: PropTypes.shape({
     user: PropTypes.shape({
       accounts: PropTypes.arrayOf(PropTypes.shape({
@@ -55,11 +70,12 @@ PrivateRoutes.propTypes = {
     }),
     loading: PropTypes.bool.isRequired,
     error: PropTypes.bool.isRequired,
+    refetch: PropTypes.func.isRequired,
   }),
 };
 
 const PrivateRoutesWithGraphQL = graphql(queryUser, {
-  skip: ownProps => !ownProps.route.authenticated,
+  skip: () => !window.localStorage.auth_token,
 })(PrivateRoutes);
 
 export default PrivateRoutesWithGraphQL;

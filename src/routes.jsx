@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route, IndexRoute } from 'react-router';
 import { ApolloProvider } from 'react-apollo';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import store, { history } from 'store';
 import client from 'config/apolloClient';
 import App from 'modules/core/App';
@@ -19,15 +19,14 @@ const errorLoading = err => (
 );
 
 @inject('sessionStore')
+@observer
 class AppRouter extends Component {
   render() {
-    const authenticated = this.props.sessionStore.authenticated;
-
     return (
       <ApolloProvider {...this.props} store={store} client={client}>
         <Router history={history}>
           <Route path={'/'} component={App}>
-            <Route component={PublicRoutes} authenticated={authenticated}>
+            <Route component={PublicRoutes} authenticated={this.props.sessionStore.authenticated}>
               <IndexRoute
                 getComponent={
                   (location, cb) => {
@@ -92,7 +91,7 @@ class AppRouter extends Component {
               }
               />
             </Route>
-            <Route component={PrivateRoutes} authenticated={authenticated}>
+            <Route component={PrivateRoutes} authenticated={this.props.sessionStore.authenticated}>
               <Route
                 path={'/settings'}
                 getComponent={

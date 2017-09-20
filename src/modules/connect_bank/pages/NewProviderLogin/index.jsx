@@ -50,7 +50,7 @@ class NewProviderLogin extends Component {
   }
 
   handleConnectSuccess() {
-    this.props.router.push('/settings');
+    this.props.router.push('/accounts');
   }
 
   render() {

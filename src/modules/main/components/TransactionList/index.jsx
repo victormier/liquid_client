@@ -10,7 +10,8 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const TransactionItem = ({ transaction, currencyCode }) => {
-  const date = new Date(transaction.made_on);
+  const date = new Date(0);
+  date.setUTCSeconds(transaction.made_on);
   const amount = toCurrency(transaction.amount, currencyCode);
 
   return (

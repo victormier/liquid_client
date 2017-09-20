@@ -51,7 +51,7 @@ class ResetPassword extends Component {
       })
       .then((data) => {
         this.props.sessionStore.setCurrentSession(data);
-        this.props.router.push('/settings');
+        this.props.router.push('/accounts');
       });
   }
 

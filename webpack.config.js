@@ -157,7 +157,7 @@ module.exports = (env) => {
           to: context => context.match[0],
         }],
       },
-      port: 8080,
+      port: isProd ? process.env.PORT : 8080,
       compress: isProd,
       inline: !isProd,
       stats: {

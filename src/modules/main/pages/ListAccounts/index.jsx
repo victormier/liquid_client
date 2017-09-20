@@ -10,7 +10,6 @@ import gridStyles from 'styles/base/grid.scss';
 
 const ListAccounts = (props) => {
   const { data } = props;
-
   if (data.loading) return <SpinnerBlock />;
   if (data.error) return <p>Error!</p>;
 
@@ -45,6 +44,8 @@ ListAccounts.propTypes = {
   }).isRequired,
 };
 
-const ListAccountsWithGraphQL = graphql(queryAllAccounts)(ListAccounts);
+const ListAccountsWithGraphQL = graphql(queryAllAccounts, {
+  options: { fetchPolicy: 'cache-and-network' },
+})(ListAccounts);
 
 export default withApollo(ListAccountsWithGraphQL);

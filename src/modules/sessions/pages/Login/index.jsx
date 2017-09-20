@@ -19,7 +19,7 @@ class Login extends Component {
             .auth(data.email, data.password, this.props.viewStore)
             .then(() => {
               this.props.client.resetStore();
-              this.props.router.push('/settings');
+              this.props.router.push('/accounts');
             });
   }
 

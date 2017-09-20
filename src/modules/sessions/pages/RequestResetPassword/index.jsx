@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { withApollo } from 'react-apollo';
-import PropTypes from 'prop-types';
 import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
@@ -58,14 +57,5 @@ class RequestResetPassword extends Component {
     );
   }
 }
-
-RequestResetPassword.propTypes = {
-  router: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  client: PropTypes.shape({
-    resetStore: PropTypes.func.isRequired,
-  }),
-};
 
 export default withApollo(RequestResetPassword);

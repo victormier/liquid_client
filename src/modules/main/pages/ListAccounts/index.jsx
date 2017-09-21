@@ -7,6 +7,7 @@ import SpinnerBlock from 'components/common/SpinnerBlock';
 import Button from 'components/common/Button';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
+import styles from './styles.scss';
 
 const ListAccounts = (props) => {
   const { data } = props;
@@ -14,13 +15,21 @@ const ListAccounts = (props) => {
   if (data.error) return <p>Error!</p>;
 
   const accounts = data.all_accounts.map(account => (
-    <Link to={`/accounts/${account.id}`} key={account.id}>
+    <Link to={`/accounts/${account.id}`} key={account.id} className={styles.account}>
       <Button text={account.name} color="transparent" />
     </Link>
   ));
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
+      <Row className={styles.topNav}>
+        <Col xs={6}>
+          <Link to="/accounts/new">
+            <Button text="+" color="transparent" shape="circle" />
+          </Link>
+        </Col>
+        <Col xs={6} />
+      </Row>
       <Row>
         <Col xs={12}>
           <h1>Your accounts</h1>

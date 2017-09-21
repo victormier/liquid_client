@@ -133,6 +133,16 @@ class AppRouter extends Component {
                 }
               />
               <Route
+                path={'/accounts/new'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/NewAccount')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
                 path={'/accounts/:accountId'}
                 getComponent={
                   (location, cb) => {

@@ -77,6 +77,17 @@ export const queryAccount = gql`
   }
 `;
 
+export const createVirtualAccount = gql`
+  mutation createVirtualAccount($name: String!) {
+    createVirtualAccount(name: $name) {
+      id,
+      name,
+      balance,
+      currency_code
+    }
+  }
+`;
+
 export const queryUser = gql`
   query user {
     user {

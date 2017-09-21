@@ -1,12 +1,27 @@
 @import 'base/mixins';
+@import 'base/variables';
 
 .default {
+  background: white;
+  color: black;
+}
+
+.round {
   @include roundedBlock;
 
   padding-left: 4rem;
   padding-right: 4rem;
-  background: white;
-  color: black;
+}
+
+.circle {
+  @include circleBlock;
+  font-size: $font-size-xlarge;
+  line-height: 1;
+
+  span {
+    position: relative;
+    top: -2px;
+  }
 }
 
 .blue {

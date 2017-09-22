@@ -19,13 +19,17 @@ class NewAccount extends Component {
       });
   }
 
+  handleCancel() {
+    this.props.router.goBack();
+  }
+
   render() {
     return (
       <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.emptyHeader}`}>
         <Row>
           <Col xs={12}>
             <h1>New Account</h1>
-            <AccountForm onSubmit={formData => this.handleFormSubmit(formData)} />
+            <AccountForm onSubmit={formData => this.handleFormSubmit(formData)} onCancel={() => { this.handleCancel(); }} />
           </Col>
         </Row>
       </Grid>
@@ -36,6 +40,7 @@ class NewAccount extends Component {
 NewAccount.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
   }).isRequired,
   submit: PropTypes.func.isRequired,
 };

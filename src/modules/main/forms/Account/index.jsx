@@ -15,14 +15,14 @@ const NameInput = componentProps => (
   />);
 
 const AccountForm = (props) => {
-  const { handleSubmit, submitting } = props;
+  const { handleSubmit, submitting, onCancel } = props;
 
   return (
     <form onSubmit={handleSubmit}>
       <Field name="name" type="text" component={NameInput} />
       <Row center="xs" className={formStyles.submitBlock}>
         <Col xs={4}>
-          <Button text="Cancel" disabled={submitting} color="blue" />
+          <Button text="Cancel" disabled={submitting} color="blue" onClick={onCancel} />
         </Col>
         <Col xs={4}>
           <Button text="Create" type="submit" disabled={submitting} />
@@ -33,8 +33,9 @@ const AccountForm = (props) => {
 };
 
 AccountForm.propTypes = {
-  handleSubmit: PropTypes.func,
+  handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default reduxForm({

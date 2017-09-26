@@ -19,6 +19,13 @@
   padding: 2.4rem 2.4rem;
 }
 
+@mixin circleBlock {
+  border: none;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+}
+
 @mixin squareRoundedBlock {
   @include roundedBlock;
   border-radius: 15px;

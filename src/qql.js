@@ -52,7 +52,9 @@ export const querySaltedgeLogin = gql`
 export const queryAllAccounts = gql`query allAccounts{
   all_accounts {
     id,
-    name
+    name,
+    balance,
+    currency_code
   }
 }
 `;
@@ -73,6 +75,17 @@ export const queryAccount = gql`
         category,
         created_at
       }
+    }
+  }
+`;
+
+export const createVirtualAccount = gql`
+  mutation createVirtualAccount($name: String!) {
+    createVirtualAccount(name: $name) {
+      id,
+      name,
+      balance,
+      currency_code
     }
   }
 `;

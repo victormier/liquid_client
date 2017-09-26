@@ -35,14 +35,16 @@ class PrivateRoutes extends Component {
     if (!props.sessionStore.authenticated ||
         (props.data &&
         !props.data.loading &&
+        !props.data.error &&
         !props.data.user)) {
+      // TODO: si hi ha error i l'error és bad login
+      // deslogejar i ficar missatge (s'haurà de canviar la condició de dalt per a que arribi)
       this.props.router.push('/login');
     }
   }
 
   render() {
     const { data } = this.props;
-
     if (data.loading) return <SpinnerBlock />;
     if (data.error) return <div>Error!</div>;
 

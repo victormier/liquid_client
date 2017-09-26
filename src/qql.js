@@ -52,7 +52,9 @@ export const querySaltedgeLogin = gql`
 export const queryAllAccounts = gql`query allAccounts{
   all_accounts {
     id,
-    name
+    name,
+    balance,
+    currency_code
   }
 }
 `;

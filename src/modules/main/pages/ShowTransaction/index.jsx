@@ -30,10 +30,13 @@ const ShowTransaction = ({ data, params }) => {
           <h2>
             { data.transaction.description }
             <br />
-            <small className={styles.transactionAttributeConcept}>Description</small>
+            <small className={styles.transactionAttributeConcept}>
+              Description
+            </small>
           </h2>
           <h2>
-            { toCurrency(data.transaction.amount, data.transaction.virtual_account.currency_code) }
+            { toCurrency(data.transaction.amount,
+                         data.transaction.virtual_account.currency_code) }
             <br />
             <small className={styles.transactionAttributeConcept}>Amount</small>
           </h2>

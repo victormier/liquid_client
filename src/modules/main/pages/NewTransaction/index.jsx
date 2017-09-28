@@ -16,7 +16,11 @@ const NewTransaction = (props) => {
   if (data.error) return <p>Error!</p>;
 
   const accounts = data.all_accounts.map(account => (
-    <Link to={`/transactions/new/${account.id}`} key={account.id} className={styles.account}>
+    <Link
+      to={`/transactions/new/${account.id}`}
+      key={account.id}
+      className={styles.account}
+    >
       <Account account={account} />
     </Link>
   ));

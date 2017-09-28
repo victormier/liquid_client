@@ -26,7 +26,10 @@ class AppRouter extends Component {
       <ApolloProvider {...this.props} store={store} client={client}>
         <Router history={history}>
           <Route path={'/'} component={App}>
-            <Route component={PublicRoutes} authenticated={this.props.sessionStore.authenticated}>
+            <Route
+              component={PublicRoutes}
+              authenticated={this.props.sessionStore.authenticated}
+            >
               <IndexRoute
                 getComponent={
                   (location, cb) => {
@@ -91,7 +94,10 @@ class AppRouter extends Component {
               }
               />
             </Route>
-            <Route component={PrivateRoutes} authenticated={this.props.sessionStore.authenticated}>
+            <Route
+              component={PrivateRoutes}
+              authenticated={this.props.sessionStore.authenticated}
+            >
               <Route
                 path={'/settings'}
                 getComponent={

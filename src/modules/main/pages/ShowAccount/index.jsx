@@ -33,12 +33,18 @@ const ShowAccount = ({ data }) => {
           <h2>{ data.account.name }</h2>
         </Col>
         <Col xs={4}>
-          <h2>{ toCurrency(data.account.balance, data.account.currency_code) }</h2>
+          <h2>
+            { toCurrency(data.account.balance, data.account.currency_code) }
+          </h2>
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <TransactionList items={data.account.transactions} currencyCode={data.account.currency_code} accountId={data.account.id} />
+          <TransactionList
+            items={data.account.transactions}
+            currencyCode={data.account.currency_code}
+            accountId={data.account.id}
+          />
         </Col>
       </Row>
     </Grid>);

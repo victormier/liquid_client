@@ -18,7 +18,10 @@ const AmountInput = componentProps => (
   />);
 
 const DestinationAccountOption = props => (
-  <Account account={props.account} onClick={() => { props.onSelect(props.account.id); }} />
+  <Account
+    account={props.account}
+    onClick={() => { props.onSelect(props.account.id); }}
+  />
 );
 
 DestinationAccountOption.propTypes = {
@@ -39,29 +42,50 @@ class TransactionForm extends Component {
 
   @autobind
   handleSelect(destinationAccountId) {
-    const destinationAccount = _.find(this.props.accounts, ['id', destinationAccountId]);
+    const destinationAccount = _.find(
+      this.props.accounts,
+      ['id', destinationAccountId]
+    );
     this.setState({ destinationAccount });
     this.props.change('destinationAccountId', destinationAccountId);
   }
 
   render() {
-    const { handleSubmit, submitting, onCancel, originAccount, accounts } = this.props;
+    const { handleSubmit, submitting, onCancel,
+            originAccount, accounts } = this.props;
 
     const accountOptions = accounts.map(account => (
-      <DestinationAccountOption account={account} onSelect={this.handleSelect} />
+      <DestinationAccountOption
+        account={account}
+        onSelect={this.handleSelect}
+      />
     ));
 
     return (
       <form onSubmit={handleSubmit}>
         <h2>Origin account</h2>
-        <FormInput name="originAccountName" value={originAccount.name} type="text" disabled />
+        <FormInput
+          name="originAccountName"
+          value={originAccount.name}
+          type="text"
+          disabled
+        />
         <Field name="originAccountId" type="hidden" component="input" />
         {
           this.state.destinationAccount ?
             <div>
               <h2>Destination account</h2>
-              <FormInput name="destinationAccountName" value={this.state.destinationAccount.name} type="text" disabled />
-              <Field name="destinationAccountId" type="hidden" component="input" />
+              <FormInput
+                name="destinationAccountName"
+                value={this.state.destinationAccount.name}
+                type="text"
+                disabled
+              />
+              <Field
+                name="destinationAccountId"
+                type="hidden"
+                component="input"
+              />
               <h2>Amount</h2>
               <Field name="amount" type="text" component={AmountInput} />
             </div> :
@@ -73,7 +97,12 @@ class TransactionForm extends Component {
 
         <Row center="xs" className={formStyles.submitBlock}>
           <Col xs={4}>
-            <Button text="Cancel" disabled={submitting} color="blue" onClick={onCancel} />
+            <Button
+              text="Cancel"
+              disabled={submitting}
+              color="blue"
+              onClick={onCancel}
+            />
           </Col>
           <Col xs={4}>
             <Button text="Create" type="submit" disabled={submitting} />

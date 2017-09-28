@@ -16,7 +16,11 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
   const amount = toCurrency(transaction.amount, currencyCode);
 
   return (
-    <Link to={`/accounts/${accountId}/transactions/${transaction.id}`} key={transaction.id} className={styles.transactionLink}>
+    <Link
+      to={`/accounts/${accountId}/transactions/${transaction.id}`}
+      key={transaction.id}
+      className={styles.transactionLink}
+    >
       <li className={styles.transaction}>
         <Grid>
           <Row>
@@ -26,7 +30,9 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
             </Col>
             <Col xs={7}>
               <div>{transaction.description}</div>
-              <div className={styles.transactionCategory}>{transaction.category}</div>
+              <div className={styles.transactionCategory}>
+                {transaction.category}
+              </div>
             </Col>
             <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
           </Row>
@@ -51,7 +57,14 @@ TransactionItem.propTypes = {
 };
 
 const TransactionList = ({ items, currencyCode, accountId }) => {
-  const transactions = items.map(transaction => <TransactionItem key={transaction.id} transaction={transaction} currencyCode={currencyCode} accountId={accountId} />);
+  const transactions = items.map(transaction =>
+    (<TransactionItem
+      key={transaction.id}
+      transaction={transaction}
+      currencyCode={currencyCode}
+      accountId={accountId}
+    />)
+  );
 
   return (
     <ul className={styles.transactionList}>{transactions}</ul>

@@ -25,11 +25,17 @@ class NewAccount extends Component {
 
   render() {
     return (
-      <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.emptyHeader}`}>
+      <Grid
+        fluid
+        className={`${gridStyles.mainGrid} ${gridStyles.emptyHeader}`}
+      >
         <Row>
           <Col xs={12}>
             <h1>New Account</h1>
-            <AccountForm onSubmit={formData => this.handleFormSubmit(formData)} onCancel={() => { this.handleCancel(); }} />
+            <AccountForm
+              onSubmit={formData => this.handleFormSubmit(formData)}
+              onCancel={() => { this.handleCancel(); }}
+            />
           </Col>
         </Row>
       </Grid>

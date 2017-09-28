@@ -9,7 +9,9 @@ const Account = props => (
     <div className={styles.accountInfo}>
       <div className={styles.accountName}>{props.account.name}</div>
     </div>
-    <div className={styles.accountBalance}>{toCurrency(props.account.balance, props.account.currency_code)}</div>
+    <div className={styles.accountBalance}>
+      {toCurrency(props.account.balance, props.account.currency_code)}
+    </div>
   </Button>
 );
 

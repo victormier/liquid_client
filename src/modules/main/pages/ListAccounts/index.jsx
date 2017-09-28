@@ -9,7 +9,6 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
 import Account from '../../components/Account';
-import styles from './styles.scss';
 
 const ListAccounts = (props) => {
   const { data } = props;
@@ -17,14 +16,14 @@ const ListAccounts = (props) => {
   if (data.error) return <p>Error!</p>;
 
   const accounts = data.all_accounts.map(account => (
-    <Link to={`/accounts/${account.id}`} key={account.id} className={styles.account}>
+    <Link to={`/accounts/${account.id}`} key={account.id}>
       <Account account={account} />
     </Link>
   ));
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <Row className={styles.topNav}>
+      <Row className={baseStyles.topNav}>
         <Col xs={6}>
           <Link to="/accounts/new">
             <Button text="+" color="transparent" shape="circle" />

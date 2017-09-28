@@ -152,6 +152,26 @@ class AppRouter extends Component {
                   }
                 }
               />
+              <Route
+                path={'/transactions/new'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/NewTransaction')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
+                path={'/transactions/new/:accountId'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/NewTransactionStep2')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
             </Route>
           </Route>
           <Route

@@ -103,4 +103,10 @@ export const queryUser = gql`
   }
 `;
 
+export const createTransaction = gql`
+  mutation createVirtualTransaction($originAccountId: ID!, $destinationAccountId: ID!, $amount: Float!) {
+    createVirtualTransaction(origin_account_id: $originAccountId, destination_account_id: $destinationAccountId, amount: $amount)
+  }
+`;
+
 export default queryAllSaltedgeProviders;

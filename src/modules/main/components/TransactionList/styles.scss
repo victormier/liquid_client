@@ -6,12 +6,24 @@
   list-style: none;
   margin: 0;
 }
+
 .transaction {
   @include squareRoundedBlock;
   @include transparentBlueBackground;
   margin-bottom: $base-grid-gutter/4;
+
+  &:hover {
+    @include moreTransparentBlueBackground;
+  }
 }
+
 .transactionCategory {
   font-size: $font-size-small;
   color: $green;
+}
+
+a.transactionLink {
+  &:hover {
+    text-decoration: none;
+  }
 }

@@ -2,34 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Link } from 'react-router';
 import baseStyles from 'styles/base/base.scss';
 import { toCurrency } from 'utils/currencies';
+import { dateFromSeconds } from 'utils/dates';
 import styles from './styles.scss';
 
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const TransactionItem = ({ transaction, currencyCode }) => {
-  const date = new Date(0);
-  date.setUTCSeconds(transaction.made_on);
+const TransactionItem = ({ transaction, currencyCode, accountId }) => {
+  const date = dateFromSeconds(transaction.made_on);
   const amount = toCurrency(transaction.amount, currencyCode);
 
   return (
-    <li className={styles.transaction}>
-      <Grid>
-        <Row>
-          <Col xs={2}>
-            <div>{date.getDate()}</div>
-            <div>{monthNames[date.getMonth()]}</div>
-          </Col>
-          <Col xs={7}>
-            <div>{transaction.description}</div>
-            <div className={styles.transactionCategory}>{transaction.category}</div>
-          </Col>
-          <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
-        </Row>
-      </Grid>
-    </li>
+    <Link to={`/accounts/${accountId}/transactions/${transaction.id}`} key={transaction.id} className={styles.transactionLink}>
+      <li className={styles.transaction}>
+        <Grid>
+          <Row>
+            <Col xs={2}>
+              <div>{date.getDate()}</div>
+              <div>{monthNames[date.getMonth()]}</div>
+            </Col>
+            <Col xs={7}>
+              <div>{transaction.description}</div>
+              <div className={styles.transactionCategory}>{transaction.category}</div>
+            </Col>
+            <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
+          </Row>
+        </Grid>
+      </li>
+    </Link>
   );
 };
 
@@ -44,10 +47,11 @@ TransactionItem.propTypes = {
     created_at: PropTypes.number.isRequired,
   }),
   currencyCode: PropTypes.string.isRequired,
+  accountId: PropTypes.string.isRequired,
 };
 
-const TransactionList = ({ items, currencyCode }) => {
-  const transactions = items.map(transaction => <TransactionItem key={transaction.id} transaction={transaction} currencyCode={currencyCode} />);
+const TransactionList = ({ items, currencyCode, accountId }) => {
+  const transactions = items.map(transaction => <TransactionItem key={transaction.id} transaction={transaction} currencyCode={currencyCode} accountId={accountId} />);
 
   return (
     <ul className={styles.transactionList}>{transactions}</ul>
@@ -67,6 +71,7 @@ TransactionList.propTypes = {
     })
   ),
   currencyCode: PropTypes.string,
+  accountId: PropTypes.string.isRequired,
 };
 
 export default withApollo(TransactionList);

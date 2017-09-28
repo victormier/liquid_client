@@ -38,7 +38,7 @@ const ShowAccount = ({ data }) => {
       </Row>
       <Row>
         <Col xs={12}>
-          <TransactionList items={data.account.transactions} currencyCode={data.account.currency_code} />
+          <TransactionList items={data.account.transactions} currencyCode={data.account.currency_code} accountId={data.account.id} />
         </Col>
       </Row>
     </Grid>);

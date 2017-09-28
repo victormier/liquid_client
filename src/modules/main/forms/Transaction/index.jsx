@@ -98,6 +98,7 @@ TransactionForm.propTypes = {
     balance: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   })),
+  change: PropTypes.func.isRequired,
 };
 
 export default reduxForm({

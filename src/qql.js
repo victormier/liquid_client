@@ -109,4 +109,22 @@ export const createTransaction = gql`
   }
 `;
 
+export const queryTransaction = gql`
+  query transaction($id: ID!) {
+    transaction(id: $id) {
+      id,
+      amount,
+      made_on,
+      type,
+      description,
+      category,
+      created_at,
+      virtual_account {
+        name,
+        currency_code
+      }
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

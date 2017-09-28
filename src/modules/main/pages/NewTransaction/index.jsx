@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { queryAllAccounts } from 'qql';
 import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
-import Button from 'components/common/Button';
 import GoBackArrow from 'components/common/GoBackArrow';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';

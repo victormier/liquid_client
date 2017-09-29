@@ -9,7 +9,6 @@ import App from 'modules/core/App';
 import PrivateRoutes from 'components/common/PrivateRoutes';
 import PublicRoutes from 'components/common/PublicRoutes';
 
-
 // Makes dynamic route loading more convenient
 const loadRoute = cb => module => cb(null, module.default);
 

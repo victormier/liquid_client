@@ -1,0 +1,19 @@
+@import 'base/variables';
+
+.container {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  padding: $base-grid-gutter;
+}
+
+.link {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1.0;
+  }
+}
+.activeLink {
+  opacity: 1.0;
+}

@@ -9,6 +9,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
 import Account from '../../components/Account';
+import Nav from '../../components/Nav';
 
 const ListAccounts = (props) => {
   const { data } = props;
@@ -41,6 +42,7 @@ const ListAccounts = (props) => {
           { accounts }
         </Col>
       </Row>
+      <Nav />
     </Grid>
   );
 };

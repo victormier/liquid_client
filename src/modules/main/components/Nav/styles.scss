@@ -1,0 +1,22 @@
+@import 'base/variables';
+@import 'base/colors';
+
+.container {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  padding: $base-grid-gutter;
+  background: $blueDark3;
+  margin-left: -$base-grid-gutter;
+}
+
+.link {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1.0;
+  }
+}
+.activeLink {
+  opacity: 1.0;
+}

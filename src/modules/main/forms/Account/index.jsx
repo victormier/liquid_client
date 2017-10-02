@@ -22,7 +22,12 @@ const AccountForm = (props) => {
       <Field name="name" type="text" component={NameInput} />
       <Row center="xs" className={formStyles.submitBlock}>
         <Col xs={4}>
-          <Button text="Cancel" disabled={submitting} color="blue" onClick={onCancel} />
+          <Button
+            text="Cancel"
+            disabled={submitting}
+            color="blue"
+            onClick={onCancel}
+          />
         </Col>
         <Col xs={4}>
           <Button text="Create" type="submit" disabled={submitting} />

@@ -1,0 +1,25 @@
+@import 'base/variables';
+@import 'base/colors';
+
+.account {
+  display: block;
+  overflow: auto;
+  margin-bottom: $base-grid-gutter/4;
+}
+.accountInfo {
+  float: left;
+  text-align: left;
+}
+.accountBalance {
+  float: right;
+  font-size: $font-size-large;
+  font-weight: bold;
+}
+.accountName {
+  color: white;
+  font-weight: bold;
+}
+.accountBank {
+  color: $blueLight;
+  font-size: $font-size-small;
+}

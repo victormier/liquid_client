@@ -4,6 +4,7 @@ import { withApollo } from 'react-apollo';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/Button';
+import Nav from 'modules/main/components/Nav';
 import gridStyles from 'styles/base/grid.scss';
 
 @inject(
@@ -34,6 +35,7 @@ export class Settings extends Component {
             />
           </Col>
         </Row>
+        <Nav />
       </Grid>
     );
   }

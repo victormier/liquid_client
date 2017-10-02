@@ -4,11 +4,13 @@ import { graphql, withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { queryAccount } from 'qql';
+import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import GoBackArrow from 'components/common/GoBackArrow';
+import Button from 'components/common/Button';
 import { toCurrency } from 'utils/currencies';
+import baseStyles from 'styles/base/base.scss';
 import TransactionList from '../../components/TransactionList';
-// <TransactionList items={props.data.account.transactions} />
 
 const ShowAccount = ({ data }) => {
   if (data.loading) return <SpinnerBlock />;
@@ -16,18 +18,33 @@ const ShowAccount = ({ data }) => {
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <GoBackArrow to="/accounts" />
+      <Row className={baseStyles.topNav}>
+        <Col xs={6}>
+          <GoBackArrow to="/accounts" />
+        </Col>
+        <Col xs={6} className={baseStyles.textRight}>
+          <Link to={`/transactions/new/${data.account.id}`}>
+            <Button text="Transfer" color="transparent" />
+          </Link>
+        </Col>
+      </Row>
       <Row>
         <Col xs={8}>
           <h2>{ data.account.name }</h2>
         </Col>
         <Col xs={4}>
-          <h2>{ toCurrency(data.account.balance, data.account.currency_code) }</h2>
+          <h2>
+            { toCurrency(data.account.balance, data.account.currency_code) }
+          </h2>
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <TransactionList items={data.account.transactions} currencyCode={data.account.currency_code} />
+          <TransactionList
+            items={data.account.transactions}
+            currencyCode={data.account.currency_code}
+            accountId={data.account.id}
+          />
         </Col>
       </Row>
     </Grid>);

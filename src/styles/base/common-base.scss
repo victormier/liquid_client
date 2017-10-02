@@ -1,7 +1,9 @@
 @import 'base/colors';
+@import 'base/variables';
 
 html, body {
   height: 100%;
+  background: rgb(0, 130, 153);
 }
 
 body {
@@ -9,8 +11,15 @@ body {
   font-size: 1.6rem;
 }
 
-h1 {
-  font-size: 3.6rem;
+h1, h2, h3, h4, h5, h6 {
+  small {
+    color: $blueLight;
+    font-size: $font-size-small;
+  }
+}
+
+h1, h2 {
+  font-size: $font-size-xlarge;
 }
 
 a {

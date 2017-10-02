@@ -37,3 +37,10 @@
 
   color: white;
 }
+
+.lightBlueGradient {
+  composes: default;
+
+  background-image: radial-gradient(66% 288%, #00E0F2 13%, #00DAEF 19%, #00D2EC 26%, #0085CF 100%);
+  color: white;
+}

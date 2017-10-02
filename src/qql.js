@@ -103,4 +103,52 @@ export const queryUser = gql`
   }
 `;
 
+export const createTransaction = gql`
+  mutation createVirtualTransaction($originAccountId: ID!, $destinationAccountId: ID!, $amount: Float!) {
+    createVirtualTransaction(origin_account_id: $originAccountId, destination_account_id: $destinationAccountId, amount: $amount)
+  }
+`;
+
+export const queryTransaction = gql`
+  query transaction($id: ID!) {
+    transaction(id: $id) {
+      id,
+      amount,
+      made_on,
+      type,
+      description,
+      category,
+      created_at,
+      virtual_account {
+        name,
+        currency_code
+      }
+    }
+  }
+`;
+
+export const queryInsights = gql`
+  query insights($month: Int!, $year: Int!) {
+     insights(month: $month, year: $year){
+      total_income,
+      total_expense,
+      mirror_account {
+        id,
+        currency_code,
+      },
+      income_transactions {
+        id,
+        amount,
+        description,
+        made_on
+      }
+      category_insights {
+        name,
+        amount,
+        percentage
+      }
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

@@ -9,7 +9,6 @@ import App from 'modules/core/App';
 import PrivateRoutes from 'components/common/PrivateRoutes';
 import PublicRoutes from 'components/common/PublicRoutes';
 
-
 // Makes dynamic route loading more convenient
 const loadRoute = cb => module => cb(null, module.default);
 
@@ -26,7 +25,10 @@ class AppRouter extends Component {
       <ApolloProvider {...this.props} store={store} client={client}>
         <Router history={history}>
           <Route path={'/'} component={App}>
-            <Route component={PublicRoutes} authenticated={this.props.sessionStore.authenticated}>
+            <Route
+              component={PublicRoutes}
+              authenticated={this.props.sessionStore.authenticated}
+            >
               <IndexRoute
                 getComponent={
                   (location, cb) => {
@@ -91,7 +93,10 @@ class AppRouter extends Component {
               }
               />
             </Route>
-            <Route component={PrivateRoutes} authenticated={this.props.sessionStore.authenticated}>
+            <Route
+              component={PrivateRoutes}
+              authenticated={this.props.sessionStore.authenticated}
+            >
               <Route
                 path={'/settings'}
                 getComponent={
@@ -147,6 +152,46 @@ class AppRouter extends Component {
                 getComponent={
                   (location, cb) => {
                     System.import('modules/main/pages/ShowAccount')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
+                path={'/transactions/new'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/NewTransaction')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
+                path={'/transactions/new/:accountId'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/NewTransactionStep2')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
+                path={'/accounts/:accountId/transactions/:transactionId'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/ShowTransaction')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
+                path={'/insights'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/Insights')
                       .then(loadRoute(cb))
                       .catch(err => errorLoading(err));
                   }

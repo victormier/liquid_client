@@ -1,0 +1,18 @@
+<svg width="37px" height="27px" viewBox="0 0 37 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Screens" stroke="none" stroke-width="2" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-50.000000, -624.000000)">
+            <g id="Group" transform="translate(51.000000, 625.000000)">
+                <g id="Accounts">
+                    <path d="M5,5.19482422 L5,4 L5,4 C5,1.790861 6.790861,0 9,0 L9,0 L31,0 L31,0 C33.209139,0 35,1.790861 35,4 L35,16 L35,16 C35,18.209139 33.209139,20 31,20 L29.9599609,20" id="Rectangle-6-Copy-2" stroke="#FFFFFF"></path>
+                    <g id="Group-2-Copy" transform="translate(0.000000, 5.000000)">
+                        <rect id="Rectangle-6-Copy-2" stroke="#FFFFFF" x="0" y="0" width="30" height="20" rx="4"></rect>
+                        <circle id="Oval-4" stroke="#FFFFFF" cx="23.5" cy="13.5" r="2.5"></circle>
+                        <rect id="Rectangle-3-Copy" fill="#FFFFFF" x="4" y="12" width="9" height="1" rx="0.5"></rect>
+                        <rect id="Rectangle-3-Copy-2" fill="#FFFFFF" x="4" y="15" width="9" height="1" rx="0.5"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

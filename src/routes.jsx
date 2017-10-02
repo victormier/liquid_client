@@ -187,6 +187,16 @@ class AppRouter extends Component {
                   }
                 }
               />
+              <Route
+                path={'/insights'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/Insights')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
             </Route>
           </Route>
           <Route

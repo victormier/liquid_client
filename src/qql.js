@@ -127,4 +127,28 @@ export const queryTransaction = gql`
   }
 `;
 
+export const queryInsights = gql`
+  query insights($month: Int!, $year: Int!) {
+     insights(month: $month, year: $year){
+      total_income,
+      total_expense,
+      mirror_account {
+        id,
+        currency_code,
+      },
+      income_transactions {
+        id,
+        amount,
+        description,
+        made_on
+      }
+      category_insights {
+        name,
+        amount,
+        percentage
+      }
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

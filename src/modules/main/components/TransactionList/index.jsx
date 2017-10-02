@@ -5,11 +5,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router';
 import baseStyles from 'styles/base/base.scss';
 import { toCurrency } from 'utils/currencies';
-import { dateFromSeconds } from 'utils/dates';
+import { dateFromSeconds, monthNameShortFromNumber } from 'utils/dates';
 import styles from './styles.scss';
-
-const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const TransactionItem = ({ transaction, currencyCode, accountId }) => {
   const date = dateFromSeconds(transaction.made_on);
@@ -26,7 +23,7 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
           <Row>
             <Col xs={2}>
               <div>{date.getDate()}</div>
-              <div>{monthNames[date.getMonth()]}</div>
+              <div>{monthNameShortFromNumber(date.getMonth())}</div>
             </Col>
             <Col xs={7}>
               <div>{transaction.description}</div>

@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { queryInsights } from 'qql';
-import { Link } from 'react-router';
 // import moment from 'moment/src/moment';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -11,8 +10,6 @@ import baseStyles from 'styles/base/base.scss';
 import { toCurrency } from 'utils/currencies';
 import { monthNameLongFromNumber, dateFromSeconds } from 'utils/dates';
 import SquareRoundedBlock from 'components/common/SquareRoundedBlock';
-import TransactionList from '../../components/TransactionList';
-import Account from '../../components/Account';
 import Nav from '../../components/Nav';
 import styles from './styles.scss';
 
@@ -64,7 +61,7 @@ const Insights = (props) => {
                   ))
                 }
               </ul> :
-              <p>There's no income transactions for this month.</p>
+              <p>There&apos;s no income transactions for this month.</p>
 
           }
         </Col>
@@ -110,7 +107,7 @@ const Insights = (props) => {
                   ))
                 }
               </ul> :
-              <p>There's no category data for this month.</p>
+              <p>There&apos;s no category data for this month.</p>
 
           }
         </Col>
@@ -150,7 +147,7 @@ Insights.propTypes = {
 };
 
 const InsightsWithGraphQL = graphql(queryInsights, {
-  options: ownProps => ({
+  options: () => ({
     fetchPolicy: 'cache-and-network',
     variables: {
       month: (new Date()).getMonth(),

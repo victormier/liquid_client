@@ -17,6 +17,7 @@ SquareRoundedBlock.propTypes = {
     React.PropTypes.arrayOf(React.PropTypes.node),
     React.PropTypes.node,
   ]),
+  className: PropTypes.string,
 };
 
 export default SquareRoundedBlock;

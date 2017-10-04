@@ -8,9 +8,12 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
 import { toCurrency } from 'utils/currencies';
-import { monthNameLongFromNumber, dateFromSeconds } from 'utils/dates';
+import { monthNameLongFromNumber,
+         monthNameShortFromNumber,
+         dateFromSeconds } from 'utils/dates';
 import SquareRoundedBlock from 'components/common/SquareRoundedBlock';
 import Nav from '../../components/Nav';
+import InsightsGraph from '../../components/InsightsGraph';
 import styles from './styles.scss';
 
 const Insights = (props) => {
@@ -19,7 +22,36 @@ const Insights = (props) => {
   if (data.error) return <p>Error!</p>;
 
   return (
-    <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav}`}>
+    <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav} ${gridStyles.basePadding}`}>
+      <Row className={styles.balances} center="xs">
+        <Col xs={3} className={styles.mainStats}>
+          <div className={styles.amountTitle}>Total balance</div>
+          <div className={styles.amountData}>
+            {toCurrency(333, data.insights.mirror_account.currency_code)}
+          </div>
+        </Col>
+        <Col xs={3} className={styles.totalIncome}>
+          <div className={styles.amountTitle}>Income</div>
+          <div className={styles.amountData}>
+            {toCurrency(data.insights.total_income, data.insights.mirror_account.currency_code)}
+          </div>
+        </Col>
+        <Col xs={3} className={styles.totalExpense}>
+          <div className={styles.amountTitle}>Expenses</div>
+          <div className={styles.amountData}>
+            {toCurrency(data.insights.total_expense, data.insights.mirror_account.currency_code)}
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <InsightsGraph
+            topValue={data.insights.total_income}
+            bottomValue={20000.0}
+            label={monthNameShortFromNumber((new Date()).getMonth())}
+          />
+        </Col>
+      </Row>
       <Row>
         <Col xs={8}>
           <h2>

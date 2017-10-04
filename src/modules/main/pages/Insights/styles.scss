@@ -6,6 +6,10 @@
   margin: 0;
 }
 
+.mainStats {
+  margin-bottom: $base-grid-gutter*2;
+}
+
 .itemTitle {
   font-size: $font-size-normal;
 }
@@ -15,4 +19,21 @@
 }
 .itemData {
   font-size: $font-size-large;
+}
+
+.amountTitle {
+  font-size: $font-size-normal;
+}
+.amountData {
+  font-size: $font-size-large;
+}
+
+.totalBalance {
+  color: white;
+}
+.totalIncome {
+  color: $blueLight2;
+}
+.totalExpense {
+  color: $blueDark;
 }

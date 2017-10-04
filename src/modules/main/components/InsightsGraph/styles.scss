@@ -1,0 +1,44 @@
+@import 'base/colors';
+@import 'base/variables';
+
+$barWidth: 40px;
+
+.insightBarContainer {
+  width: 100px;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+}
+
+.barContainer {
+  position: relative;
+  height: 100%;
+  width: $barWidth;
+  margin: 0 auto;
+}
+
+.bar {
+  position: absolute;
+  width: $barWidth;
+}
+
+.topBar {
+  @extend .bar;
+  top: 0;
+  background: $blueLight2;
+  border-top-left-radius: $barWidth/2;
+  border-top-right-radius: $barWidth/2;
+}
+.bottomBar {
+  @extend .bar;
+  bottom: 0;
+  background: $blueDark;
+  border-bottom-left-radius: $barWidth/2;
+  border-bottom-right-radius: $barWidth/2;
+}
+
+.label {
+  text-transform: uppercase;
+  margin-top: $base-grid-gutter*2;
+  font-weight: bold;
+}

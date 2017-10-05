@@ -1,0 +1,17 @@
+@import 'base/variables';
+@import 'base/colors';
+
+.blockList {
+  list-style: none;
+  margin: 0;
+}
+.itemTitle {
+  font-size: $font-size-normal;
+}
+.itemDetail {
+  font-size: $font-size-small;
+  color: $grayLight;
+}
+.itemData {
+  font-size: $font-size-large;
+}

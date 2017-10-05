@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { autobind } from 'core-decorators';
 import styles from './styles.scss';
 
 class InsightsGraph extends Component {
+  @autobind
+  handleOnClick() {
+    this.props.onClick(this.props.index);
+  }
+
   render() {
     const barHeight = 300;
     const topValue = Math.abs(this.props.topValue);
     const bottomValue = Math.abs(this.props.bottomValue);
-    const totalValue = topValue + bottomValue;
+
+    const totalValue = this.props.topMaxValue + this.props.bottomMaxValue;
     const topHeight = (topValue / totalValue) * barHeight;
     const bottomHeight = (bottomValue / totalValue) * barHeight;
 
     return (
       <div className={styles.insightBarContainer}>
-        <div className={styles.barContainer} style={{ height: barHeight }}>
+        <div onClick={this.handleOnClick} className={styles.barContainer} style={{ height: barHeight }}>
           <div className={styles.topBar} style={{ height: topHeight }} />
           <div className={styles.bottomBar} style={{ height: bottomHeight }} />
         </div>

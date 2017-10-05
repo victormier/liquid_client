@@ -141,11 +141,25 @@ export const queryInsights = gql`
         amount,
         description,
         made_on
-      }
+      },
       category_insights {
         name,
         amount,
         percentage
+      }
+    }
+  }
+`;
+
+export const queryAllInsights = gql`
+  query allInsights {
+     all_insights {
+      start_date,
+      end_date,
+      total_income,
+      total_expense,
+      mirror_account {
+        currency_code
       }
     }
   }

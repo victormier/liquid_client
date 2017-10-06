@@ -40,7 +40,7 @@ class Insights extends Component {
           <Col xs={3} className={styles.mainStats}>
             <div className={styles.amountTitle}>Total balance</div>
             <div className={styles.amountData}>
-              {toCurrency(333, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
+              {toCurrency(data.all_insights[this.state.selectedInsight].total_balance, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
             </div>
           </Col>
           <Col xs={3} className={styles.totalIncome}>

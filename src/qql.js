@@ -158,6 +158,7 @@ export const queryAllInsights = gql`
       end_date,
       total_income,
       total_expense,
+      total_balance,
       mirror_account {
         currency_code
       }

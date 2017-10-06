@@ -22,9 +22,10 @@ class InsightsGraph extends Component {
     const top = maxHeightTop - topHeight;
     const maxHeightBottom = (this.props.bottomMaxValue / totalValue) * barHeight;
     const bottom = maxHeightBottom - bottomHeight;
+    const mainClassName = this.props.selected ? `${styles.insightBarContainer} ${styles.active}` : styles.insightBarContainer;
 
     return (
-      <div className={styles.insightBarContainer}>
+      <div className={mainClassName}>
         <div
           onClick={this.handleOnClick}
           className={styles.barContainer}
@@ -49,6 +50,7 @@ InsightsGraph.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   index: PropTypes.string.isRequired,
+  selected: PropTypes.bool.isRequired,
 };
 
 export default InsightsGraph;

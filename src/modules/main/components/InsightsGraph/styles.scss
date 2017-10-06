@@ -8,6 +8,12 @@ $barWidth: 40px;
   overflow: auto;
   text-align: center;
   float: left;
+
+  &.active {
+    .bar {
+      opacity: 1;
+    }
+  }
 }
 
 .barContainer {
@@ -19,6 +25,7 @@ $barWidth: 40px;
 }
 
 .bar {
+  opacity: 0.4;
   position: absolute;
   width: $barWidth;
 }

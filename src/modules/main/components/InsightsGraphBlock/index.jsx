@@ -33,6 +33,7 @@ const InsightsGraphBlock = (props) => {
               key={insight.start_date}
               index={insights.length - index - 1}
               onClick={props.onMonthSelect}
+              selected={selectedInsight === (insights.length - index - 1)}
             />)
           )
         }

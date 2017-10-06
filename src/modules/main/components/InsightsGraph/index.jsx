@@ -18,6 +18,11 @@ class InsightsGraph extends Component {
     const topHeight = (topValue / totalValue) * barHeight;
     const bottomHeight = (bottomValue / totalValue) * barHeight;
 
+    const maxHeightTop = (this.props.topMaxValue / totalValue) * barHeight;
+    const top = maxHeightTop - topHeight;
+    const maxHeightBottom = (this.props.bottomMaxValue / totalValue) * barHeight;
+    const bottom = maxHeightBottom - bottomHeight;
+
     return (
       <div className={styles.insightBarContainer}>
         <div
@@ -27,8 +32,8 @@ class InsightsGraph extends Component {
           role="button"
           tabIndex={0}
         >
-          <div className={styles.topBar} style={{ height: topHeight }} />
-          <div className={styles.bottomBar} style={{ height: bottomHeight }} />
+          <div className={styles.topBar} style={{ height: topHeight, top }} />
+          <div className={styles.bottomBar} style={{ height: bottomHeight, bottom }} />
         </div>
         <div className={styles.label}>{this.props.label}</div>
       </div>

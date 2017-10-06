@@ -5,6 +5,7 @@ import { queryInsights } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import { toCurrency } from 'utils/currencies';
 import { monthNameLongFromNumber,
+         monthNameShortFromNumber,
          dateFromSeconds } from 'utils/dates';
 import SquareRoundedBlock from 'components/common/SquareRoundedBlock';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -28,7 +29,10 @@ const InsightsData = (props) => {
         </Col>
         <Col xs={4} className={baseStyles.textRight}>
           <h2>
-            { toCurrency(data.insights.total_income, data.insights.mirror_account.currency_code) }
+            { toCurrency(
+                data.insights.total_income,
+                data.insights.mirror_account.currency_code)
+            }
           </h2>
         </Col>
       </Row>
@@ -44,8 +48,17 @@ const InsightsData = (props) => {
                         <Grid>
                           <Row>
                             <Col xs={6}>
-                              <div className={styles.itemTitle}>{transaction.description}</div>
-                              <div className={styles.itemDetail}>{`${dateFromSeconds(transaction.made_on).getDay() + 1}/${dateFromSeconds(transaction.made_on).getMonth() + 1}`}</div>
+                              <div className={styles.itemTitle}>
+                                {transaction.description}
+                              </div>
+                              <div className={styles.itemDetail}>
+                                {
+                                  `${monthNameShortFromNumber(
+                                      dateFromSeconds(transaction.made_on).getMonth() + 1
+                                     )}
+                                   ${dateFromSeconds(transaction.made_on).getDay() + 1}`
+                                }
+                              </div>
                             </Col>
                             <Col xs={6} className={baseStyles.textRight}>
                               <span className={styles.itemData}>
@@ -95,7 +108,12 @@ const InsightsData = (props) => {
                             </Col>
                             <Col xs={6} className={baseStyles.textRight}>
                               <span className={styles.itemData}>
-                                {toCurrency(categoryInsight.amount, data.insights.mirror_account.currency_code)}
+                                {
+                                  toCurrency(
+                                    categoryInsight.amount,
+                                    data.insights.mirror_account.currency_code
+                                  )
+                                }
                               </span>
                             </Col>
                           </Row>
@@ -116,7 +134,6 @@ const InsightsData = (props) => {
 
 InsightsData.propTypes = {
   month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
   data: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.object,

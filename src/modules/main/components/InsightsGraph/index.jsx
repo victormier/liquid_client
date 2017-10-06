@@ -20,7 +20,13 @@ class InsightsGraph extends Component {
 
     return (
       <div className={styles.insightBarContainer}>
-        <div onClick={this.handleOnClick} className={styles.barContainer} style={{ height: barHeight }}>
+        <div
+          onClick={this.handleOnClick}
+          className={styles.barContainer}
+          style={{ height: barHeight }}
+          role="button"
+          tabIndex={0}
+        >
           <div className={styles.topBar} style={{ height: topHeight }} />
           <div className={styles.bottomBar} style={{ height: bottomHeight }} />
         </div>
@@ -33,7 +39,11 @@ class InsightsGraph extends Component {
 InsightsGraph.propTypes = {
   topValue: PropTypes.number.isRequired,
   bottomValue: PropTypes.number.isRequired,
+  topMaxValue: PropTypes.number.isRequired,
+  bottomMaxValue: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  index: PropTypes.string.isRequired,
 };
 
 export default InsightsGraph;

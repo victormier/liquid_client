@@ -8,7 +8,7 @@ import styles from './styles.scss';
 
 const InsightsGraphBlock = (props) => {
   const { insights, selectedInsight } = props;
-  const barWidth = 100;
+  const barWidth = 60;
   const barHeight = 362;
   const containerStyles = {
     width: insights.length * barWidth,

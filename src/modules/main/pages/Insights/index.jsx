@@ -38,7 +38,7 @@ class Insights extends Component {
       <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav} ${gridStyles.basePadding}`}>
         <Row className={styles.balances} center="xs">
           <Col xs={3} className={styles.mainStats}>
-            <div className={styles.amountTitle}>Total balance</div>
+            <div className={styles.amountTitle}>Current balance</div>
             <div className={styles.amountData}>
               {toCurrency(data.all_insights[this.state.selectedInsight].total_balance, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
             </div>

@@ -185,6 +185,7 @@ export const queryPercentageRule = gql`
 export const updatePercentageRule = gql`
   mutation updatePercentageRule($active: Boolean!, $minimumAmount: Float!, $percentage: Float!, $percentageRuleId: ID!) {
     updatePercentageRule(active: $active, minimum_amount: $minimumAmount, percentage: $percentage, percentage_rule_id: $percentageRuleId) {
+      id
       percentage
       minimum_amount
       active

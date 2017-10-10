@@ -132,7 +132,19 @@ const SettingsWithGraphQL = compose(
   graphql(queryUser, { name: 'userQuery' }),
   graphql(updatePercentageRule, {
     props: ({ mutate }) => ({
-      submit: (percentageRuleId, { percentage, minimumAmount, active }) => mutate({ variables: { percentageRuleId, percentage, minimumAmount, active: active === 'true' } }),
+      submit: (percentageRuleId, { percentage, minimumAmount, active }) => mutate({
+        variables: {
+          percentageRuleId,
+          percentage,
+          minimumAmount,
+          active: active === 'true',
+        },
+        update: (store, { data: { updatePercentageRule } }) => {
+          const data = store.readQuery({ query: queryPercentageRule });
+          data.percentage_rule = updatePercentageRule;
+          store.writeQuery({ query: queryPercentageRule, data });
+        },
+      }),
     }),
   })
 )(Settings);

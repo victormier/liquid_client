@@ -139,9 +139,9 @@ const SettingsWithGraphQL = compose(
           minimumAmount,
           active: active === 'true',
         },
-        update: (store, { data: { updatePercentageRule } }) => {
+        update: (store, { data: { updatedPercentageRule } }) => {
           const data = store.readQuery({ query: queryPercentageRule });
-          data.percentage_rule = updatePercentageRule;
+          data.percentage_rule = updatedPercentageRule;
           store.writeQuery({ query: queryPercentageRule, data });
         },
       }),

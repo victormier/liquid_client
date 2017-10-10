@@ -33,7 +33,7 @@ export class Settings extends Component {
       .then(() => {
         this.props.viewStore.addError('Settings updated successfully!');
       })
-      .catch((er) => {
+      .catch(() => {
         this.props.viewStore.addError('There was a problem');
       });
   }
@@ -97,11 +97,29 @@ Settings.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  submit: PropTypes.func.isRequired,
+  percentageRuleQuery: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
+    percentage_rule: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      minimum_amount: PropTypes.number.isRequired,
+      percentage: PropTypes.number.isRequired,
+    }),
+  }),
+  userQuery: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
+    user: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 Settings.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     reset: PropTypes.func.isRequired,
+    addError: PropTypes.func.isRequired,
   }).isRequired,
   sessionStore: PropTypes.shape({
     reset: PropTypes.func.isRequired,

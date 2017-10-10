@@ -31,8 +31,9 @@ const PercentageRuleForm = (props) => {
       <Field name="percentage" type="text" component={PercentageInput} />
       <div>
         <div>
-          <label>
+          <label htmlFor="percentageRuleActiveTrue">
             <Field
+              id="percentageRuleActiveTrue"
               name="active"
               component="input"
               type="radio"
@@ -40,8 +41,9 @@ const PercentageRuleForm = (props) => {
             />{' '}
             Active
           </label>
-          <label>
+          <label htmlFor="percentageRuleActiveFalse">
             <Field
+              id="percentageRuleActiveFalse"
               name="active"
               component="input"
               type="radio"

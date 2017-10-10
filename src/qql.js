@@ -94,6 +94,7 @@ export const queryUser = gql`
   query user {
     user {
       id,
+      email,
       accounts {
         id,
         balance,
@@ -161,6 +162,35 @@ export const queryAllInsights = gql`
       total_balance,
       mirror_account {
         currency_code
+      }
+    }
+  }
+`;
+
+export const queryPercentageRule = gql`
+  query percentageRule {
+    percentage_rule {
+      id,
+      active,
+      minimum_amount,
+      percentage,
+      destination_virtual_account {
+        id,
+        name
+      }
+    }
+  }
+`;
+
+export const updatePercentageRule = gql`
+  mutation updatePercentageRule($active: Boolean!, $minimumAmount: Float!, $percentage: Float!, $percentageRuleId: ID!) {
+    updatePercentageRule(active: $active, minimum_amount: $minimumAmount, percentage: $percentage, percentage_rule_id: $percentageRuleId) {
+      percentage
+      minimum_amount
+      active
+      destination_virtual_account {
+        id,
+        name
       }
     }
   }

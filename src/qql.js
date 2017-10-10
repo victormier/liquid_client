@@ -94,6 +94,7 @@ export const queryUser = gql`
   query user {
     user {
       id,
+      email,
       accounts {
         id,
         balance,

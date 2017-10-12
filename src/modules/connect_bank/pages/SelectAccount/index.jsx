@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
-import FormInput from 'components/common/FormInput';
 import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { queryAllSaltedgeAccounts, selectSaltedgeAccount } from 'qql';
@@ -15,7 +14,7 @@ import styles from './styles.scss';
 class SelectSaltedgeAccount extends Component {
   handleSelectAccount(saltedgeAccountId) {
     return this.props.submit(saltedgeAccountId)
-        .then((newData) => {
+        .then(() => {
           this.props.router.push('/accounts');
         })
         .catch(() => {
@@ -34,13 +33,15 @@ class SelectSaltedgeAccount extends Component {
         onClick={() => { this.handleSelectAccount(account.id); }}
         key={account.id}
         className={styles.account}
+        role="button"
+        tabIndex="0"
       >
         <Account account={account} />
       </div>
     ));
 
     return (
-      <Grid fluid className={gridStyles.mainGrid}>
+      <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.emptyHeader}`}>
         <ErrorBar />
         <Row>
           <Col xs={12}>
@@ -48,7 +49,7 @@ class SelectSaltedgeAccount extends Component {
             {
               data.all_saltedge_accounts.length ?
                 <div>{ accounts }</div> :
-                <div>We couldn't find any account. Was the bank connection succesful?</div>
+                <div>We could not find any account. Was the bank connection succesful?</div>
             }
           </Col>
         </Row>

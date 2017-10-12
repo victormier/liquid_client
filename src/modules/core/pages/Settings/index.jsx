@@ -17,6 +17,14 @@ import { queryUser, queryPercentageRule, updatePercentageRule } from 'qql';
   'sessionStore'
 )
 export class Settings extends Component {
+  onLogout = (e) => {
+    e.preventDefault();
+    this.props.sessionStore.logout();
+    this.props.client.resetStore();
+    this.props.viewStore.reset();
+    this.props.router.push('/');
+  }
+
   handleUpdatePercentageRule(data) {
     data.minimumAmount = parseFloat(data.minimumAmount);
     data.percentage = parseFloat(data.percentage);
@@ -30,13 +38,6 @@ export class Settings extends Component {
       });
   }
 
-  onLogout = (e) => {
-    e.preventDefault();
-    this.props.sessionStore.logout();
-    this.props.client.resetStore();
-    this.props.viewStore.reset();
-    this.props.router.push('/');
-  }
 
   render() {
     const { userQuery, percentageRuleQuery } = this.props;

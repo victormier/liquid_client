@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/Button';
@@ -17,14 +17,6 @@ import { queryUser, queryPercentageRule, updatePercentageRule } from 'qql';
   'sessionStore'
 )
 export class Settings extends Component {
-  onLogout = (e) => {
-    e.preventDefault();
-    this.props.sessionStore.logout();
-    this.props.client.resetStore();
-    this.props.viewStore.reset();
-    this.props.router.push('/');
-  }
-
   handleUpdatePercentageRule(data) {
     data.minimumAmount = parseFloat(data.minimumAmount);
     data.percentage = parseFloat(data.percentage);
@@ -36,6 +28,14 @@ export class Settings extends Component {
       .catch(() => {
         this.props.viewStore.addError('There was a problem');
       });
+  }
+
+  onLogout = (e) => {
+    e.preventDefault();
+    this.props.sessionStore.logout();
+    this.props.client.resetStore();
+    this.props.viewStore.reset();
+    this.props.router.push('/');
   }
 
   render() {
@@ -52,7 +52,7 @@ export class Settings extends Component {
               id="logoutButton"
               text="Log out"
               color="transparent"
-              onClick={this.onLogout}
+              onClick={(e) => { this.onLogout(e); }}
             />
           </Col>
         </Row>
@@ -146,7 +146,8 @@ const SettingsWithGraphQL = compose(
         },
       }),
     }),
-  })
+  }),
+  withApollo
 )(Settings);
 
 export default SettingsWithGraphQL;

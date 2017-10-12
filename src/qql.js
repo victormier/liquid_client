@@ -197,4 +197,27 @@ export const updatePercentageRule = gql`
   }
 `;
 
+export const queryAllSaltedgeAccounts = gql`
+  query allSaltedgeAccounts {
+    all_saltedge_accounts {
+      id,
+      name,
+      balance,
+      currency_code,
+      selected
+    }
+  }
+`;
+
+export const selectSaltedgeAccount = gql`
+  mutation selectAccount($saltedgeAccountId: ID!) {
+    selectSaltedgeAccount(saltedge_account_id: $saltedgeAccountId) {
+      id,
+      name,
+      balance,
+      currency_code
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

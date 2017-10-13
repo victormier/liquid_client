@@ -10,14 +10,31 @@
   0.5);
 }
 
+$gradientTransparentDarkBlue: rgba(0,23,52,0.15);
+$gradientTransparentLightBlue: rgba(1,184,204,0.15);
+$gradientMoreTransparentDarkBlue: rgba(0,23,52,0.08);
+$gradientMoreTransparentLightBlue: rgba(1,184,204,0.08);
+
 @mixin transparentBlueBackground {
-  background: transparentize($blueDark2,
-  0.8);
+  background: gradientTransparentLightBlue;
+  background: -moz-linear-gradient(45deg, $gradientTransparentDarkBlue -10%, $gradientTransparentLightBlue 100%);
+  background: -webkit-gradient(left bottom, right top, color-stop(-10%, $gradientTransparentDarkBlue), color-stop(100%, $gradientTransparentLightBlue));
+  background: -webkit-linear-gradient(45deg, $gradientTransparentDarkBlue -10%, $gradientTransparentLightBlue 100%);
+  background: -o-linear-gradient(45deg, $gradientTransparentDarkBlue -10%, $gradientTransparentLightBlue 100%);
+  background: -ms-linear-gradient(45deg, $gradientTransparentDarkBlue -10%, $gradientTransparentLightBlue 100%);
+  background: linear-gradient(45deg, $gradientTransparentDarkBlue -10%, $gradientTransparentLightBlue 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#01b8cc', endColorstr='#001734', GradientType=1 );
 }
 
 @mixin moreTransparentBlueBackground {
-  background: transparentize($blueDark2,
-  0.9);
+  background: $gradientMoreTransparentLightBlue;
+  background: -moz-linear-gradient(45deg, $gradientMoreTransparentDarkBlue -10%, $gradientMoreTransparentLightBlue 100%);
+  background: -webkit-gradient(left bottom, right top, color-stop(-10%, $gradientMoreTransparentDarkBlue), color-stop(100%, $gradientMoreTransparentLightBlue));
+  background: -webkit-linear-gradient(45deg, $gradientMoreTransparentDarkBlue -10%, $gradientMoreTransparentLightBlue 100%);
+  background: -o-linear-gradient(45deg, $gradientMoreTransparentDarkBlue -10%, $gradientMoreTransparentLightBlue 100%);
+  background: -ms-linear-gradient(45deg, $gradientMoreTransparentDarkBlue -10%, $gradientMoreTransparentLightBlue 100%);
+  background: linear-gradient(45deg, $gradientMoreTransparentDarkBlue -10%, $gradientMoreTransparentLightBlue 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#01b8cc', endColorstr='#001734', GradientType=1 );
 }
 
 @mixin roundedBlock {

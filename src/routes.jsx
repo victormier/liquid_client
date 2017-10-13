@@ -128,6 +128,16 @@ class AppRouter extends Component {
                 }
               />
               <Route
+                path={'/connect/select_account'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/connect_bank/pages/SelectAccount')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
                 path={'/accounts'}
                 getComponent={
                   (location, cb) => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/Button';
@@ -38,6 +38,7 @@ export class Settings extends Component {
       });
   }
 
+
   render() {
     const { userQuery, percentageRuleQuery } = this.props;
     if (userQuery.loading || percentageRuleQuery.loading) return <SpinnerBlock />;
@@ -52,7 +53,7 @@ export class Settings extends Component {
               id="logoutButton"
               text="Log out"
               color="transparent"
-              onClick={this.onLogout}
+              onClick={(e) => { this.onLogout(e); }}
             />
           </Col>
         </Row>
@@ -146,7 +147,8 @@ const SettingsWithGraphQL = compose(
         },
       }),
     }),
-  })
+  }),
+  withApollo
 )(Settings);
 
 export default SettingsWithGraphQL;

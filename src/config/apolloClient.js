@@ -20,6 +20,15 @@ networkInterface.use([{
   },
 }]);
 
+networkInterface.useAfter([{
+  applyAfterware({ response }, next) {
+    if (response.status === 401) {
+      window.localStorage.removeItem('auth_token');
+    }
+    next();
+  },
+}]);
+
 const client = new ApolloClient({
   networkInterface,
   queryTransformer: addTypeName,

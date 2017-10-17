@@ -33,6 +33,7 @@ class PrivateRoutes extends Component {
 
   ensureAuthentication(props) {
     if (!props.sessionStore.authenticated ||
+        !window.localStorage.auth_token ||
         (props.data &&
         !props.data.loading &&
         !props.data.error &&

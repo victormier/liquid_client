@@ -97,6 +97,9 @@ Settings.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  route: PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+  }),
   submit: PropTypes.func.isRequired,
   percentageRuleQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,

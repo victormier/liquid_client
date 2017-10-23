@@ -27,6 +27,9 @@ PublicRoutes.propTypes = {
     logout: PropTypes.func.isRequired,
     authenticated: PropTypes.func.isRequired,
   }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }),
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),

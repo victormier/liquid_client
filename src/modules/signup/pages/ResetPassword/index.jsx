@@ -11,8 +11,7 @@ import PasswordForm from '../../forms/Password';
 import styles from './styles.scss';
 
 @inject('viewStore',
-        'userStore',
-        'sessionStore')
+        'userStore')
 @observer
 class ResetPassword extends Component {
   componentDidMount() {
@@ -50,7 +49,7 @@ class ResetPassword extends Component {
         }
       })
       .then((data) => {
-        this.props.sessionStore.setCurrentSession(data);
+        window.localStorage.setItem('auth_token', data.auth_token);
         this.props.router.push('/accounts');
       });
   }
@@ -104,9 +103,6 @@ ResetPassword.wrappedComponent.propTypes = {
       id: PropTypes.integer,
     }).isRequired,
   }).isRequired,
-  sessionStore: PropTypes.shape({
-    setCurrentSession: PropTypes.func.isRequiredm,
-  }),
 };
 
 export default withApollo(ResetPassword);

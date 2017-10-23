@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 import ViewStore from 'stores/ViewStore';
-import SessionStore from 'stores/SessionStore';
 import UserStore from 'stores/UserStore';
 
 // Makes hot module replacement possible
@@ -15,15 +14,21 @@ import AppRouter from 'routes';
 // such as view state
 const stores = {
   viewStore: new ViewStore(),
-  sessionStore: new SessionStore(),
   userStore: new UserStore(),
 };
+
+const logout = () => {
+  window.localStorage.removeItem('auth_token');
+  // TO DO: force rerender
+};
+
+const authenticated = () => window.localStorage.auth_token;
 
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
       <Provider {...stores} >
-        <Component />
+        <Component authenticated={authenticated} logout={logout} />
       </Provider>
     </AppContainer>,
     document.getElementById('root')

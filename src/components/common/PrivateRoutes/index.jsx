@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { queryUser } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-@inject('sessionStore')
 @observer
 class PrivateRoutes extends Component {
   componentWillMount() {
@@ -32,7 +31,7 @@ class PrivateRoutes extends Component {
   }
 
   ensureAuthentication(props) {
-    if (!props.sessionStore.authenticated ||
+    if (!props.route.authenticated() ||
         !window.localStorage.auth_token ||
         (props.data &&
         !props.data.loading &&
@@ -41,7 +40,7 @@ class PrivateRoutes extends Component {
       // TODO: si hi ha error i l'error és bad login
       // deslogejar i ficar missatge
       // (s'haurà de canviar la condició de dalt per a que arribi)
-      this.props.router.push('/login');
+      window.location.replace('/login');
     }
   }
 

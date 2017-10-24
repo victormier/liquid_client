@@ -7,6 +7,33 @@
   height: 100%;
   margin: 0 auto;
   // background-image: radial-gradient(farthest-corner at top 10% right 35%, #01B8CC 0%, #001734 120%);
+  z-index: 10;
+}
+
+.baseContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.viewportContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: scroll;
+}
+
+.bgContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-image: url(assets/images/bg.svg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 0;
 }
 
 .textCentered {

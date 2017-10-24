@@ -13,15 +13,14 @@ import ErrorBar from 'components/layout/ErrorBar';
 import { queryUser, queryPercentageRule, updatePercentageRule } from 'qql';
 
 @inject(
-  'viewStore',
-  'sessionStore'
+  'viewStore'
 )
 export class Settings extends Component {
   onLogout = (e) => {
     e.preventDefault();
-    this.props.sessionStore.logout();
     this.props.client.resetStore();
     this.props.viewStore.reset();
+    this.props.route.logout();
     this.props.router.push('/');
   }
 
@@ -98,6 +97,9 @@ Settings.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  route: PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+  }),
   submit: PropTypes.func.isRequired,
   percentageRuleQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
@@ -121,10 +123,6 @@ Settings.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     reset: PropTypes.func.isRequired,
     addError: PropTypes.func.isRequired,
-  }).isRequired,
-  sessionStore: PropTypes.shape({
-    reset: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
   }).isRequired,
 };
 

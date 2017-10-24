@@ -3,17 +3,31 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { queryUser } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-@inject('sessionStore')
+const ensureAuthentication = (props) => {
+  if (!props.route.authenticated() ||
+      !window.localStorage.auth_token ||
+      (props.data &&
+      !props.data.loading &&
+      !props.data.error &&
+      !props.data.user)) {
+    // TODO: si hi ha error i l'error és bad login
+    // deslogejar i ficar missatge
+    // (s'haurà de canviar la condició de dalt per a que arribi)
+    debugger;
+    window.location.replace('/login');
+  }
+};
+
 @observer
 class PrivateRoutes extends Component {
   componentWillMount() {
-    this.ensureAuthentication(this.props);
+    ensureAuthentication(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.ensureAuthentication(newProps);
+    ensureAuthentication(newProps);
 
     // refetch user if finished connecting
     if (this.props.location.pathname.includes('connect') &&
@@ -28,19 +42,6 @@ class PrivateRoutes extends Component {
         !newProps.location.pathname.includes('connect') &&
         !newProps.location.pathname.includes('settings')) {
       this.props.router.push('/connect/providers');
-    }
-  }
-
-  ensureAuthentication(props) {
-    if (!props.sessionStore.authenticated ||
-        (props.data &&
-        !props.data.loading &&
-        !props.data.error &&
-        !props.data.user)) {
-      // TODO: si hi ha error i l'error és bad login
-      // deslogejar i ficar missatge
-      // (s'haurà de canviar la condició de dalt per a que arribi)
-      this.props.router.push('/login');
     }
   }
 

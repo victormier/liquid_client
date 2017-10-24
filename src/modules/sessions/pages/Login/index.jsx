@@ -4,6 +4,7 @@ import { withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { Link } from 'react-router';
+import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
@@ -11,16 +12,40 @@ import GoBackArrow from 'components/common/GoBackArrow';
 import SessionForm from '../../forms/Session';
 import styles from './styles.scss';
 
-@inject('sessionStore',
-        'viewStore')
+@inject('viewStore')
 class Login extends Component {
   handleFormSubmit(data) {
-    return this.props.sessionStore
-            .auth(data.email, data.password, this.props.viewStore)
-            .then(() => {
-              this.props.client.resetStore();
-              this.props.router.push('/accounts');
+    const { email, password } = data;
+
+    return restFetch('/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        // try to parse errors
+        response.json().then((responseData) => {
+          if (responseData.errors.length) {
+            responseData.errors.forEach((message) => {
+              this.props.viewStore.addError(message);
             });
+          } else {
+            this.props.viewStore.addError("We couldn't log you in");
+          }
+        });
+        throw Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
+    .then((responseData) => {
+      window.localStorage.setItem('auth_token', responseData.auth_token);
+      this.props.client.resetStore();
+      this.props.router.push('/accounts');
+    });
   }
 
   render() {
@@ -59,10 +84,6 @@ Login.propTypes = {
 };
 
 Login.wrappedComponent.propTypes = {
-  sessionStore: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired,
-    auth: PropTypes.func.isRequired,
-  }).isRequired,
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,
     removeError: PropTypes.func.isRequired,

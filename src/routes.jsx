@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route, IndexRoute } from 'react-router';
 import { ApolloProvider } from 'react-apollo';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import store, { history } from 'store';
 import client from 'config/apolloClient';
 import App from 'modules/core/App';
@@ -17,7 +17,6 @@ const errorLoading = err => (
   console.error(`Dynamic route loading failed ${err}`)
 );
 
-@inject('sessionStore')
 @observer
 class AppRouter extends Component {
   render() {
@@ -27,7 +26,8 @@ class AppRouter extends Component {
           <Route path={'/'} component={App}>
             <Route
               component={PublicRoutes}
-              authenticated={this.props.sessionStore.authenticated}
+              authenticated={this.props.authenticated}
+              logout={this.props.logout}
             >
               <IndexRoute
                 getComponent={
@@ -95,10 +95,12 @@ class AppRouter extends Component {
             </Route>
             <Route
               component={PrivateRoutes}
-              authenticated={this.props.sessionStore.authenticated}
+              authenticated={this.props.authenticated}
+              logout={this.props.logout}
             >
               <Route
                 path={'/settings'}
+                logout={this.props.logout}
                 getComponent={
                   (location, cb) => {
                     System.import('modules/core/pages/Settings')
@@ -225,10 +227,9 @@ class AppRouter extends Component {
   }
 }
 
-AppRouter.wrappedComponent.propTypes = {
-  sessionStore: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired,
-  }).isRequired,
+AppRouter.propTypes = {
+  logout: PropTypes.func.isRequired,
+  authenticated: PropTypes.func.isRequired,
 };
 
 export default AppRouter;

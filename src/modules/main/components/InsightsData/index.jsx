@@ -20,14 +20,14 @@ const InsightsData = (props) => {
   return (
     <Grid>
       <Row>
-        <Col xs={8}>
+        <Col xs={6}>
           <h2>
             Income
             <br />
             <small>{monthNameLongFromNumber(props.month)}</small>
           </h2>
         </Col>
-        <Col xs={4} className={baseStyles.textRight}>
+        <Col xs={6} className={baseStyles.textRight}>
           <h2>
             { toCurrency(
                 data.insights.total_income,
@@ -76,14 +76,14 @@ const InsightsData = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col xs={8}>
+        <Col xs={6}>
           <h2>
             Expenses
             <br />
             <small>{monthNameLongFromNumber(props.month)}</small>
           </h2>
         </Col>
-        <Col xs={4} className={baseStyles.textRight}>
+        <Col xs={6} className={baseStyles.textRight}>
           <h2>
             { toCurrency(data.insights.total_expense, data.insights.mirror_account.currency_code) }
           </h2>

@@ -42,6 +42,7 @@ class Login extends Component {
       }
     })
     .then((responseData) => {
+      window.localStorage.removeItem('auth_token');
       window.localStorage.setItem('auth_token', responseData.auth_token);
       this.props.client.resetStore();
       this.props.router.push('/accounts');

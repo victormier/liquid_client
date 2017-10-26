@@ -21,7 +21,7 @@ const UserForm = (props) => {
     <form onSubmit={handleSubmit}>
       <Field name="email" type="text" component={EmailInput} />
       <Row center="xs" className={styles.formRow} >
-        <Col xs={4}>
+        <Col xs={8} sm={4}>
           <div className={styles.submitBlock}>
             <Button text="Sign Up" type="submit" disabled={submitting} />
           </div>

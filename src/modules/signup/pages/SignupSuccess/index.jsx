@@ -14,7 +14,7 @@ const SignupSuccess = () => (
           There&apos;s an email on the way!
         </h2>
       </Col>
-      <Col xs={4}>
+      <Col xs={8} sm={4}>
         <Link to="/"><Button text="Back home" /></Link>
       </Col>
     </Row>

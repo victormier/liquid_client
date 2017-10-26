@@ -3,8 +3,9 @@
 
 .container {
   bottom: 0;
+  left: 0;
+  right: 0;
   position: fixed;
-  width: 100%;
   padding: $base-grid-gutter;
   background: $blueDark3;
   margin-left: -$base-grid-gutter;
@@ -19,4 +20,7 @@
 }
 .activeLink {
   opacity: 1.0;
+}
+.navElement {
+  text-align: center;
 }

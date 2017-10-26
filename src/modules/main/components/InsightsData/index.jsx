@@ -20,14 +20,14 @@ const InsightsData = (props) => {
   return (
     <Grid>
       <Row>
-        <Col xs={8}>
+        <Col xs={6}>
           <h2>
             Income
             <br />
             <small>{monthNameLongFromNumber(props.month)}</small>
           </h2>
         </Col>
-        <Col xs={4} className={baseStyles.textRight}>
+        <Col xs={6} className={baseStyles.textRight}>
           <h2>
             { toCurrency(
                 data.insights.total_income,
@@ -45,28 +45,26 @@ const InsightsData = (props) => {
                   data.insights.income_transactions.map(transaction => (
                     <li>
                       <SquareRoundedBlock>
-                        <Grid>
-                          <Row>
-                            <Col xs={6}>
-                              <div className={styles.itemTitle}>
-                                {transaction.description}
-                              </div>
-                              <div className={styles.itemDetail}>
-                                {
+                        <Row>
+                          <Col xs={6}>
+                            <div className={styles.itemTitle}>
+                              {transaction.description}
+                            </div>
+                            <div className={styles.itemDetail}>
+                              {
                                   `${monthNameShortFromNumber(
                                       dateFromSeconds(transaction.made_on).getMonth() + 1
                                      )}
                                    ${dateFromSeconds(transaction.made_on).getDay() + 1}`
                                 }
-                              </div>
-                            </Col>
-                            <Col xs={6} className={baseStyles.textRight}>
-                              <span className={styles.itemData}>
-                                {toCurrency(transaction.amount, data.insights.mirror_account.currency_code)}
-                              </span>
-                            </Col>
-                          </Row>
-                        </Grid>
+                            </div>
+                          </Col>
+                          <Col xs={6} className={baseStyles.textRight}>
+                            <span className={styles.itemData}>
+                              {toCurrency(transaction.amount, data.insights.mirror_account.currency_code)}
+                            </span>
+                          </Col>
+                        </Row>
                       </SquareRoundedBlock>
                     </li>
                   ))
@@ -78,14 +76,14 @@ const InsightsData = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col xs={8}>
+        <Col xs={6}>
           <h2>
             Expenses
             <br />
             <small>{monthNameLongFromNumber(props.month)}</small>
           </h2>
         </Col>
-        <Col xs={4} className={baseStyles.textRight}>
+        <Col xs={6} className={baseStyles.textRight}>
           <h2>
             { toCurrency(data.insights.total_expense, data.insights.mirror_account.currency_code) }
           </h2>
@@ -100,24 +98,22 @@ const InsightsData = (props) => {
                   data.insights.category_insights.map(categoryInsight => (
                     <li>
                       <SquareRoundedBlock>
-                        <Grid>
-                          <Row>
-                            <Col xs={6}>
-                              <div className={styles.itemTitle}>{categoryInsight.name}</div>
-                              <div className={styles.itemDetail}>{categoryInsight.percentage}%</div>
-                            </Col>
-                            <Col xs={6} className={baseStyles.textRight}>
-                              <span className={styles.itemData}>
-                                {
-                                  toCurrency(
-                                    categoryInsight.amount,
-                                    data.insights.mirror_account.currency_code
-                                  )
-                                }
-                              </span>
-                            </Col>
-                          </Row>
-                        </Grid>
+                        <Row>
+                          <Col xs={6}>
+                            <div className={styles.itemTitle}>{categoryInsight.name}</div>
+                            <div className={styles.itemDetail}>{categoryInsight.percentage}%</div>
+                          </Col>
+                          <Col xs={6} className={baseStyles.textRight}>
+                            <span className={styles.itemData}>
+                              {
+                                toCurrency(
+                                  categoryInsight.amount,
+                                  data.insights.mirror_account.currency_code
+                                )
+                              }
+                            </span>
+                          </Col>
+                        </Row>
                       </SquareRoundedBlock>
                     </li>
                   ))

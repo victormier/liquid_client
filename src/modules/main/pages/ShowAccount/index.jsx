@@ -29,11 +29,11 @@ const ShowAccount = ({ data }) => {
         </Col>
       </Row>
       <Row>
-        <Col xs={8}>
+        <Col xs={6}>
           <h2>{ data.account.name }</h2>
         </Col>
-        <Col xs={4}>
-          <h2>
+        <Col xs={6}>
+          <h2 className={baseStyles.textRight}>
             { toCurrency(data.account.balance, data.account.currency_code) }
           </h2>
         </Col>

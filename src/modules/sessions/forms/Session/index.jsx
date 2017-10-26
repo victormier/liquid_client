@@ -30,7 +30,7 @@ const SessionForm = (props) => {
       <Field name="email" type="text" component={EmailInput} />
       <Field name="password" type="password" component={PasswordInput} />
       <Row center="xs" className={styles.formRow} >
-        <Col xs={4}>
+        <Col xs={6} sm={4}>
           <div className={styles.submitBlock}>
             <Button text="Log In" type="submit" disabled={submitting} />
           </div>

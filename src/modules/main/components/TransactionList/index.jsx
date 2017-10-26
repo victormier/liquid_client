@@ -19,21 +19,19 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
       className={styles.transactionLink}
     >
       <li className={styles.transaction}>
-        <Grid>
-          <Row>
-            <Col xs={2}>
-              <div>{date.getDate()}</div>
-              <div>{monthNameShortFromNumber(date.getMonth())}</div>
-            </Col>
-            <Col xs={7}>
-              <div>{transaction.description}</div>
-              <div className={styles.transactionCategory}>
-                {transaction.category}
-              </div>
-            </Col>
-            <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
-          </Row>
-        </Grid>
+        <Row>
+          <Col xs={2}>
+            <div>{date.getDate()}</div>
+            <div>{monthNameShortFromNumber(date.getMonth())}</div>
+          </Col>
+          <Col xs={7}>
+            <div>{transaction.description}</div>
+            <div className={styles.transactionCategory}>
+              {transaction.category}
+            </div>
+          </Col>
+          <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
+        </Row>
       </li>
     </Link>
   );

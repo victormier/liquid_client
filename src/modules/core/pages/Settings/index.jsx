@@ -47,7 +47,7 @@ export class Settings extends Component {
       <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav} ${gridStyles.basePadding}`}>
         <ErrorBar />
         <Row end="xs">
-          <Col xs={4}>
+          <Col xs={6} sm={4}>
             <Button
               id="logoutButton"
               text="Log out"

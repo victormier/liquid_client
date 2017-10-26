@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router';
 import baseStyles from 'styles/base/base.scss';
 import { toCurrency } from 'utils/currencies';

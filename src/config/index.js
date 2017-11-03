@@ -1,4 +1,34 @@
-export const IS_DEVELOP = process.env.NODE_ENV !== 'production';
-export const API_URL = IS_DEVELOP ?
-                        'http://localhost:3000' :
-                        'https://liquid-api.herokuapp.com';
+export const DEVELOPMENT_CLIENT_HOST = 'localhost:8080';
+export const STAGING_CLIENT_HOST = 'liquid-client-staging.herokuapp.com';
+export const PRODUCTION_CLIENT_HOST_HEROKU = 'liquid-client.herokuapp.com';
+export const PRODUCTION_CLIENT_HOST = 'app.helloliquid.com';
+
+let liquidEnvironment;
+if (process.env.NODE_ENV === 'production') {
+  if ((window.location.hostname.toLowerCase().search(PRODUCTION_CLIENT_HOST) < 0) ||
+     (window.location.hostname.toLowerCase().search(PRODUCTION_CLIENT_HOST_HEROKU) < 0)) {
+    liquidEnvironment = 'production';
+  } else {
+    liquidEnvironment = 'staging';
+  }
+} else {
+  liquidEnvironment = 'development';
+}
+
+let apiHost;
+let mixpanelToken;
+switch (liquidEnvironment) {
+  case 'development':
+    apiHost = DEVELOPMENT_CLIENT_HOST;
+    mixpanelToken = '8031cf315d6b0b92f22892fe2ee70685';
+    break;
+  case 'staging':
+    apiHost = STAGING_CLIENT_HOST;
+    mixpanelToken = 'a7c4b21b8d0d7499f56ba532eaeb5e4c';
+    break;
+  default:
+    apiHost = PRODUCTION_CLIENT_HOST;
+    mixpanelToken = 'dc1a320436debda6a29ea4e58c5fb631';
+}
+export const API_URL = `https://${apiHost}`;
+export const MIXPANEL_TOKEN = mixpanelToken;

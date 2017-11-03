@@ -15,7 +15,6 @@ const ensureAuthentication = (props) => {
     // TODO: si hi ha error i l'error és bad login
     // deslogejar i ficar missatge
     // (s'haurà de canviar la condició de dalt per a que arribi)
-    debugger;
     window.location.replace('/login');
   }
 };

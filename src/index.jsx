@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
+import mixpanel from 'mixpanel-browser';
 import ViewStore from 'stores/ViewStore';
 import UserStore from 'stores/UserStore';
+import { MIXPANEL_TOKEN } from 'config';
 
 // Makes hot module replacement possible
 import { AppContainer } from 'react-hot-loader';
 
 // This is our App with ApolloProvider and Router
 import AppRouter from 'routes';
+
+// Init mixpanel
+mixpanel.init(MIXPANEL_TOKEN);
 
 // Mobx stores (everything not held by Apollo)
 // such as view state
@@ -27,7 +32,7 @@ const authenticated = () => window.localStorage.auth_token;
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Provider {...stores} >
+      <Provider {...stores} mixpanel={mixpanel} >
         <Component authenticated={authenticated} logout={logout} />
       </Provider>
     </AppContainer>,

@@ -9,6 +9,11 @@ export const dateFromSeconds = (seconds) => {
   return date;
 };
 
+export const mixpanelDateNow = () => {
+  const d = new Date();
+  return d.toISOString();
+};
+
 export const monthNameLongFromNumber = month => monthNamesLong[month];
 export const monthNameShortFromNumber = month => monthNamesShort[month];
 

@@ -21,7 +21,15 @@ class ResetPassword extends Component {
       this.props.location.query.reset_password_token,
       this.props.viewStore
     );
-    this.props.mixpanel.track(VIEW_SIGNUP_PASSWORD_PAGE);
+  }
+
+  componentWillUpdate(newProps) {
+    if (newProps.userStore.user.email) {
+      this.props.mixpanel.identify(newProps.userStore.user.email);
+      this.props.mixpanel.track(VIEW_SIGNUP_PASSWORD_PAGE);
+      this.props.mixpanel.register(mixpanelEventProps(VIEW_SIGNUP_PASSWORD_PAGE));
+      this.props.mixpanel.people.set(mixpanelEventProps(VIEW_SIGNUP_PASSWORD_PAGE));
+    }
   }
 
   handleFormSubmit(dataValues) {

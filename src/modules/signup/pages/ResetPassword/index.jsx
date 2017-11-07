@@ -4,6 +4,8 @@ import { withApollo } from 'react-apollo';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import restFetch from 'restApi';
+import { mixpanelDateNow } from 'utils/dates';
+import { SETUP_SIGNUP_PASSWORD } from 'config/mixpanelEvents';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
@@ -11,7 +13,8 @@ import PasswordForm from '../../forms/Password';
 import styles from './styles.scss';
 
 @inject('viewStore',
-        'userStore')
+        'userStore',
+        'mixpanel')
 @observer
 class ResetPassword extends Component {
   componentDidMount() {
@@ -49,6 +52,15 @@ class ResetPassword extends Component {
         }
       })
       .then((data) => {
+        this.props.mixpanel.identify(this.props.userStore.user.email);
+        this.props.mixpanel.track(SETUP_SIGNUP_PASSWORD);
+        const mixpanelProps = {
+          'Last Set-up signup password': mixpanelDateNow(),
+          'Previous Event Name': SETUP_SIGNUP_PASSWORD,
+        };
+        this.props.mixpanel.register(mixpanelProps);
+        this.props.mixpanel.people.set(mixpanelProps);
+
         window.localStorage.setItem('auth_token', data.auth_token);
         this.props.router.push('/accounts');
       });
@@ -95,6 +107,14 @@ ResetPassword.propTypes = {
 ResetPassword.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,
+  }).isRequired,
+  mixpanel: PropTypes.shape({
+    track: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    identify: PropTypes.func.isRequired,
+    people: PropTypes.shape({
+      set: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   userStore: PropTypes.shape({
     getUserFromResetPasswordToken: PropTypes.func.isRequired,

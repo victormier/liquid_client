@@ -1,3 +1,5 @@
+import { mixpanelDateNow } from 'utils/dates';
+
 export const VIEW_PAGE = 'View Page';
 export const VIEW_BLOG = 'View blog';
 export const INPUT_SIGNUP_EMAIL = 'Input signup email';
@@ -20,3 +22,8 @@ export const SELECT_DESTINATION_ACCOUNT = 'Select destination account';
 export const TRANSFER_COMPLETE = 'Transfer complete';
 export const END_SESSION = 'End session';
 export const LOGOUT = 'Log-out';
+
+export const mixpanelEventProps = eventName => ({
+  [`Last ${eventName}`]: mixpanelDateNow(),
+  'Previous Event Name': eventName,
+});

@@ -4,8 +4,7 @@ import { withApollo } from 'react-apollo';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import restFetch from 'restApi';
-import { mixpanelDateNow } from 'utils/dates';
-import { SETUP_SIGNUP_PASSWORD, VIEW_SIGNUP_PASSWORD_PAGE } from 'config/mixpanelEvents';
+import { mixpanelEventProps, SETUP_SIGNUP_PASSWORD, VIEW_SIGNUP_PASSWORD_PAGE } from 'config/mixpanelEvents';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
@@ -53,14 +52,9 @@ class ResetPassword extends Component {
         }
       })
       .then((data) => {
-        this.props.mixpanel.identify(this.props.userStore.user.email);
         this.props.mixpanel.track(SETUP_SIGNUP_PASSWORD);
-        const mixpanelProps = {
-          'Last Set-up signup password': mixpanelDateNow(),
-          'Previous Event Name': SETUP_SIGNUP_PASSWORD,
-        };
-        this.props.mixpanel.register(mixpanelProps);
-        this.props.mixpanel.people.set(mixpanelProps);
+        this.props.mixpanel.register(mixpanelEventProps(SETUP_SIGNUP_PASSWORD));
+        this.props.mixpanel.people.set(mixpanelEventProps(SETUP_SIGNUP_PASSWORD));
 
         window.localStorage.setItem('auth_token', data.auth_token);
         this.props.router.push('/accounts');

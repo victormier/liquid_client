@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import restFetch from 'restApi';
 import { mixpanelDateNow } from 'utils/dates';
-import { SETUP_SIGNUP_PASSWORD } from 'config/mixpanelEvents';
+import { SETUP_SIGNUP_PASSWORD, VIEW_SIGNUP_PASSWORD_PAGE } from 'config/mixpanelEvents';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
@@ -22,6 +22,7 @@ class ResetPassword extends Component {
       this.props.location.query.reset_password_token,
       this.props.viewStore
     );
+    this.props.mixpanel.track(VIEW_SIGNUP_PASSWORD_PAGE);
   }
 
   handleFormSubmit(dataValues) {

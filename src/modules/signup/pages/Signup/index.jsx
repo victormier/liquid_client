@@ -8,13 +8,19 @@ import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
+import { INPUT_SIGNUP_EMAIL, mixpanelEventProps } from 'config/mixpanelEvents';
+import { mixpanelDateNow } from 'utils/dates';
 import UserForm from '../../forms/User';
 import styles from './styles.scss';
 
-@inject('viewStore')
+@inject('viewStore',
+        'mixpanel')
 class Signup extends Component {
   handleFormSubmit(dataValues) {
     const { email } = dataValues;
+
+    this.props.mixpanel.track(INPUT_SIGNUP_EMAIL);
+    this.props.mixpanel.register({ ...mixpanelEventProps(INPUT_SIGNUP_EMAIL), Email: email });
 
     return restFetch('/users', {
       method: 'POST',
@@ -36,6 +42,8 @@ class Signup extends Component {
           });
           throw Error(response.statusText);
         } else {
+          this.props.mixpanel.alias(email);
+          this.props.mixpanel.people.set({ $email: email, $created: mixpanelDateNow() });
           this.props.router.push('/signup/success');
         }
       });
@@ -72,6 +80,14 @@ Signup.propTypes = {
 Signup.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,
+  }).isRequired,
+  mixpanel: PropTypes.shape({
+    track: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    people: PropTypes.shape({
+      set: PropTypes.func.isRequired,
+    }),
+    alias: PropTypes.func.isRequired,
   }).isRequired,
 };
 

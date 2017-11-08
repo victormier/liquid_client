@@ -8,7 +8,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { querySaltedgeProvider, createSaltedgeLogin } from 'qql';
 import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
-import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP } from 'config/mixpanelEvents';
+import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP, CONNECT_BANK } from 'config/mixpanelEvents';
 import PollProviderLogin from '../../components/PollProviderLogin';
 import ProviderLoginForm from '../../forms/ProviderLogin';
 import styles from './styles.scss';
@@ -58,6 +58,13 @@ class NewProviderLogin extends Component {
   }
 
   handleConnectSuccess() {
+    const saltedgeProvider = this.props.data.saltedge_provider;
+    const bankIdentifier = `${saltedgeProvider.name} [${saltedgeProvider.country_code}] [${saltedgeProvider.id}]`;
+    const eventProps = { ...mixpanelEventProps(CONNECT_BANK), 'Connected bank': bankIdentifier };
+    this.props.mixpanel.track(CONNECT_BANK);
+    this.props.mixpanel.register(eventProps);
+    this.props.mixpanel.people.set(eventProps);
+
     this.props.router.push('/connect/select_account');
   }
 

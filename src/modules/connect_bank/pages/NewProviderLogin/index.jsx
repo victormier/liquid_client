@@ -8,11 +8,13 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { querySaltedgeProvider, createSaltedgeLogin } from 'qql';
 import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
+import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP } from 'config/mixpanelEvents';
 import PollProviderLogin from '../../components/PollProviderLogin';
 import ProviderLoginForm from '../../forms/ProviderLogin';
 import styles from './styles.scss';
 
-@inject('viewStore')
+@inject('viewStore',
+        'mixpanel')
 class NewProviderLogin extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +31,12 @@ class NewProviderLogin extends Component {
       this.props.data.saltedge_provider.id,
       JSON.stringify(data))
         .then((newData) => {
+          const inputFieldTypes = this.props.data.saltedge_provider.required_fields.map(f => f.nature);
+          const eventProps = { ...mixpanelEventProps(CONNECT_BANK_FIRST_STEP), 'Input field types': inputFieldTypes };
+          this.props.mixpanel.track(CONNECT_BANK_FIRST_STEP, { 'Input field types': inputFieldTypes });
+          this.props.mixpanel.register(eventProps);
+          this.props.mixpanel.people.set(eventProps);
+
           this.setState({
             polling: true,
             saltedgeLoginId: newData.data.createSaltedgeLogin.id,
@@ -107,6 +115,9 @@ NewProviderLogin.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       country_code: PropTypes.string.isRequired,
+      required_fields: PropTypes.arrayOf(PropTypes.shape({
+        nature: PropTypes.string.isRequired,
+      })),
     }),
   }),
   submit: PropTypes.func.isRequired,
@@ -115,6 +126,13 @@ NewProviderLogin.propTypes = {
 NewProviderLogin.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,
+  }).isRequired,
+  mixpanel: PropTypes.shape({
+    track: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    people: PropTypes.shape({
+      set: PropTypes.func.isRequired,
+    }),
   }).isRequired,
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { queryUser } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 const ensureAuthentication = (props) => {
   if (!props.route.authenticated() ||
@@ -16,10 +16,13 @@ const ensureAuthentication = (props) => {
     // deslogejar i ficar missatge
     // (s'haurà de canviar la condició de dalt per a que arribi)
     window.location.replace('/login');
+  } else if (props.data.user) {
+    props.mixpanel.identify(props.data.user.email);
   }
 };
 
 @observer
+@inject('mixpanel')
 class PrivateRoutes extends Component {
   componentWillMount() {
     ensureAuthentication(this.props);

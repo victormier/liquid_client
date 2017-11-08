@@ -18,7 +18,6 @@ class EmailInput extends Component {
 
   @autobind
   handleChange(evt) {
-    debugger;
     if (!this.state.changeFired) {
       this.setState({ changeFired: true }, () => {
         this.props.mixpanel.track(INPUT_SIGNUP_EMAIL);

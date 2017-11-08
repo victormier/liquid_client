@@ -1,3 +1,5 @@
+import { mixpanelDateNow } from 'utils/dates';
+
 export const VIEW_PAGE = 'View Page';
 export const VIEW_BLOG = 'View blog';
 export const INPUT_SIGNUP_EMAIL = 'Input signup email';
@@ -8,6 +10,7 @@ export const SEARCH_BANK = 'Search bank';
 export const SELECT_BANK = 'Select bank';
 export const CONNECT_BANK_FIRST_STEP = 'Connect bank first step';
 export const CONNECT_BANK_INTERACTIVE = 'Connect bank interactive';
+export const CONNECT_BANK = 'Connect bank';
 export const VIEW_ACCOUNTS = 'View accounts';
 export const VIEW_ACCOUNT_TRANSACTIONS = 'View account transactions';
 export const VIEW_TRANSACTION_DETAILS = 'View transaction details';
@@ -20,3 +23,8 @@ export const SELECT_DESTINATION_ACCOUNT = 'Select destination account';
 export const TRANSFER_COMPLETE = 'Transfer complete';
 export const END_SESSION = 'End session';
 export const LOGOUT = 'Log-out';
+
+export const mixpanelEventProps = eventName => ({
+  [`Last ${eventName}`]: mixpanelDateNow(),
+  'Previous Event Name': eventName,
+});

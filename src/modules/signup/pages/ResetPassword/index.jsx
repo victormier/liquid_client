@@ -4,6 +4,7 @@ import { withApollo } from 'react-apollo';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import restFetch from 'restApi';
+import { mixpanelEventProps, SETUP_SIGNUP_PASSWORD, VIEW_SIGNUP_PASSWORD_PAGE } from 'config/mixpanelEvents';
 import gridStyles from 'styles/base/grid.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
@@ -11,7 +12,8 @@ import PasswordForm from '../../forms/Password';
 import styles from './styles.scss';
 
 @inject('viewStore',
-        'userStore')
+        'userStore',
+        'mixpanel')
 @observer
 class ResetPassword extends Component {
   componentDidMount() {
@@ -19,6 +21,15 @@ class ResetPassword extends Component {
       this.props.location.query.reset_password_token,
       this.props.viewStore
     );
+  }
+
+  componentWillUpdate(newProps) {
+    if (newProps.userStore.user.email) {
+      this.props.mixpanel.identify(newProps.userStore.user.email);
+      this.props.mixpanel.track(VIEW_SIGNUP_PASSWORD_PAGE);
+      this.props.mixpanel.register(mixpanelEventProps(VIEW_SIGNUP_PASSWORD_PAGE));
+      this.props.mixpanel.people.set(mixpanelEventProps(VIEW_SIGNUP_PASSWORD_PAGE));
+    }
   }
 
   handleFormSubmit(dataValues) {
@@ -49,6 +60,10 @@ class ResetPassword extends Component {
         }
       })
       .then((data) => {
+        this.props.mixpanel.track(SETUP_SIGNUP_PASSWORD);
+        this.props.mixpanel.register(mixpanelEventProps(SETUP_SIGNUP_PASSWORD));
+        this.props.mixpanel.people.set(mixpanelEventProps(SETUP_SIGNUP_PASSWORD));
+
         window.localStorage.setItem('auth_token', data.auth_token);
         this.props.router.push('/accounts');
       });
@@ -95,6 +110,14 @@ ResetPassword.propTypes = {
 ResetPassword.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,
+  }).isRequired,
+  mixpanel: PropTypes.shape({
+    track: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    identify: PropTypes.func.isRequired,
+    people: PropTypes.shape({
+      set: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   userStore: PropTypes.shape({
     getUserFromResetPasswordToken: PropTypes.func.isRequired,

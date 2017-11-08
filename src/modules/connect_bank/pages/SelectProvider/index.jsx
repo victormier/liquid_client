@@ -104,7 +104,6 @@ SelectProvider.wrappedComponent.propTypes = {
   mixpanel: PropTypes.shape({
     track: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
-    identify: PropTypes.func.isRequired,
     people: PropTypes.shape({
       set: PropTypes.func.isRequired,
     }),

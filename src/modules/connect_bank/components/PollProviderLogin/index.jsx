@@ -20,6 +20,7 @@ class PollProviderLogin extends Component {
   componentWillReceiveProps(newProps) {
     if (!newProps.data.loading) {
       const newData = newProps.data;
+
       if (newData.saltedge_login &&
           newData.saltedge_login.finished_connecting &&
           !this.state.pollFinished) {
@@ -31,7 +32,7 @@ class PollProviderLogin extends Component {
             that.props.onConnectSuccess();
           }, 3000);
         } else {
-          that.props.onConnectError();
+          that.props.onConnectError(newData.saltedge_login);
         }
       }
     }

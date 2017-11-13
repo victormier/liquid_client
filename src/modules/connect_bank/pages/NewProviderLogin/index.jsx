@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
+import { autobind } from 'core-decorators';
 import FormInput from 'components/common/FormInput';
 import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { querySaltedgeProvider, createSaltedgeLogin } from 'qql';
+import { querySaltedgeProvider, createSaltedgeLogin, reconnectSaltedgeLogin } from 'qql';
 import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
 import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP, CONNECT_BANK } from 'config/mixpanelEvents';
@@ -26,31 +27,39 @@ class NewProviderLogin extends Component {
     this.handleConnectError = this.handleConnectError.bind(this);
   }
 
-  handleFormSubmit(data) {
-    return this.props.submit(
-      this.props.data.saltedge_provider.id,
-      JSON.stringify(data))
-        .then((newData) => {
-          const inputFieldTypes = this.props.data.saltedge_provider.required_fields.map(f => f.nature);
-          const eventProps = { ...mixpanelEventProps(CONNECT_BANK_FIRST_STEP), 'Input field types': inputFieldTypes };
-          this.props.mixpanel.track(CONNECT_BANK_FIRST_STEP, { 'Input field types': inputFieldTypes });
-          this.props.mixpanel.register(eventProps);
-          this.props.mixpanel.people.set(eventProps);
-
-          this.setState({
-            polling: true,
-            saltedgeLoginId: newData.data.createSaltedgeLogin.id,
-          });
-        })
-        .catch(() => {
-          this.props.viewStore.addError('There was a problem');
-        });
+  @autobind
+  submitCredentials(data) {
+    const dataParams = JSON.stringify(data);
+    return this.state.saltedgeLoginId ?
+      this.props.reconnectSaltedgeLogin(this.state.saltedgeLoginId, dataParams) :
+      this.props.createSaltedgeLogin(this.props.data.saltedge_provider.id, dataParams);
   }
 
-  handleConnectError() {
+  handleFormSubmit(data) {
+    return this.submitCredentials(data)
+            .then((newData) => {
+              const inputFieldTypes = this.props.data.saltedge_provider.required_fields.map(f => f.nature);
+              const eventProps = { ...mixpanelEventProps(CONNECT_BANK_FIRST_STEP), 'Input field types': inputFieldTypes };
+              this.props.mixpanel.track(CONNECT_BANK_FIRST_STEP, { 'Input field types': inputFieldTypes });
+              this.props.mixpanel.register(eventProps);
+              this.props.mixpanel.people.set(eventProps);
+
+              this.setState({
+                polling: true,
+                saltedgeLoginId: newData.data.createSaltedgeLogin.id,
+              });
+            })
+            .catch(() => {
+              this.props.viewStore.addError('There was a problem');
+            });
+  }
+
+  handleConnectError(saltedgeLogin) {
+    const saltedgeLoginId = saltedgeLogin.killed ? null : saltedgeLogin.id;
+
     this.setState({
       polling: false,
-      saltedgeLoginId: null,
+      saltedgeLoginId,
     });
     this.props.viewStore.addError(
       "We couldn't connect to your bank. Please try again."
@@ -127,7 +136,8 @@ NewProviderLogin.propTypes = {
       })),
     }),
   }),
-  submit: PropTypes.func.isRequired,
+  reconnectSaltedgeLogin: PropTypes.func.isRequired,
+  createSaltedgeLogin: PropTypes.func.isRequired,
 };
 
 NewProviderLogin.wrappedComponent.propTypes = {
@@ -152,9 +162,18 @@ const NewProviderLoginWithGraphQL = compose(
     }),
   }),
   graphql(createSaltedgeLogin, {
-    props: ({ mutate }) => ({
-      submit: (saltedgeProviderId, credentials) => mutate({
+    name: 'createSaltedgeLoginMutation',
+    props: ({ createSaltedgeLoginMutation }) => ({
+      createSaltedgeLogin: (saltedgeProviderId, credentials) => createSaltedgeLoginMutation({
         variables: { saltedgeProviderId, credentials },
+      }),
+    }),
+  }),
+  graphql(reconnectSaltedgeLogin, {
+    name: 'reconnectSaltedgeLoginMutation',
+    props: ({ reconnectSaltedgeLoginMutation }) => ({
+      reconnectSaltedgeLogin: (saltedgeLoginId, credentials) => reconnectSaltedgeLoginMutation({
+        variables: { saltedgeLoginId, credentials },
       }),
     }),
   })

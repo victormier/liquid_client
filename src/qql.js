@@ -39,12 +39,21 @@ export const createSaltedgeLogin = gql`
   }
 `;
 
+export const reconnectSaltedgeLogin = gql`
+  mutation reconnectSaltedgeLogin($saltedgeLoginId: ID!, $credentials: String!) {
+    reconnectSaltedgeLogin(saltedgeLoginId: $saltedgeLoginId, credentials: $credentials) {
+       id
+    }
+  }
+`;
+
 export const querySaltedgeLogin = gql`
   query saltedgeLogin($id: ID!) {
     saltedge_login(id: $id) {
       id,
       active,
-      finished_connecting
+      finished_connecting,
+      killed
     }
   }
 `;

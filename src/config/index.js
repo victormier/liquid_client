@@ -9,8 +9,8 @@ export const API_HOST_PRODUCTION = 'api.helloliquid.com';
 
 let liquidEnvironment;
 if (process.env.NODE_ENV === 'production') {
-  if ((window.location.hostname.toLowerCase().search(PRODUCTION_CLIENT_HOST) < 0) ||
-     (window.location.hostname.toLowerCase().search(PRODUCTION_CLIENT_HOST_HEROKU) < 0)) {
+  if ((window.location.hostname.toLowerCase().search(PRODUCTION_CLIENT_HOST) >= 0) ||
+     (window.location.hostname.toLowerCase().search(PRODUCTION_CLIENT_HOST_HEROKU) >= 0)) {
     liquidEnvironment = 'production';
   } else {
     liquidEnvironment = 'staging';

@@ -61,9 +61,8 @@ class NewProviderLogin extends Component {
       polling: false,
       saltedgeLoginId,
     });
-    this.props.viewStore.addError(
-      "We couldn't connect to your bank. Please try again."
-    );
+    const errorMessage = `There was an error: ${saltedgeLogin.error_message}. Please try again` || "We couldn't connect to your bank. Please try again.";
+    this.props.viewStore.addError(errorMessage);
   }
 
   handleConnectSuccess() {

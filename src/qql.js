@@ -53,7 +53,8 @@ export const querySaltedgeLogin = gql`
       id,
       active,
       finished_connecting,
-      killed
+      killed,
+      error_message
     }
   }
 `;

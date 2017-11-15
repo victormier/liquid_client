@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 import { queryUser } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import { observer, inject } from 'mobx-react';
+import _ from 'lodash';
 
 const ensureAuthentication = (props) => {
   if (!props.route.authenticated() ||
@@ -40,10 +41,26 @@ class PrivateRoutes extends Component {
 
     if (!newProps.data.loading &&
         newProps.data.user &&
-        !newProps.data.user.accounts.length &&
         !newProps.location.pathname.includes('connect') &&
         !newProps.location.pathname.includes('settings')) {
-      this.props.router.push('/connect/providers');
+      switch (newProps.data.user.bank_connection_phase) {
+        case 'select_account':
+          this.props.router.push('/connect/select_account');
+          break;
+        case 'login_failed':
+        case 'login_pending': {
+          const saltedgeLogin = _.find(newProps.data.user.saltedge_logins, sl => (!sl.active));
+          const providerId = saltedgeLogin.saltedge_provider.id;
+          this.props.router.push(`/connect/providers/${providerId}`);
+          break;
+        }
+        case 'new_login':
+          this.props.router.push('/connect/providers');
+          break;
+        case 'connected':
+        default:
+          break;
+      }
     }
   }
 

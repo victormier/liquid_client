@@ -6,10 +6,13 @@ import { autobind } from 'core-decorators';
 import FormInput from 'components/common/FormInput';
 import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { querySaltedgeProvider, createSaltedgeLogin, reconnectSaltedgeLogin } from 'qql';
+import { querySaltedgeProvider, createSaltedgeLogin,
+         reconnectSaltedgeLogin, queryUser } from 'qql';
 import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
+import SpinnerBlock from 'components/common/SpinnerBlock';
 import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP, CONNECT_BANK } from 'config/mixpanelEvents';
+import _ from 'lodash';
 import PollProviderLogin from '../../components/PollProviderLogin';
 import ProviderLoginForm from '../../forms/ProviderLogin';
 import styles from './styles.scss';
@@ -19,12 +22,28 @@ import styles from './styles.scss';
 class NewProviderLogin extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      polling: false,
-      saltedgeLoginId: null,
-    };
+    this.state = this.initializeStateFromProps(props);
     this.handleConnectSuccess = this.handleConnectSuccess.bind(this);
     this.handleConnectError = this.handleConnectError.bind(this);
+  }
+
+  initializeStateFromProps(props) {
+    switch (props.userQuery.user.bank_connection_phase) {
+      case 'login_pending': {
+        const saltedgeLogin = (props.saltedgeLogin && props.saltedgeLogin.killed) ? null : props.saltedgeLogin;
+        return {
+          polling: true,
+          saltedgeLoginId: saltedgeLogin.id,
+        };
+      }
+      case 'login_failed':
+      case 'new_login':
+      default:
+        return {
+          polling: false,
+          saltedgeLoginId: null,
+        };
+    }
   }
 
   @autobind
@@ -32,13 +51,13 @@ class NewProviderLogin extends Component {
     const dataParams = JSON.stringify(data);
     return this.state.saltedgeLoginId ?
       this.props.reconnectSaltedgeLogin(this.state.saltedgeLoginId, dataParams) :
-      this.props.createSaltedgeLogin(this.props.data.saltedge_provider.id, dataParams);
+      this.props.createSaltedgeLogin(this.props.saltedgeProviderQuery.saltedge_provider.id, dataParams);
   }
 
   handleFormSubmit(data) {
     return this.submitCredentials(data)
             .then((newData) => {
-              const inputFieldTypes = this.props.data.saltedge_provider.required_fields.map(f => f.nature);
+              const inputFieldTypes = this.props.saltedgeProviderQuery.saltedge_provider.required_fields.map(f => f.nature);
               const eventProps = { ...mixpanelEventProps(CONNECT_BANK_FIRST_STEP), 'Input field types': inputFieldTypes };
               this.props.mixpanel.track(CONNECT_BANK_FIRST_STEP, { 'Input field types': inputFieldTypes });
               this.props.mixpanel.register(eventProps);
@@ -66,7 +85,7 @@ class NewProviderLogin extends Component {
   }
 
   handleConnectSuccess() {
-    const saltedgeProvider = this.props.data.saltedge_provider;
+    const saltedgeProvider = this.props.saltedgeProviderQuery.saltedge_provider;
     const bankIdentifier = `${saltedgeProvider.name} [${saltedgeProvider.country_code}] [${saltedgeProvider.id}]`;
     const eventProps = { ...mixpanelEventProps(CONNECT_BANK), 'Connected bank': bankIdentifier };
     this.props.mixpanel.track(CONNECT_BANK);
@@ -77,14 +96,11 @@ class NewProviderLogin extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { saltedgeProviderQuery, userQuery } = this.props;
 
-    if (data.loading) {
-      return <p>Loading provider...</p>;
-    }
-    if (data.error) {
-      return <p>Error!</p>;
-    }
+    if (saltedgeProviderQuery.loading || userQuery.loading) return <SpinnerBlock />;
+    if (saltedgeProviderQuery.error || userQuery.error) return <div>Error!</div>;
+
     if (this.state.polling) {
       return (<PollProviderLogin
         saltedgeLoginId={this.state.saltedgeLoginId}
@@ -102,7 +118,7 @@ class NewProviderLogin extends Component {
             <h1>Connect to your account</h1>
             <div className={styles.bankNameInput}>
               <FormInput
-                value={data.saltedge_provider.name}
+                value={saltedgeProviderQuery.saltedge_provider.name}
                 type="text"
                 onChange={this.onChange}
                 disabled
@@ -110,7 +126,7 @@ class NewProviderLogin extends Component {
             </div>
             <ProviderLoginForm
               onSubmit={formData => this.handleFormSubmit(formData)}
-              fieldsDescription={data.saltedge_provider.required_fields}
+              fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}
             />
           </Col>
         </Row>
@@ -123,7 +139,7 @@ NewProviderLogin.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  data: PropTypes.shape({
+  saltedgeProviderQuery: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.object,
     saltedge_provider: PropTypes.shape({
@@ -133,6 +149,15 @@ NewProviderLogin.propTypes = {
       required_fields: PropTypes.arrayOf(PropTypes.shape({
         nature: PropTypes.string.isRequired,
       })),
+    }),
+  }),
+  userQuery: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
+    user: PropTypes.shape({
+      saltedge_login: PropTypes.shape({
+        id: PropTypes.ID,
+      }),
     }),
   }),
   reconnectSaltedgeLogin: PropTypes.func.isRequired,
@@ -153,7 +178,15 @@ NewProviderLogin.wrappedComponent.propTypes = {
 };
 
 const NewProviderLoginWithGraphQL = compose(
+  graphql(queryUser, {
+    name: 'userQuery',
+    props: ({ userQuery, ownProps: { params: { saltedgeProviderId } } }) => {
+      const saltedgeLogin = _.find(userQuery.user.saltedge_logins, sl => (sl.saltedge_provider.id === saltedgeProviderId));
+      return { userQuery, saltedgeLogin };
+    },
+  }),
   graphql(querySaltedgeProvider, {
+    name: 'saltedgeProviderQuery',
     options: ownProps => ({
       variables: {
         id: ownProps.params.saltedgeProviderId,

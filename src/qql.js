@@ -105,6 +105,16 @@ export const queryUser = gql`
     user {
       id,
       email,
+      bank_connection_phase,
+      saltedge_logins {
+        id,
+        active,
+        finished_connecting,
+        killed,
+        saltedge_provider {
+          id
+        }
+      },
       accounts {
         id,
         balance,

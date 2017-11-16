@@ -54,9 +54,20 @@ export const querySaltedgeLogin = gql`
       active,
       finished_connecting,
       killed,
-      error_message
+      error_message,
+      saltedge_provider {
+        id
+      }
     }
   }
+`;
+
+export const queryAllSaltedgeLogins = gql`query allSaltedgeLogins{
+  all_saltedge_logins {
+    id,
+    needs_reconnection
+  }
+}
 `;
 
 export const queryAllAccounts = gql`query allAccounts{
@@ -110,9 +121,11 @@ export const queryUser = gql`
         id,
         active,
         finished_connecting,
+        needs_reconnection,
         killed,
         saltedge_provider {
-          id
+          id,
+          name
         }
       },
       accounts {

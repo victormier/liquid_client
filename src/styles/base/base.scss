@@ -54,6 +54,13 @@
   padding-top: $base-grid-gutter;
 }
 
+.baseMarginBottom {
+  margin-bottom: $base-grid-gutter;
+}
+.baseMarginBottomSmall {
+  margin-bottom: $base-grid-gutter/2;
+}
+
 .clear {
   clear: both;
 }

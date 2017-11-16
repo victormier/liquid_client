@@ -2,7 +2,7 @@ import { observable, computed, extendObservable, action } from 'mobx';
 import uuid from 'uuid/v4';
 import _ from 'lodash';
 
-class ErrorMessage {
+export class ErrorMessage {
   constructor(message, id) {
     this.message = message;
     this.id = id;

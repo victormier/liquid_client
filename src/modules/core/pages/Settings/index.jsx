@@ -4,13 +4,16 @@ import { graphql, compose, withApollo } from 'react-apollo';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/Button';
+import { Link } from 'react-router';
 import Nav from 'modules/main/components/Nav';
-import gridStyles from 'styles/base/grid.scss';
 import PercentageRuleForm from 'modules/main/forms/PercentageRule';
 import FormInput from 'components/common/FormInput';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import ErrorBar from 'components/layout/ErrorBar';
 import { queryUser, queryPercentageRule, updatePercentageRule } from 'qql';
+import gridStyles from 'styles/base/grid.scss';
+import baseStyles from 'styles/base/base.scss';
+import { circleType } from 'styles/base/_helpers.scss';
 
 @inject(
   'viewStore'
@@ -80,6 +83,44 @@ export class Settings extends Component {
                       active: percentageRuleQuery.percentage_rule.active.toString(),
                     }}
                   />
+                </div>
+            }
+            {
+              userQuery &&
+                <div>
+                  <h2>Bank connection</h2>
+                  <div>
+                    {
+                      userQuery.user.saltedge_logins.map((saltedgeLogin) => {
+                        if (!saltedgeLogin.killed) {
+                          return (
+                            <div className={baseStyles.baseMarginBottomSmall}>
+                              <div className={baseStyles.baseMarginBottomSmall}>
+                                <FormInput
+                                  value={saltedgeLogin.saltedge_provider.name}
+                                  type="text"
+                                  disabled
+                                />
+                              </div>
+                              {
+                                saltedgeLogin.needs_reconnection &&
+                                  <div>
+                                    <div className={baseStyles.baseMarginBottomSmall}>
+                                      <Link to={`/connect/providers/${saltedgeLogin.saltedge_provider.id}`}><Button text="Reconnect Bank" color="transparent" /></Link>
+                                    </div>
+                                    <Row className={baseStyles.baseMarginBottomSmall}>
+                                      <Col xsOffset={1} xs={1} className={baseStyles.textCentered}><div className={circleType}>!</div></Col>
+                                      <Col xs={9}>Your bank stopped responding. You need to reconnect with your bank.</Col>
+                                    </Row>
+                                  </div>
+                              }
+                            </div>
+                          );
+                        }
+                        return null;
+                      })
+                    }
+                  </div>
                 </div>
             }
           </Col>

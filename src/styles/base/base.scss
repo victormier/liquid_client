@@ -60,6 +60,9 @@
 .baseMarginBottomSmall {
   margin-bottom: $base-grid-gutter/2;
 }
+.baseMarginBottomLarge {
+  margin-bottom: $base-grid-gutter*2;
+}
 
 .clear {
   clear: both;

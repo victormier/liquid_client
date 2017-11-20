@@ -123,6 +123,12 @@ export class Settings extends Component {
                   </div>
                 </div>
             }
+            <div>
+              <h2>Liquid account</h2>
+              <div className={baseStyles.baseMarginBottomSmall}>
+                <Link to={'/settings/delete_account'}><Button text="Delete Liquid Account" color="transparent" /></Link>
+              </div>
+            </div>
           </Col>
         </Row>
         <Nav />

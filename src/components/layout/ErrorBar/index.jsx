@@ -7,13 +7,14 @@ import styles from './styles.scss';
 class ErrorBar extends React.Component {
   render() {
     const { errors } = this.props.viewStore;
-    if (!errors.length) return null;
+    const propErrors = this.props.errors || [];
+    const allErrors = propErrors.length ? propErrors : errors;
 
     return (
       <div className={styles.errorContainer} >
         <ul className={styles.errorList} >
           {
-            errors.map(errorMessage => (
+            allErrors.map(errorMessage => (
               <li className={styles.errorListItem} key={errorMessage.id} >
                 {errorMessage.message}
               </li>
@@ -29,6 +30,7 @@ ErrorBar.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     errors: PropTypes.array,
   }).isRequired,
+  errors: PropTypes.array,
 };
 
 export default ErrorBar;

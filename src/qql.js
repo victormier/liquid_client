@@ -253,4 +253,10 @@ export const selectSaltedgeAccount = gql`
   }
 `;
 
+export const killUser = gql`
+  mutation killUser {
+    killUser
+  }
+`;
+
 export default queryAllSaltedgeProviders;

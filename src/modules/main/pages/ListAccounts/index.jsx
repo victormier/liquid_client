@@ -10,6 +10,7 @@ import _ from 'lodash';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
 import errorStyles from 'components/layout/ErrorBar/styles.scss';
+import RefreshButton from '../../components/RefreshButton';
 import Account from '../../components/Account';
 import Nav from '../../components/Nav';
 
@@ -39,6 +40,8 @@ const ListAccounts = (props) => {
     </Link>
   ));
 
+  const mirrorAccount = _.find(allAccountsQuery.all_accounts, a => a.is_mirror_account);
+
   return (
     <div>
       { error }
@@ -49,7 +52,14 @@ const ListAccounts = (props) => {
               <Button text="+" color="transparent" shape="circle" />
             </Link>
           </Col>
-          <Col xs={6} className={baseStyles.textRight}>
+          <Col xs={2}>
+            { mirrorAccount &&
+              <div className={baseStyles.floatRight}>
+                <RefreshButton accountId={mirrorAccount.id} />
+              </div>
+            }
+          </Col>
+          <Col xs={4} className={baseStyles.textRight}>
             <Link to="/transactions/new">
               <Button text="Transfer" color="transparent" />
             </Link>

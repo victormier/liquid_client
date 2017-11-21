@@ -10,6 +10,7 @@ import GoBackArrow from 'components/common/GoBackArrow';
 import Button from 'components/common/Button';
 import { toCurrency } from 'utils/currencies';
 import baseStyles from 'styles/base/base.scss';
+import RefreshButton from '../../components/RefreshButton';
 import TransactionList from '../../components/TransactionList';
 
 const ShowAccount = ({ data }) => {
@@ -22,7 +23,13 @@ const ShowAccount = ({ data }) => {
         <Col xs={6}>
           <GoBackArrow to="/accounts" />
         </Col>
-        <Col xs={6} className={baseStyles.textRight}>
+        <Col xs={2}>
+          {
+            data.account.is_mirror_account &&
+              <RefreshButton />
+          }
+        </Col>
+        <Col xs={4} className={baseStyles.textRight}>
           <Link to={`/transactions/new/${data.account.id}`}>
             <Button text="Transfer" color="transparent" />
           </Link>

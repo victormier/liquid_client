@@ -193,7 +193,7 @@ NewProviderLogin.propTypes = {
     error: PropTypes.bool,
     user: PropTypes.shape({
       saltedge_login: PropTypes.shape({
-        id: PropTypes.ID,
+        id: PropTypes.number,
       }),
       bank_connection_phase: PropTypes.string.isRequired,
     }),

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { graphql, withApollo } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import { inject } from 'mobx-react';
 // import { Grid, Row, Col } from 'react-flexbox-grid';
 // import gridStyles from 'styles/base/grid.scss';
-// import { queryAccount } from 'qql';
+import { updateMirrorAccount } from 'qql';
 // import { Link } from 'react-router';
 // import SpinnerBlock from 'components/common/SpinnerBlock';
 // import GoBackArrow from 'components/common/GoBackArrow';
@@ -13,14 +14,44 @@ import PropTypes from 'prop-types';
 import refresh from 'assets/images/refresh.svg';
 import styles from './styles.scss';
 
-const RefreshButton = props => (
-  <div className={styles.refreshIcon}>
-    <img alt="refresh" src={refresh} />
-  </div>
-);
+@inject('viewStore')
+class RefreshButton extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
+
+  handleClick() {
+    this.setState({ loading: true });
+
+    return this.props.submit()
+      .then(() => {
+        this.setState({ loading: false });
+      })
+      .catch((er) => {
+        this.props.viewStore.addError('There was a problem refreshing the data');
+      });
+  }
+
+  render() {
+    return (
+      <div className={styles.refreshIcon} onClick={e => this.handleClick(e)}>
+        <img alt="refresh" src={refresh} className={this.state.loading ? styles.loading : null} />
+      </div>
+    );
+  }
+}
 
 RefreshButton.propTypes = {
   accountId: PropTypes.number.isRequired,
 };
 
-export default RefreshButton;
+const RefreshButtonWithGraphQL = graphql(updateMirrorAccount, {
+  props: ({ mutate, ownProps }) => ({
+    submit: () => mutate({ variables: { mirrorAccountId: ownProps.accountId } }),
+  }),
+})(RefreshButton);
+
+export default RefreshButtonWithGraphQL;

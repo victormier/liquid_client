@@ -110,6 +110,17 @@ class AppRouter extends Component {
                 }
               />
               <Route
+                path={'/settings/delete_account'}
+                logout={this.props.logout}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/core/pages/DeleteAccount')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
                 path={'/connect/providers'}
                 getComponent={
                   (location, cb) => {

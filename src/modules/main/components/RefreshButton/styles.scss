@@ -1,0 +1,8 @@
+@import 'base/mixins';
+
+.refreshIcon {
+  display: inline-block;
+  padding: 8px;
+  @include circleBlock;
+  @include transparentBackground;
+}

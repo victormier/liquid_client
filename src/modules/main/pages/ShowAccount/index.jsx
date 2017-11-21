@@ -26,7 +26,7 @@ const ShowAccount = ({ data }) => {
         <Col xs={2}>
           {
             data.account.is_mirror_account &&
-              <RefreshButton />
+              <RefreshButton accountId={data.account.id} />
           }
         </Col>
         <Col xs={4} className={baseStyles.textRight}>

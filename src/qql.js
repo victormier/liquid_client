@@ -75,7 +75,8 @@ export const queryAllAccounts = gql`query allAccounts{
     id,
     name,
     balance,
-    currency_code
+    currency_code,
+    is_mirror_account
   }
 }
 `;
@@ -87,6 +88,7 @@ export const queryAccount = gql`
       currency_code,
       name,
       balance,
+      is_mirror_account,
       transactions {
         id,
         amount,

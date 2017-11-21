@@ -261,4 +261,12 @@ export const killUser = gql`
   }
 `;
 
+export const updateMirrorAccount = gql`
+  mutation updateMirrorAccount($mirrorAccountId: ID!) {
+    updateMirrorAccount(mirror_account_id: $mirrorAccountId) {
+      id
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

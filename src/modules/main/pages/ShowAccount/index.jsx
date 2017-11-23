@@ -5,9 +5,11 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { queryAccount } from 'qql';
 import { Link } from 'react-router';
+import moment from 'node-moment';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import GoBackArrow from 'components/common/GoBackArrow';
 import Button from 'components/common/Button';
+import ErrorBar from 'components/layout/ErrorBar';
 import { toCurrency } from 'utils/currencies';
 import baseStyles from 'styles/base/base.scss';
 import RefreshButton from '../../components/RefreshButton';
@@ -20,6 +22,7 @@ const ShowAccount = ({ data }) => {
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
+      <ErrorBar />
       <Row className={baseStyles.topNav}>
         <Col xs={6}>
           <GoBackArrow to="/accounts" />
@@ -44,7 +47,7 @@ const ShowAccount = ({ data }) => {
               data.account.is_mirror_account && data.account.last_updated &&
               <span>
                 <br />
-                <small>Updated 1 hour ago</small>
+                <small>Updated {moment.unix(data.account.last_updated).fromNow()}</small>
               </span>
             }
           </h2>

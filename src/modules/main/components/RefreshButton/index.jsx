@@ -30,7 +30,7 @@ class RefreshButton extends Component {
       .then(() => {
         this.setState({ loading: false });
       })
-      .catch((er) => {
+      .catch(() => {
         this.setState({ loading: false });
         this.props.viewStore.addError('There was a problem refreshing the data');
       });
@@ -38,7 +38,12 @@ class RefreshButton extends Component {
 
   render() {
     return (
-      <div className={styles.refreshIcon} onClick={e => this.handleClick(e)}>
+      <div
+        className={styles.refreshIcon}
+        onClick={e => this.handleClick(e)}
+        role="button"
+        tabIndex="0"
+      >
         <img alt="refresh" src={refresh} className={this.state.loading ? styles.loading : null} />
       </div>
     );
@@ -46,7 +51,12 @@ class RefreshButton extends Component {
 }
 
 RefreshButton.propTypes = {
-  accountId: PropTypes.number.isRequired,
+  submit: PropTypes.func.isRequired,
+};
+RefreshButton.wrappedComponent.propTypes = {
+  viewStore: PropTypes.shape({
+    addError: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const RefreshButtonWithGraphQL = graphql(updateMirrorAccount, {

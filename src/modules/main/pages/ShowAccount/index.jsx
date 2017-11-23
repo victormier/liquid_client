@@ -16,24 +16,23 @@ import RefreshButton from '../../components/RefreshButton';
 import TransactionList from '../../components/TransactionList';
 import styles from './styles.scss';
 
-
-class ShowAccount extends Component {
-  checkPolling(props) {
-    if (!props.data.loading && !props.data.error) {
-      if (props.data.account.is_refreshing) {
-        props.data.startPolling(5000);
-      } else {
-        props.data.stopPolling();
-      }
+const checkPolling = (props) => {
+  if (!props.data.loading && !props.data.error) {
+    if (props.data.account.is_refreshing) {
+      props.data.startPolling(5000);
+    } else {
+      props.data.stopPolling();
     }
   }
+};
 
+class ShowAccount extends Component {
   componentDidMount() {
-    this.checkPolling(this.props);
+    checkPolling(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.checkPolling(newProps);
+    checkPolling(newProps);
   }
 
   render() {

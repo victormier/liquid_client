@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { queryUser, killUser } from 'qql';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import GoBackArrow from 'components/common/GoBackArrow';
-import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import Button from 'components/common/Button';
 import gridStyles from 'styles/base/grid.scss';
@@ -70,6 +69,22 @@ DeleteAccount.propTypes = {
         email: PropTypes.string.isRequired,
       })
     ),
+  }).isRequired,
+  mutate: PropTypes.func.isRequired,
+  client: PropTypes.shape({
+    resetStore: PropTypes.func.isRequired,
+  }),
+  route: PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+  }),
+  router: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+DeleteAccount.wrappedComponent.propTypes = {
+  viewStore: PropTypes.shape({
+    reset: PropTypes.func.isRequired,
+    addError: PropTypes.func.isRequired,
   }).isRequired,
 };
 

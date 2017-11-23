@@ -81,28 +81,6 @@ export const queryAllAccounts = gql`query allAccounts{
 }
 `;
 
-export const queryAccount = gql`
-  query account($id: ID!) {
-    account(id: $id) {
-      id,
-      currency_code,
-      name,
-      balance,
-      is_mirror_account,
-      last_updated,
-      transactions {
-        id,
-        amount,
-        made_on,
-        type,
-        description,
-        category,
-        created_at
-      }
-    }
-  }
-`;
-
 export const createVirtualAccount = gql`
   mutation createVirtualAccount($name: String!) {
     createVirtualAccount(name: $name) {
@@ -262,12 +240,43 @@ export const killUser = gql`
   }
 `;
 
+const virtualAccountFieldsFragment = gql`
+  fragment virtualAccountFields on VirtualAccount {
+    id,
+    currency_code,
+    name,
+    balance,
+    is_mirror_account,
+    last_updated,
+    is_refreshing,
+    transactions {
+      id,
+      amount,
+      made_on,
+      type,
+      description,
+      category,
+      created_at
+    }
+  }
+`;
+
 export const updateMirrorAccount = gql`
   mutation updateMirrorAccount($mirrorAccountId: ID!) {
     updateMirrorAccount(mirror_account_id: $mirrorAccountId) {
-      id
+      ...virtualAccountFields
     }
   }
+  ${virtualAccountFieldsFragment}
+`;
+
+export const queryAccount = gql`
+  query account($id: ID!) {
+    account(id: $id) {
+      ...virtualAccountFields
+    }
+  }
+  ${virtualAccountFieldsFragment}
 `;
 
 export default queryAllSaltedgeProviders;

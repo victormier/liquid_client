@@ -18,7 +18,7 @@ const ListAccounts = (props) => {
   const { allAccountsQuery, saltedgeLoginsQuery } = props;
   let error;
 
-  if (allAccountsQuery.loading) return <SpinnerBlock />;
+  if (allAccountsQuery.loading && !allAccountsQuery.all_accounts) return <SpinnerBlock />;
   if (allAccountsQuery.error) return <p>Error!</p>;
 
   if (saltedgeLoginsQuery &&

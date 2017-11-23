@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import { inject } from 'mobx-react';
 // import { Grid, Row, Col } from 'react-flexbox-grid';
 // import gridStyles from 'styles/base/grid.scss';
-import { updateMirrorAccount } from 'qql';
+import { updateMirrorAccount, queryAccount } from 'qql';
 // import { Link } from 'react-router';
 // import SpinnerBlock from 'components/common/SpinnerBlock';
 // import GoBackArrow from 'components/common/GoBackArrow';
@@ -31,6 +31,7 @@ class RefreshButton extends Component {
         this.setState({ loading: false });
       })
       .catch((er) => {
+        this.setState({ loading: false });
         this.props.viewStore.addError('There was a problem refreshing the data');
       });
   }
@@ -50,7 +51,15 @@ RefreshButton.propTypes = {
 
 const RefreshButtonWithGraphQL = graphql(updateMirrorAccount, {
   props: ({ mutate, ownProps }) => ({
-    submit: () => mutate({ variables: { mirrorAccountId: ownProps.accountId } }),
+    submit: () => mutate({
+      variables: { mirrorAccountId: ownProps.accountId },
+      refetchQueries: [{
+        query: queryAccount,
+        variables: {
+          id: ownProps.accountId,
+        },
+      }],
+    }),
   }),
 })(RefreshButton);
 

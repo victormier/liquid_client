@@ -12,6 +12,7 @@ import { toCurrency } from 'utils/currencies';
 import baseStyles from 'styles/base/base.scss';
 import RefreshButton from '../../components/RefreshButton';
 import TransactionList from '../../components/TransactionList';
+import styles from './styles.scss';
 
 const ShowAccount = ({ data }) => {
   if (data.loading) return <SpinnerBlock />;
@@ -37,7 +38,16 @@ const ShowAccount = ({ data }) => {
       </Row>
       <Row>
         <Col xs={6}>
-          <h2>{ data.account.name }</h2>
+          <h2 className={styles.accountName}>
+            { data.account.name }
+            {
+              data.account.is_mirror_account && data.account.last_updated &&
+              <span>
+                <br />
+                <small>Updated 1 hour ago</small>
+              </span>
+            }
+          </h2>
         </Col>
         <Col xs={6}>
           <h2 className={baseStyles.textRight}>

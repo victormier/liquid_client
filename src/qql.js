@@ -89,6 +89,7 @@ export const queryAccount = gql`
       name,
       balance,
       is_mirror_account,
+      last_updated,
       transactions {
         id,
         amount,

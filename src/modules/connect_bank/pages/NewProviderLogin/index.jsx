@@ -161,6 +161,8 @@ class NewProviderLogin extends Component {
                 disabled
               />
             </div>
+            <hr />
+            <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
             <ProviderLoginForm
               onSubmit={formData => this.handleFormSubmit(formData)}
               fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}

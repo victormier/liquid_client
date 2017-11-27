@@ -220,6 +220,16 @@ class AppRouter extends Component {
                   }
                 }
               />
+              <Route
+                path={'/insights/categories/:category/:year/:month'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/CategoryInsights')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
             </Route>
           </Route>
           <Route

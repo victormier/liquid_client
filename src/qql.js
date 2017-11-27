@@ -161,7 +161,16 @@ export const queryInsights = gql`
       category_insights {
         name,
         amount,
-        percentage
+        percentage,
+        transactions {
+          id,
+          amount,
+          type,
+          description,
+          category,
+          made_on,
+          created_at
+        }
       }
     }
   }

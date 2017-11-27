@@ -100,24 +100,26 @@ const InsightsData = (props) => {
                 {
                   data.insights.category_insights.map(categoryInsight => (
                     <li>
-                      <SquareRoundedBlock>
-                        <Row>
-                          <Col xs={6}>
-                            <div className={styles.itemTitle}>{categoryInsight.name}</div>
-                            <div className={styles.itemDetail}>{categoryInsight.percentage}%</div>
-                          </Col>
-                          <Col xs={6} className={baseStyles.textRight}>
-                            <span className={styles.itemData}>
-                              {
-                                toCurrency(
-                                  categoryInsight.amount,
-                                  data.insights.mirror_account.currency_code
-                                )
-                              }
-                            </span>
-                          </Col>
-                        </Row>
-                      </SquareRoundedBlock>
+                      <Link to={`insights/categories/${categoryInsight.name}/${props.year}/${props.month + 1}`}>
+                        <SquareRoundedBlock>
+                          <Row>
+                            <Col xs={6}>
+                              <div className={styles.itemTitle}>{categoryInsight.name}</div>
+                              <div className={styles.itemDetail}>{categoryInsight.percentage}%</div>
+                            </Col>
+                            <Col xs={6} className={baseStyles.textRight}>
+                              <span className={styles.itemData}>
+                                {
+                                  toCurrency(
+                                    categoryInsight.amount,
+                                    data.insights.mirror_account.currency_code
+                                  )
+                                }
+                              </span>
+                            </Col>
+                          </Row>
+                        </SquareRoundedBlock>
+                      </Link>
                     </li>
                   ))
                 }
@@ -133,6 +135,7 @@ const InsightsData = (props) => {
 
 InsightsData.propTypes = {
   month: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
   data: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.object,

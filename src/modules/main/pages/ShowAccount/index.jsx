@@ -63,7 +63,9 @@ class ShowAccount extends Component {
           <Col xs={2}>
             {
               data.account.is_mirror_account &&
-                <RefreshButton accountId={data.account.id} />
+                <div className={baseStyles.floatRight}>
+                  <RefreshButton accountId={data.account.id} />
+                </div>
             }
           </Col>
           <Col xs={4} className={baseStyles.textRight}>

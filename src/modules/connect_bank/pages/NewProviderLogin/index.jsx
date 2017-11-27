@@ -161,6 +161,8 @@ class NewProviderLogin extends Component {
                 disabled
               />
             </div>
+            <hr />
+            <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
             <ProviderLoginForm
               onSubmit={formData => this.handleFormSubmit(formData)}
               fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}
@@ -193,7 +195,7 @@ NewProviderLogin.propTypes = {
     error: PropTypes.bool,
     user: PropTypes.shape({
       saltedge_login: PropTypes.shape({
-        id: PropTypes.ID,
+        id: PropTypes.number,
       }),
       bank_connection_phase: PropTypes.string.isRequired,
     }),

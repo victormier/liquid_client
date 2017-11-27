@@ -3,8 +3,10 @@ import { reduxForm, Field } from 'redux-form';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from 'components/common/Button';
 import FormInput from 'components/common/FormInput';
+import SelectInput from 'components/common/SelectInput';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import baseStyles from 'styles/base/base.scss';
 
 const TextInput = componentProps => (
   <FormInput
@@ -20,19 +22,27 @@ const PasswordInput = componentProps => (
     type="password"
   />);
 
-const SelectInput = ({ fieldDescription }) => {
+const renderSelect = componentProps => (
+  <SelectInput {...componentProps.input}>
+    {componentProps.children}
+  </SelectInput>
+);
+
+const SelectField = ({ fieldDescription }) => {
   const options = fieldDescription.field_options.map(option => (
     <option name={option.name} key={option.name} value={option.value}>
       {option.localized_name}
     </option>
   ));
+
   return (
-    <Field component="select" name={fieldDescription.name}>
+    <Field component={renderSelect} name={fieldDescription.name}>
+      <option value={null} />
       {options}
     </Field>
   );
 };
-SelectInput.propTypes = {
+SelectField.propTypes = {
   fieldDescription: PropTypes.shape({
     field_options: PropTypes.arrayOf(
       PropTypes.shape({
@@ -59,7 +69,7 @@ const ProviderLoginForm = (props) => {
         />);
         break;
       case 'select':
-        field = <SelectInput fieldDescription={fieldDescription} />;
+        field = <SelectField fieldDescription={fieldDescription} />;
         break;
       case 'text':
       default:
@@ -78,7 +88,9 @@ const ProviderLoginForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      { fields }
+      <div className={baseStyles.baseMarginBottom}>
+        { fields }
+      </div>
       <Row center="xs" >
         <Col xs={4}>
           <div>

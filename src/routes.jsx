@@ -211,6 +211,16 @@ class AppRouter extends Component {
                 }
               />
               <Route
+                path={'/accounts/:accountId/transactions/:transactionId/category'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/EditTransactionCategory')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
                 path={'/insights'}
                 getComponent={
                   (location, cb) => {

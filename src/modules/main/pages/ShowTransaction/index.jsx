@@ -4,6 +4,7 @@ import { graphql, withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { queryTransaction } from 'qql';
+import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import GoBackArrow from 'components/common/GoBackArrow';
 import { toCurrency } from 'utils/currencies';
@@ -47,7 +48,9 @@ const ShowTransaction = ({ data, location, params }) => {
             <small className={styles.transactionAttributeConcept}>Date</small>
           </h2>
           <div>
-            <div className={styles.category}>{data.transaction.category}</div>
+            <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
+              <div className={styles.category}>{data.transaction.category}</div>
+            </Link>
             <small className={styles.transactionAttributeConcept}>
               Category
             </small>

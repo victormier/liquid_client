@@ -46,6 +46,12 @@ const ShowTransaction = ({ data, location, params }) => {
             <br />
             <small className={styles.transactionAttributeConcept}>Date</small>
           </h2>
+          <div>
+            <div className={styles.category}>{data.transaction.category}</div>
+            <small className={styles.transactionAttributeConcept}>
+              Category
+            </small>
+          </div>
         </Col>
       </Row>
     </Grid>);

@@ -10,15 +10,16 @@ import { toCurrency } from 'utils/currencies';
 import { dateFromSeconds } from 'utils/dates';
 import styles from './styles.scss';
 
-const ShowTransaction = ({ data, params }) => {
+const ShowTransaction = ({ data, location, params }) => {
   if (data.loading) return <SpinnerBlock />;
   if (data.error) return <div>Error!</div>;
 
   const date = dateFromSeconds(data.transaction.made_on);
+  const backProps = (location.state && location.state.fromInsights) ? {} : { to: `/accounts/${params.accountId}` };
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <GoBackArrow to={`/accounts/${params.accountId}`} />
+      <GoBackArrow {...backProps} />
       <Row>
         <Col xs={12}>
           <h2>
@@ -51,6 +52,7 @@ const ShowTransaction = ({ data, params }) => {
 };
 
 ShowTransaction.propTypes = {
+  backTo: PropTypes.string,
   data: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     error: PropTypes.bool,
@@ -69,6 +71,9 @@ ShowTransaction.propTypes = {
   params: PropTypes.shape({
     accountId: PropTypes.string.isRequired,
     transactionId: PropTypes.string.isRequired,
+  }),
+  location: PropTypes.shape({
+    state: PropTypes.object,
   }),
 };
 

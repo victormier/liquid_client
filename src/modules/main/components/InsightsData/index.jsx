@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { queryInsights } from 'qql';
+import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import { toCurrency } from 'utils/currencies';
 import { monthNameLongFromNumber,
@@ -43,29 +44,31 @@ const InsightsData = (props) => {
               <ul className={styles.blockList}>
                 {
                   data.insights.income_transactions.map(transaction => (
-                    <li>
-                      <SquareRoundedBlock>
-                        <Row>
-                          <Col xs={6}>
-                            <div className={styles.itemTitle}>
-                              {transaction.description}
-                            </div>
-                            <div className={styles.itemDetail}>
-                              {
-                                  `${monthNameShortFromNumber(
-                                      dateFromSeconds(transaction.made_on).getMonth() + 1
-                                     )}
-                                   ${dateFromSeconds(transaction.made_on).getDay() + 1}`
-                                }
-                            </div>
-                          </Col>
-                          <Col xs={6} className={baseStyles.textRight}>
-                            <span className={styles.itemData}>
-                              {toCurrency(transaction.amount, data.insights.mirror_account.currency_code)}
-                            </span>
-                          </Col>
-                        </Row>
-                      </SquareRoundedBlock>
+                    <li key={transaction.id}>
+                      <Link to={{ pathname: `/accounts/${data.insights.mirror_account.id}/transactions/${transaction.id}`, state: { fromInsights: true } }}>
+                        <SquareRoundedBlock>
+                          <Row>
+                            <Col xs={6}>
+                              <div className={styles.itemTitle}>
+                                {transaction.description}
+                              </div>
+                              <div className={styles.itemDetail}>
+                                {
+                                    `${monthNameShortFromNumber(
+                                        dateFromSeconds(transaction.made_on).getMonth() + 1
+                                       )}
+                                     ${dateFromSeconds(transaction.made_on).getDay() + 1}`
+                                  }
+                              </div>
+                            </Col>
+                            <Col xs={6} className={baseStyles.textRight}>
+                              <span className={styles.itemData}>
+                                {toCurrency(transaction.amount, data.insights.mirror_account.currency_code)}
+                              </span>
+                            </Col>
+                          </Row>
+                        </SquareRoundedBlock>
+                      </Link>
                     </li>
                   ))
                 }
@@ -97,24 +100,26 @@ const InsightsData = (props) => {
                 {
                   data.insights.category_insights.map(categoryInsight => (
                     <li>
-                      <SquareRoundedBlock>
-                        <Row>
-                          <Col xs={6}>
-                            <div className={styles.itemTitle}>{categoryInsight.name}</div>
-                            <div className={styles.itemDetail}>{categoryInsight.percentage}%</div>
-                          </Col>
-                          <Col xs={6} className={baseStyles.textRight}>
-                            <span className={styles.itemData}>
-                              {
-                                toCurrency(
-                                  categoryInsight.amount,
-                                  data.insights.mirror_account.currency_code
-                                )
-                              }
-                            </span>
-                          </Col>
-                        </Row>
-                      </SquareRoundedBlock>
+                      <Link to={`insights/categories/${categoryInsight.name}/${props.year}/${props.month + 1}`}>
+                        <SquareRoundedBlock>
+                          <Row>
+                            <Col xs={6}>
+                              <div className={styles.itemTitle}>{categoryInsight.name}</div>
+                              <div className={styles.itemDetail}>{categoryInsight.percentage}%</div>
+                            </Col>
+                            <Col xs={6} className={baseStyles.textRight}>
+                              <span className={styles.itemData}>
+                                {
+                                  toCurrency(
+                                    categoryInsight.amount,
+                                    data.insights.mirror_account.currency_code
+                                  )
+                                }
+                              </span>
+                            </Col>
+                          </Row>
+                        </SquareRoundedBlock>
+                      </Link>
                     </li>
                   ))
                 }
@@ -130,6 +135,7 @@ const InsightsData = (props) => {
 
 InsightsData.propTypes = {
   month: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
   data: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.object,

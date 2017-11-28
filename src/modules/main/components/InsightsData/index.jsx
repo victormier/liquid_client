@@ -45,7 +45,11 @@ const InsightsData = (props) => {
                 {
                   data.insights.income_transactions.map(transaction => (
                     <li key={transaction.id}>
-                      <Link to={{ pathname: `/accounts/${data.insights.mirror_account.id}/transactions/${transaction.id}`, state: { fromInsights: true } }}>
+                      <Link to={{
+                        pathname: `/accounts/${data.insights.mirror_account.id}/transactions/${transaction.id}`,
+                        state: { backTo: window.location.pathname },
+                      }}
+                      >
                         <SquareRoundedBlock>
                           <Row>
                             <Col xs={6}>

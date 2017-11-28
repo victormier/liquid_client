@@ -14,7 +14,10 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
 
   return (
     <Link
-      to={`/accounts/${accountId}/transactions/${transaction.id}`}
+      to={{
+        pathname: `/accounts/${accountId}/transactions/${transaction.id}`,
+        state: { backTo: window.location.pathname },
+      }}
       key={transaction.id}
       className={styles.transactionLink}
     >

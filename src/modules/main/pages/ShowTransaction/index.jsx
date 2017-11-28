@@ -15,11 +15,11 @@ const ShowTransaction = ({ data, location, params }) => {
   if (data.error) return <div>Error!</div>;
 
   const date = dateFromSeconds(data.transaction.made_on);
-  const backProps = (location.state && location.state.fromInsights) ? {} : { to: `/accounts/${params.accountId}` };
+  const backTo = (location.state && location.state.backTo) ? location.state.backTo : `/accounts/${params.accountId}`;
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <GoBackArrow {...backProps} />
+      <GoBackArrow to={backTo} />
       <Row>
         <Col xs={12}>
           <h2>
@@ -52,7 +52,6 @@ const ShowTransaction = ({ data, location, params }) => {
 };
 
 ShowTransaction.propTypes = {
-  backTo: PropTypes.string,
   data: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     error: PropTypes.bool,
@@ -73,7 +72,9 @@ ShowTransaction.propTypes = {
     transactionId: PropTypes.string.isRequired,
   }),
   location: PropTypes.shape({
-    state: PropTypes.object,
+    state: PropTypes.shape({
+      backTo: PropTypes.string,
+    }),
   }),
 };
 

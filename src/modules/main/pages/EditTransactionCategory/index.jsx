@@ -8,7 +8,7 @@ import SpinnerBlock from 'components/common/SpinnerBlock';
 import GoBackArrow from 'components/common/GoBackArrow';
 import FormInput from 'components/common/FormInput';
 
-const EditTransactionCategory = ({ data, location, params }) => {
+const EditTransactionCategory = ({ data, params }) => {
   if (data.loading) return <SpinnerBlock />;
   if (data.error) return <div>Error!</div>;
 

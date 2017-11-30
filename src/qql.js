@@ -289,4 +289,19 @@ export const queryAccount = gql`
   ${virtualAccountFieldsFragment}
 `;
 
+export const queryAllCategories = gql`
+  query allCategories {
+    all_saltedge_categories {
+      id
+      key
+      name
+      subcategories {
+        id
+        key
+        name
+      }
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

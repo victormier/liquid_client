@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
+import { inject } from 'mobx-react';
 import { compose, graphql, withApollo } from 'react-apollo';
 import _ from 'lodash';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
-import { queryTransaction, queryAllCategories } from 'qql';
+import { queryTransaction, queryAllCategories, updateMirrorTransactionCategory } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import GoBackArrow from 'components/common/GoBackArrow';
 import FormInput from 'components/common/FormInput';
+import ErrorBar from 'components/layout/ErrorBar';
 import styles from './styles.scss';
 
 const CategoryInput = componentProps => (
@@ -20,19 +22,28 @@ const CategoryInput = componentProps => (
     placeholder="Find category..."
   />);
 
-const CategoryItem = ({ category: { name, key, subcategories } }) => {
-  const className = subcategories ? `${styles.categoryItem} ${styles.parentCategory}` : styles.categoryItem;
-  return <li key={key} className={className}>{name}</li>;
-};
-
+@inject('viewStore')
 class EditTransactionCategory extends Component {
   handleCategoryClick(categoryKey) {
-    console.log(categoryKey);
+    const { params } = this.props;
+    return this.props.submit({ mirrorTransactionId: params.transactionId, categoryCode: categoryKey })
+            .then(() => {
+              this.props.router.push(`/accounts/${params.accountId}/transactions/${params.transactionId}`);
+            })
+            .catch(() => {
+              this.props.viewStore.addError('There was a problem');
+            });
   }
 
   renderCategoryItem({ name, key, subcategories }) {
     const className = subcategories ? `${styles.categoryItem} ${styles.parentCategory}` : styles.categoryItem;
-    return <li key={key} className={className} onClick={() => { this.handleCategoryClick(key); }}>{name}</li>;
+    return (
+      <li key={key} className={className}>
+        <div onClick={() => { this.handleCategoryClick(key); }} role="button" tabIndex="0">
+          {name}
+        </div>
+      </li>
+    );
   }
 
   render() {
@@ -54,6 +65,7 @@ class EditTransactionCategory extends Component {
 
     return (
       <Grid fluid className={gridStyles.mainGrid}>
+        <ErrorBar />
         <GoBackArrow to={`/accounts/${params.accountId}/transactions/${params.transactionId}`} />
         <Row>
           <Col xs={12}>
@@ -90,10 +102,25 @@ EditTransactionCategory.propTypes = {
       category: PropTypes.string.isRequired,
     }),
   }),
+  allCategoriesQuery: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
+    all_saltedge_categories: PropTypes.array,
+  }),
   params: PropTypes.shape({
     accountId: PropTypes.string.isRequired,
     transactionId: PropTypes.string.isRequired,
   }),
+  router: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  submit: PropTypes.func.isRequired,
+  categoryName: PropTypes.string,
+};
+EditTransactionCategory.wrappedComponent.propTypes = {
+  viewStore: PropTypes.shape({
+    addError: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const EditTransactionCategoryWithGraphQL = compose(
@@ -105,7 +132,14 @@ const EditTransactionCategoryWithGraphQL = compose(
       },
     }),
   }),
-  graphql(queryAllCategories, { name: 'allCategoriesQuery' })
+  graphql(queryAllCategories, { name: 'allCategoriesQuery' }),
+  graphql(updateMirrorTransactionCategory, {
+    props: ({ mutate }) => ({
+      submit: ({ mirrorTransactionId, categoryCode }) => mutate({
+        variables: { mirrorTransactionId, categoryCode },
+      }),
+    }),
+  })
 )(EditTransactionCategory);
 
 const EditTransactionCategoryWithGraphQLReduxForm = reduxForm({

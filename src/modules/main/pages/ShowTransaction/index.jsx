@@ -48,12 +48,16 @@ const ShowTransaction = ({ data, location, params }) => {
             <small className={styles.transactionAttributeConcept}>Date</small>
           </h2>
           <div>
-            <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
-              <div className={styles.category}>{data.transaction.category}</div>
-            </Link>
-            <small className={styles.transactionAttributeConcept}>
-              Category
-            </small>
+            { data.transaction.type === 'MirrorTransaction' &&
+            <div>
+              <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
+                <div className={styles.category}>{data.transaction.category}</div>
+              </Link>
+              <small className={styles.transactionAttributeConcept}>
+                        Category
+              </small>
+            </div>
+            }
           </div>
         </Col>
       </Row>

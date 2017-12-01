@@ -26,13 +26,11 @@ const CategoryInput = componentProps => (
 class EditTransactionCategory extends Component {
   handleCategoryClick(categoryKey) {
     const { params } = this.props;
-    return this.props.submit({ mirrorTransactionId: params.transactionId, categoryCode: categoryKey })
-            .then(() => {
-              this.props.router.push(`/accounts/${params.accountId}/transactions/${params.transactionId}`);
-            })
-            .catch(() => {
-              this.props.viewStore.addError('There was a problem');
-            });
+    this.props.submit({ mirrorTransactionId: params.transactionId, categoryCode: categoryKey })
+              .catch(() => {
+                this.props.viewStore.addError('There was a problem updating the category');
+              });
+    this.props.router.push(`/accounts/${params.accountId}/transactions/${params.transactionId}`);
   }
 
   renderCategoryItem({ name, key, subcategories }) {
@@ -76,6 +74,7 @@ class EditTransactionCategory extends Component {
               disabled
             />
             <hr />
+            <h2>Change category</h2>
             <Field
               name="categoryName"
               type="text"
@@ -84,9 +83,11 @@ class EditTransactionCategory extends Component {
             <hr />
             {
               categories &&
-                <ul>
-                  {categories.map(category => this.renderCategoryItem(category))}
-                </ul>
+                <div>
+                  <ul>
+                    {categories.map(category => this.renderCategoryItem(category))}
+                  </ul>
+                </div>
             }
           </Col>
         </Row>
@@ -137,6 +138,14 @@ const EditTransactionCategoryWithGraphQL = compose(
     props: ({ mutate }) => ({
       submit: ({ mirrorTransactionId, categoryCode }) => mutate({
         variables: { mirrorTransactionId, categoryCode },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateMirrorTransactionCategory: {
+            id: mirrorTransactionId,
+            __typename: 'Transaction',
+            category: categoryCode,
+          },
+        },
       }),
     }),
   })

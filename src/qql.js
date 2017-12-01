@@ -300,11 +300,10 @@ mutation createVirtualTransaction($originAccountId: ID!, $destinationAccountId: 
 export const updateMirrorTransactionCategory = gql`
 mutation updateMirrorTransactionCategory($mirrorTransactionId: ID!, $categoryCode: String!) {
   updateMirrorTransactionCategory(mirror_transaction_id: $mirrorTransactionId, category_code: $categoryCode) {
-    ...transactionFields
+    id
+    category
   }
 }
-
-${transactionFieldsFragment}
 `;
 
 export const updatePercentageRule = gql`

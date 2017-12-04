@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import restFetch from 'restApi';
 import { mixpanelEventProps, SETUP_SIGNUP_PASSWORD, VIEW_SIGNUP_PASSWORD_PAGE } from 'config/mixpanelEvents';
 import gridStyles from 'styles/base/grid.scss';
+import baseStyles from 'styles/base/base.scss';
 import logo from 'assets/images/logo.png';
 import ErrorBar from 'components/layout/ErrorBar';
 import PasswordForm from '../../forms/Password';
@@ -83,10 +84,22 @@ class ResetPassword extends Component {
         <Row center="xs" className={styles.formRow} >
           <Col xs>
             { this.props.userStore.user.email ?
-              <PasswordForm
-                onSubmit={data => this.handleFormSubmit(data)}
-                initialValues={{ email: this.props.userStore.user.email }}
-              /> :
+              <div>
+                <div className={baseStyles.baseMarginBottom}>
+                  <PasswordForm
+                    onSubmit={data => this.handleFormSubmit(data)}
+                    initialValues={{ email: this.props.userStore.user.email }}
+                  />
+                </div>
+                {
+                   this.props.userStore.isNewUser &&
+                   <Row center="xs" className={baseStyles.baseMarginBottom}>
+                     <Col xs={6} className={styles.legalText}>
+                        By signing up, you agree to the <a href="/terms_of_service" target="_blank">Terms of Service</a> and <a href="/privacy_policy" target="_blank">Privacy Policy</a>, and <a href="https://www.saltedge.com/pages/end_user_license_terms" target="_blank">those of our providers</a>.
+                     </Col>
+                   </Row>
+                }
+              </div> :
               <p>Password reset token is not valid.</p>
             }
           </Col>

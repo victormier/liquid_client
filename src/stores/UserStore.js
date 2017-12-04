@@ -1,4 +1,4 @@
-import { extendObservable, action } from 'mobx';
+import { extendObservable, action, computed } from 'mobx';
 import restFetch from 'restApi';
 
 class UserStore {
@@ -11,8 +11,13 @@ class UserStore {
       user: {
         id: null,
         email: null,
+        bank_connection_phase: null,
       },
     });
+  }
+
+  @computed get isNewUser() {
+    return (!this.user.bank_connection_phase || this.user.bank_connection_phase === 'new_login');
   }
 
   @action getUserFromResetPasswordToken(resetPasswordToken, viewStore) {
@@ -41,6 +46,7 @@ class UserStore {
         this.user = {
           id: data.user.id,
           email: data.user.email,
+          bank_connection_phase: data.user.bank_connection_phase,
         };
       }))
       .catch((error) => {

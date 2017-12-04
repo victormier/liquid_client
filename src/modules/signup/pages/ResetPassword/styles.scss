@@ -4,3 +4,9 @@
   padding-top: $base-grid-gutter*4;
   padding-bottom: $base-grid-gutter*2;
 }
+
+.legalText {
+  a {
+    text-decoration: underline;
+  }
+}

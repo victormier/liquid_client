@@ -78,7 +78,7 @@ const PrivacyPolicy = () => (
           <h2>Changes to our Privacy Policy</h2>
           <p>Subject to applicable law, we may revise this Privacy Policy at any time and in our sole discretion. When we revise this Privacy Policy, we will post the revised version via our Services and will update the date at the top of this Privacy Policy. The revised Privacy Policy will be effective upon posting via our Services, unless otherwise set forth therein or as otherwise required by applicable law. You are free to decide whether or not to accept a revised version of this Privacy Policy, but accepting this Privacy Policy, as revised, is required for you to continue accessing or using our Services. If you do not agree to the terms of this Privacy Policy or any revised version of this Privacy Policy, your sole recourse is to terminate your access and use of our Services. Except as otherwise expressly stated by us, your access and use of our Services is subject to the version of this Privacy Policy in effect at the time of access or use.</p>
           <h2>Contacting Us</h2>
-          <p>If you have any questions regarding this Privacy Policy, or if you wish to ask us to delete, correct, or show you your Personal Information as provided above, please contact us at <a href="mailto:help@helloliquid.com">help@helloliquid.com</a>&nbsp;, or [Insert physical address]</p>
+          <p>If you have any questions regarding this Privacy Policy, or if you wish to ask us to delete, correct, or show you your Personal Information as provided above, please contact us at <a href="mailto:help@helloliquid.com">help@helloliquid.com</a>&nbsp;, or c/Jesus 16 Local 2, 08012, Barcelona, Spain</p>
         </Col>
       </Row>
     </Row>

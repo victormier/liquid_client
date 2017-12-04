@@ -71,7 +71,7 @@ const TermsOfService = () => (
           <h2>Will Liquid ever change these Terms or the Services?</h2>
           <p>We may add to or terminate any of the Services or amend these Terms at any time, in our sole discretion, without providing notice to you, subject to applicable law. We reserve the right, subject to applicable law, to deliver to you any notice of changes to existing terms or the addition of new terms by posting an updated version of these Terms on the Website and the Application or delivering notice thereof to you electronically. You are free to decide whether or not to accept a revised version of these Terms, but accepting these Terms, as revised, is required for you to continue accessing or using the Services. If you do not agree to these Terms or any revised version of these Terms, your sole recourse is to terminate your access or use of the Services. Except as otherwise expressly stated by us, your access and use of the Services are subject to, and constitute your acceptance of, the version of these Terms in effect at the time of your access or use.</p>
           <h2>How can I contact Liquid?</h2>
-          <p>If you have any questions, comments, or concerns regarding these Terms or the Services, please contact us at help@helloliquid.com, or Liquid financial services, Inc., [Insert physical address here]</p>
+          <p>If you have any questions, comments, or concerns regarding these Terms or the Services, please contact us at help@helloliquid.com, or Liquid financial services, Inc., c/Jesus 16 Local 2, 08012, Barcelona, Spain</p>
         </Col>
       </Row>
     </Row>

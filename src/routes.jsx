@@ -102,6 +102,16 @@ class AppRouter extends Component {
                 }
               }
               />
+              <Route
+                path={'/privacy_policy'}
+                getComponent={
+                (location, cb) => {
+                  System.import('modules/core/pages/PrivacyPolicy')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+                }
+              }
+              />
             </Route>
             <Route
               component={PrivateRoutes}

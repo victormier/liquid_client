@@ -92,6 +92,16 @@ class AppRouter extends Component {
                 }
               }
               />
+              <Route
+                path={'/terms_of_service'}
+                getComponent={
+                (location, cb) => {
+                  System.import('modules/core/pages/TermsOfService')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+                }
+              }
+              />
             </Route>
             <Route
               component={PrivateRoutes}

@@ -69,7 +69,7 @@ class EditTransactionCategory extends Component {
           <Col xs={12}>
             <h1>Transaction Category</h1>
             <FormInput
-              value={transactionQuery.transaction.category}
+              value={transactionQuery.transaction.category_name}
               type="text"
               disabled
             />
@@ -100,7 +100,7 @@ EditTransactionCategory.propTypes = {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.bool,
     transaction: PropTypes.shape({
-      category: PropTypes.string.isRequired,
+      category_name: PropTypes.string.isRequired,
     }),
   }),
   allCategoriesQuery: PropTypes.shape({

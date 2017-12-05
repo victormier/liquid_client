@@ -51,7 +51,7 @@ const ShowTransaction = ({ data, location, params }) => {
             { data.transaction.type === 'MirrorTransaction' &&
             <div>
               <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
-                <div className={styles.category}>{data.transaction.category}</div>
+                <div className={styles.category}>{data.transaction.category_name}</div>
               </Link>
               <small className={styles.transactionAttributeConcept}>
                         Category
@@ -72,7 +72,7 @@ ShowTransaction.propTypes = {
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
+      category_name: PropTypes.string.isRequired,
       made_on: PropTypes.number.isRequired,
       created_at: PropTypes.number.isRequired,
       account: PropTypes.shape({

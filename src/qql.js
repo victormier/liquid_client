@@ -10,6 +10,7 @@ const transactionFieldsFragment = gql`
     type,
     description,
     category,
+    category_name,
     created_at
   }
 `;
@@ -159,6 +160,7 @@ query transaction($id: ID!) {
     type,
     description,
     category,
+    category_name,
     created_at,
     virtual_account {
       name,
@@ -302,6 +304,7 @@ mutation updateMirrorTransactionCategory($mirrorTransactionId: ID!, $categoryCod
   updateMirrorTransactionCategory(mirror_transaction_id: $mirrorTransactionId, category_code: $categoryCode) {
     id
     category
+    category_name
   }
 }
 `;

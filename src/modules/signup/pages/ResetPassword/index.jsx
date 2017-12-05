@@ -95,7 +95,7 @@ class ResetPassword extends Component {
                    this.props.userStore.isNewUser &&
                    <Row center="xs" className={baseStyles.baseMarginBottom}>
                      <Col xs={6} className={styles.legalText}>
-                        By signing up, you agree to the <a href="/terms_of_service" target="_blank">Terms of Service</a> and <a href="/privacy_policy" target="_blank">Privacy Policy</a>, and <a href="https://www.saltedge.com/pages/end_user_license_terms" target="_blank">those of our providers</a>.
+                        By signing up, you agree to the <a href="/terms_of_service" target="_blank">Terms of Service</a> and <a href="/privacy_policy" target="_blank">Privacy Policy</a>, and <a href="https://www.saltedge.com/pages/end_user_license_terms" target="_blank" rel="noreferrer noopener">those of our providers</a>.
                      </Col>
                    </Row>
                 }
@@ -138,6 +138,7 @@ ResetPassword.wrappedComponent.propTypes = {
       email: PropTypes.string,
       id: PropTypes.integer,
     }).isRequired,
+    isNewUser: PropTypes.bool.isRequired,
   }).isRequired,
 };
 

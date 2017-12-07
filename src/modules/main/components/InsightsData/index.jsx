@@ -104,7 +104,7 @@ const InsightsData = (props) => {
                 {
                   data.insights.category_insights.map(categoryInsight => (
                     <li>
-                      <Link to={`insights/categories/${categoryInsight.name}/${props.year}/${props.month + 1}`}>
+                      <Link to={`insights/categories/${categoryInsight.code}/${props.year}/${props.month + 1}`}>
                         <SquareRoundedBlock>
                           <Row>
                             <Col xs={6}>
@@ -159,6 +159,7 @@ InsightsData.propTypes = {
       total_income: PropTypes.number.isRequired,
       category_insights: PropTypes.arrayOf(
         PropTypes.shape({
+          code: PropTypes.string.isRequired,
           name: PropTypes.string.isRequired,
           amount: PropTypes.number.isRequired,
           percentage: PropTypes.number.isRequired,

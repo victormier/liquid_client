@@ -186,6 +186,7 @@ query insights($month: Int!, $year: Int!) {
       made_on
     },
     category_insights {
+      code,
       name,
       amount,
       percentage,

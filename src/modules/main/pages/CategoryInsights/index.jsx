@@ -16,7 +16,7 @@ const CategoryInsights = (props) => {
   const { data } = props;
   if (data.loading) return <SpinnerBlock />;
   if (data.error) return <p>Error!</p>;
-  const category = _.find(data.insights.category_insights, ci => (ci.name === props.params.category));
+  const category = _.find(data.insights.category_insights, ci => (ci.code === props.params.category));
   const currencyCode = data.insights.mirror_account.currency_code;
   const accountId = data.insights.mirror_account.id;
 
@@ -30,7 +30,7 @@ const CategoryInsights = (props) => {
       <Row>
         <Col xs={6}>
           <h2 className={styles.categoryName}>
-            { props.params.category }
+            { category ? category.name : props.params.category }
           </h2>
         </Col>
         <Col xs={6}>
@@ -71,7 +71,7 @@ CategoryInsights.propTypes = {
       }),
       category_insights: PropTypes.arrayOf(
         PropTypes.shape({
-          name: PropTypes.string.isRequired,
+          code: PropTypes.string.isRequired,
           amount: PropTypes.number.isRequired,
           percentage: PropTypes.number.isRequired,
           transactions: PropTypes.array,

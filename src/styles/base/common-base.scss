@@ -37,6 +37,10 @@ a {
   }
 }
 
+ul {
+  list-style: none;
+}
+
 hr {
   border-color: transparentize($gray, 0.8);
 }

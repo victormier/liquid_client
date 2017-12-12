@@ -4,6 +4,7 @@ import { graphql, withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { queryTransaction } from 'qql';
+import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import GoBackArrow from 'components/common/GoBackArrow';
 import { toCurrency } from 'utils/currencies';
@@ -46,6 +47,18 @@ const ShowTransaction = ({ data, location, params }) => {
             <br />
             <small className={styles.transactionAttributeConcept}>Date</small>
           </h2>
+          <div>
+            { data.transaction.type === 'MirrorTransaction' &&
+            <div>
+              <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
+                <div className={styles.category}>{data.transaction.category_name}</div>
+              </Link>
+              <small className={styles.transactionAttributeConcept}>
+                        Category
+              </small>
+            </div>
+            }
+          </div>
         </Col>
       </Row>
     </Grid>);
@@ -59,7 +72,7 @@ ShowTransaction.propTypes = {
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
+      category_name: PropTypes.string.isRequired,
       made_on: PropTypes.number.isRequired,
       created_at: PropTypes.number.isRequired,
       account: PropTypes.shape({

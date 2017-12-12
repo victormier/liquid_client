@@ -30,7 +30,7 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
           <Col xs={7}>
             <div>{transaction.description}</div>
             <div className={styles.transactionCategory}>
-              {transaction.category}
+              {transaction.category_name}
             </div>
           </Col>
           <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
@@ -46,7 +46,7 @@ TransactionItem.propTypes = {
     amount: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    category_name: PropTypes.string.isRequired,
     made_on: PropTypes.number.isRequired,
     created_at: PropTypes.number.isRequired,
   }),
@@ -76,7 +76,7 @@ TransactionList.propTypes = {
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
+      category_name: PropTypes.string.isRequired,
       made_on: PropTypes.number.isRequired,
       created_at: PropTypes.number.isRequired,
     })

@@ -92,6 +92,26 @@ class AppRouter extends Component {
                 }
               }
               />
+              <Route
+                path={'/terms_of_service'}
+                getComponent={
+                (location, cb) => {
+                  System.import('modules/core/pages/TermsOfService')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+                }
+              }
+              />
+              <Route
+                path={'/privacy_policy'}
+                getComponent={
+                (location, cb) => {
+                  System.import('modules/core/pages/PrivacyPolicy')
+                  .then(loadRoute(cb))
+                  .catch(err => errorLoading(err));
+                }
+              }
+              />
             </Route>
             <Route
               component={PrivateRoutes}
@@ -205,6 +225,16 @@ class AppRouter extends Component {
                 getComponent={
                   (location, cb) => {
                     System.import('modules/main/pages/ShowTransaction')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
+                path={'/accounts/:accountId/transactions/:transactionId/category'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/main/pages/EditTransactionCategory')
                       .then(loadRoute(cb))
                       .catch(err => errorLoading(err));
                   }

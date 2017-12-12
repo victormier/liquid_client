@@ -63,6 +63,15 @@
 .baseMarginBottomLarge {
   margin-bottom: $base-grid-gutter*2;
 }
+.baseMarginTop {
+  margin-top: $base-grid-gutter;
+}
+.baseMarginTopSmall {
+  margin-top: $base-grid-gutter/2;
+}
+.baseMarginTopLarge {
+  margin-top: $base-grid-gutter*2;
+}
 
 .floatLeft {
   float: left;

@@ -1,0 +1,11 @@
+@import 'base/variables';
+
+.title {
+  margin-bottom: $base-grid-gutter/4;
+}
+
+.subtitle {
+  line-height: 1.4;
+  font-size: $font-size-small;
+  color: transparentize(white, 0.5);
+}

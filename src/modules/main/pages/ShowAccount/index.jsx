@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { graphql, withApollo } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { queryAccount } from 'qql';
@@ -41,6 +42,7 @@ class ShowAccount extends Component {
     let subtitle;
     let rightButtonSecondary;
     let titleRight;
+    let cachedAccount;
 
     if (contentIsReady) {
       if (data.account.is_refreshing) {
@@ -51,6 +53,24 @@ class ShowAccount extends Component {
       title = data.account.name;
       if (data.account.is_mirror_account) rightButtonSecondary = <RefreshButton accountId={data.account.id} />;
       titleRight = toCurrency(data.account.balance, data.account.currency_code);
+    } else {
+      cachedAccount = this.props.client.readFragment({
+        id: `VirtualAccount_${params.accountId}`,
+        fragment: gql`
+           fragment myAccount on VirtualAccount {
+             id
+             name
+             balance
+             currency_code
+             is_mirror_account
+           }
+         `,
+      });
+
+      if (cachedAccount) {
+        title = cachedAccount.name;
+        titleRight = toCurrency(cachedAccount.balance, cachedAccount.currency_code);
+      }
     }
 
     return (
@@ -104,14 +124,17 @@ ShowAccount.propTypes = {
       ),
     }),
   }),
+  client: PropTypes.shape({
+    readFragment: PropTypes.func.isRequired,
+  }),
 };
 
-const ShowAccountWithGraphQL = graphql(queryAccount, {
-  options: ownProps => ({
-    variables: {
-      id: ownProps.params.accountId,
-    },
-  }),
-})(ShowAccount);
+const ShowAccountWithGraphQL = compose(
+  graphql(queryAccount, {
+    options: ownProps => ({
+      variables: { id: ownProps.params.accountId },
+    }),
+  })
+)(ShowAccount);
 
 export default withApollo(ShowAccountWithGraphQL);

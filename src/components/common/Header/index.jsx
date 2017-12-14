@@ -30,12 +30,12 @@ const Header = props => (
       </Col>
     </Row>
     <Row>
-      <Col xs={6}>
+      <Col xs={8}>
         <h1 className={styles.title}>{props.title}</h1>
         <div className={styles.subtitle}>{props.subtitle}</div>
       </Col>
-      <Col xs={6}>
-        <h2 className={baseStyles.textRight}>
+      <Col xs={4}>
+        <h2 className={styles.titleRight}>
           { props.titleRight }
         </h2>
       </Col>

@@ -33,7 +33,7 @@ networkInterface.useAfter([{
 const client = new ApolloClient({
   networkInterface,
   queryTransformer: addTypeName,
-  dataIdFromObject: o => o.id,
+  dataIdFromObject: o => `${o.__typename}_${o.id}`,
 });
 
 export default client;

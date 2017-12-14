@@ -9,3 +9,7 @@
   font-size: $font-size-small;
   color: transparentize(white, 0.5);
 }
+
+.topRow {
+  padding-top: $base-grid-gutter*1.5;
+}

@@ -37,6 +37,7 @@
     "max-len": ["warn", 80],
     "no-debugger": ["warn"],
     "react/forbid-prop-types": 0,
-    "no-param-reassign": ["warn"]
+    "no-param-reassign": ["warn"],
+    "no-underscore-dangle": ["off"]
   }
 }

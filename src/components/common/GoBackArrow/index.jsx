@@ -17,11 +17,9 @@ class GoBackArrow extends Component {
 
   render() {
     return (
-      <div className={styles.container}>
-        <a href="#back" onClick={this.handleGoBackClick}>
-          <img alt="arrow left" src={arrowLeft} />
-        </a>
-      </div>
+      <a href="#back" onClick={this.handleGoBackClick} className={styles.button}>
+        <img alt="arrow left" src={arrowLeft} />
+      </a>
     );
   }
 }

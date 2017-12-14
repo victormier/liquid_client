@@ -1,8 +1,16 @@
+@import 'base/mixins';
 @import 'base/variables';
 
-.container {
-  display: block;
-  padding-top: $base-grid-gutter;
-  left: $base-grid-gutter;
+.button {
+  @include circleBlock;
+  @include transparentBackground;
+  display: inline-block;
   z-index: 10;
+  line-height: 1rem;
+
+  img {
+    position: relative;
+    top: 2rem;
+    left: 2.1rem;
+  }
 }

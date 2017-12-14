@@ -6,15 +6,13 @@ import gridStyles from 'styles/base/grid.scss';
 import { queryAccount } from 'qql';
 import { Link } from 'react-router';
 import moment from 'node-moment';
-import SpinnerBlock from 'components/common/SpinnerBlock';
-import GoBackArrow from 'components/common/GoBackArrow';
+import Header from 'components/common/Header';
+import QueryLoading from 'components/common/QueryLoading';
 import Button from 'components/common/Button';
 import ErrorBar from 'components/layout/ErrorBar';
 import { toCurrency } from 'utils/currencies';
-import baseStyles from 'styles/base/base.scss';
 import RefreshButton from '../../components/RefreshButton';
 import TransactionList from '../../components/TransactionList';
-import styles from './styles.scss';
 
 const checkPolling = (props) => {
   if (!props.data.loading && !props.data.error) {
@@ -36,64 +34,48 @@ class ShowAccount extends Component {
   }
 
   render() {
-    const { data } = this.props;
-    if (data.loading && !data.account) return <SpinnerBlock />;
-    if (data.error) return <div>Error!</div>;
+    const { data, params } = this.props;
+    const contentIsReady = !data.loading && !data.error && data.account;
 
-    let updatingMessage;
-    if (data.account.is_refreshing) {
-      updatingMessage = (<span>
-        <br />
-        <small>Syncing account...It might take 2 min.</small>
-      </span>);
-    } else if (data.account.is_mirror_account && data.account.last_updated) {
-      updatingMessage = (<span>
-        <br />
-        <small>Updated {moment.unix(data.account.last_updated).fromNow()}</small>
-      </span>);
+    let title = 'Account';
+    let subtitle;
+    let rightButtonSecondary;
+    let titleRight;
+
+    if (contentIsReady) {
+      if (data.account.is_refreshing) {
+        subtitle = 'Syncing account...It might take 2 min.';
+      } else if (data.account.is_mirror_account && data.account.last_updated) {
+        subtitle = `Updated ${moment.unix(data.account.last_updated).fromNow()}`;
+      }
+      title = data.account.name;
+      if (data.account.is_mirror_account) rightButtonSecondary = <RefreshButton accountId={data.account.id} />;
+      titleRight = toCurrency(data.account.balance, data.account.currency_code);
     }
 
     return (
       <Grid fluid className={gridStyles.mainGrid}>
         <ErrorBar />
-        <Row className={baseStyles.topNav}>
-          <Col xs={6}>
-            <GoBackArrow to="/accounts" />
-          </Col>
-          <Col xs={2}>
-            {
-              data.account.is_mirror_account &&
-                <div className={baseStyles.floatRight}>
-                  <RefreshButton accountId={data.account.id} />
-                </div>
-            }
-          </Col>
-          <Col xs={4} className={baseStyles.textRight}>
-            <Link to={`/transactions/new/${data.account.id}`}>
-              <Button text="Transfer" color="transparent" />
-            </Link>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <h2 className={styles.accountName}>
-              { data.account.name }
-              { updatingMessage }
-            </h2>
-          </Col>
-          <Col xs={6}>
-            <h2 className={baseStyles.textRight}>
-              { toCurrency(data.account.balance, data.account.currency_code) }
-            </h2>
-          </Col>
-        </Row>
+        <Header
+          title={title}
+          subtitle={subtitle}
+          backTo="/accounts"
+          rightButtonSecondary={rightButtonSecondary}
+          rightButton={<Link to={`/transactions/new/${params.accountId}`}>
+            <Button text="Transfer" color="transparent" />
+          </Link>}
+          titleRight={titleRight}
+        />
         <Row>
           <Col xs={12}>
-            <TransactionList
-              items={data.account.transactions}
-              currencyCode={data.account.currency_code}
-              accountId={data.account.id}
-            />
+            { contentIsReady ?
+              <TransactionList
+                items={data.account.transactions}
+                currencyCode={data.account.currency_code}
+                accountId={data.account.id}
+              /> :
+              <QueryLoading error={data.error} />
+            }
           </Col>
         </Row>
       </Grid>);
@@ -101,6 +83,9 @@ class ShowAccount extends Component {
 }
 
 ShowAccount.propTypes = {
+  params: PropTypes.shape({
+    accountId: PropTypes.string.isRequired,
+  }),
   data: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     account: PropTypes.shape({

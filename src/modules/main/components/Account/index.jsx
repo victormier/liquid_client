@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import Button from 'components/common/Button';
 import { toCurrency } from 'utils/currencies';
 import styles from './styles.scss';
 
 const Account = props => (
-  <Button color="lightBlueGradient" className={styles.account} {...props} >
+  <Button color="lightBlueGradient" className={styles.account} {..._.without(props, props.account)} >
     <div className={styles.accountInfo}>
       <div className={styles.accountName}>{props.account.name}</div>
     </div>

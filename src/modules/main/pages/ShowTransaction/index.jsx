@@ -31,7 +31,7 @@ const ShowTransaction = ({ data, location, params, client }) => {
 
   if (transaction) {
     date = dateFromSeconds(transaction.made_on);
-    backTo = (location.state && location.state.backTo) ? location.state.backTo : `/accounts/${params.accountId}`;
+    if (location.state && location.state.backTo) backTo = location.state.backTo;
   }
   if (virtualAccount) {
     title = virtualAccount.name;

@@ -57,7 +57,7 @@ const ListAccounts = (props) => {
             <Button text="Transfer" color="transparent" />
           </Link>}
           rightButtonSecondary={
-            contentIsReady && <RefreshButton accountId={mirrorAccount.id} />
+            contentIsReady ? <RefreshButton accountId={mirrorAccount.id} /> : null
           }
         />
         { contentIsReady ?

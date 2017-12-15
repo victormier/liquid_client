@@ -38,7 +38,7 @@ class ShowAccount extends Component {
     const { data, params } = this.props;
     const contentIsReady = !data.loading && !data.error && data.account;
 
-    let title = 'Account';
+    let title = '';
     let subtitle;
     let rightButtonSecondary;
     let titleRight;

@@ -14,7 +14,7 @@ import styles from './styles.scss';
 const ShowTransaction = ({ data, location, params, client }) => {
   const contentIsReady = !data.loading && !data.error && data.transaction;
 
-  let title = 'Account';
+  let title = '';
   let backTo = `/accounts/${params.accountId}`;
   let date;
 

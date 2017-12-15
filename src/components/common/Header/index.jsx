@@ -13,7 +13,7 @@ const Header = props => (
         <div className={gridStyles.gridDisplacedLeft}>
           {
             props.backTo ?
-              <GoBackArrow to="/accounts" /> :
+              <GoBackArrow to={props.backTo} /> :
               props.leftButton
           }
         </div>
@@ -46,7 +46,7 @@ const Header = props => (
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
-  titleRight: PropTypes.string.isRequired,
+  titleRight: PropTypes.string,
   subtitle: PropTypes.string,
   leftButton: PropTypes.object,
   rightButton: PropTypes.object,

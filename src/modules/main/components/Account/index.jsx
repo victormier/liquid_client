@@ -6,7 +6,7 @@ import { toCurrency } from 'utils/currencies';
 import styles from './styles.scss';
 
 const Account = props => (
-  <Button color="lightBlueGradient" className={styles.account} {..._.without(props, props.account)} >
+  <Button color="lightBlueGradient" className={styles.account} {..._.omit(props, ['account'])} >
     <div className={styles.accountInfo}>
       <div className={styles.accountName}>{props.account.name}</div>
     </div>

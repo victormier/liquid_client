@@ -9,6 +9,7 @@ import gridStyles from 'styles/base/grid.scss';
 import { toCurrency } from 'utils/currencies';
 import { dateFromSeconds } from 'utils/dates';
 import { autobind } from 'core-decorators';
+import QueryLoading from 'components/common/QueryLoading';
 import Nav from '../../components/Nav';
 import InsightsGraphBlock from '../../components/InsightsGraphBlock';
 import InsightsData from '../../components/InsightsData';
@@ -31,45 +32,54 @@ class Insights extends Component {
     const { data } = this.props;
     if (data.loading) return <SpinnerBlock />;
     if (data.error) return <p>Error!</p>;
+    const contentIsReady = !data.loading && !data.error && data.all_insights;
+    let selectedStartDate;
 
-    const selectedStartDate = dateFromSeconds(data.all_insights[this.state.selectedInsight].start_date);
+    if (contentIsReady) {
+      selectedStartDate = dateFromSeconds(data.all_insights[this.state.selectedInsight].start_date);
+    }
 
     return (
       <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav} ${gridStyles.basePadding}`}>
-        <Row className={styles.balances} center="xs">
-          <Col xs={3} className={styles.mainStats}>
-            <div className={styles.amountTitle}>Current balance</div>
-            <div className={styles.amountData}>
-              {toCurrency(data.all_insights[this.state.selectedInsight].total_balance, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
-            </div>
-          </Col>
-          <Col xs={3} className={styles.totalIncome}>
-            <div className={styles.amountTitle}>Income</div>
-            <div className={styles.amountData}>
-              {toCurrency(data.all_insights[this.state.selectedInsight].total_income, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
-            </div>
-          </Col>
-          <Col xs={3} className={styles.totalExpense}>
-            <div className={styles.amountTitle}>Expenses</div>
-            <div className={styles.amountData}>
-              {toCurrency(data.all_insights[this.state.selectedInsight].total_expense, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <InsightsGraphBlock
-              insights={data.all_insights}
-              selectedInsight={this.state.selectedInsight}
-              onMonthSelect={this.handleMonthSelect}
-            />
-          </Col>
-        </Row>
+        { contentIsReady ?
+          <div>
+            <Row className={styles.balances} center="xs">
+              <Col xs={3} className={styles.mainStats}>
+                <div className={styles.amountTitle}>Current balance</div>
+                <div className={styles.amountData}>
+                  {toCurrency(data.all_insights[this.state.selectedInsight].total_balance, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
+                </div>
+              </Col>
+              <Col xs={3} className={styles.totalIncome}>
+                <div className={styles.amountTitle}>Income</div>
+                <div className={styles.amountData}>
+                  {toCurrency(data.all_insights[this.state.selectedInsight].total_income, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
+                </div>
+              </Col>
+              <Col xs={3} className={styles.totalExpense}>
+                <div className={styles.amountTitle}>Expenses</div>
+                <div className={styles.amountData}>
+                  {toCurrency(data.all_insights[this.state.selectedInsight].total_expense, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <InsightsGraphBlock
+                  insights={data.all_insights}
+                  selectedInsight={this.state.selectedInsight}
+                  onMonthSelect={this.handleMonthSelect}
+                />
+              </Col>
+            </Row>
 
-        <InsightsData
-          month={selectedStartDate.getMonth()}
-          year={selectedStartDate.getFullYear()}
-        />
+            <InsightsData
+              month={selectedStartDate.getMonth()}
+              year={selectedStartDate.getFullYear()}
+            />
+          </div> :
+          <QueryLoading error={data.error} />
+        }
 
         <Nav />
       </Grid>

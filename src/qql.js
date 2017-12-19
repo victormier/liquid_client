@@ -63,12 +63,14 @@ export const querySaltedgeProvider = gql`
       name
       instruction
       required_fields {
+        id
         localized_name
         name
         nature
         optional
         position
         field_options {
+          id
           name
           localized_name
           option_value
@@ -176,10 +178,11 @@ export const queryInsights = gql`
         ...transactionFields
       },
       category_insights {
-        code,
-        name,
-        amount,
-        percentage,
+        id
+        code
+        name
+        amount
+        percentage
         transactions {
           ...transactionFields
         }
@@ -192,11 +195,12 @@ export const queryInsights = gql`
 export const queryAllInsights = gql`
   query allInsights {
     all_insights {
-      start_date,
-      end_date,
-      total_income,
-      total_expense,
-      total_balance,
+      id
+      start_date
+      end_date
+      total_income
+      total_expense
+      total_balance
       mirror_account {
         id
         currency_code

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import FormInput from 'components/common/FormInput';
+import Header from 'components/common/Header';
+import Button from 'components/common/Button';
+import QueryLoading from 'components/common/QueryLoading';
 import gridStyles from 'styles/base/grid.scss';
 import { inject } from 'mobx-react';
 import { mixpanelEventProps, SEARCH_BANK } from 'config/mixpanelEvents';
@@ -22,7 +25,10 @@ const BankNameInput = componentProps => (
     placeholder="Your Bank"
   />);
 
-@inject('mixpanel')
+@inject(
+  'mixpanel',
+  'viewStore'
+)
 class SelectProvider extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.bankName &&
@@ -35,51 +41,64 @@ class SelectProvider extends Component {
     }
   }
 
+  onLogout = (e) => {
+    e.preventDefault();
+    this.props.client.resetStore();
+    this.props.viewStore.reset();
+    this.props.route.logout();
+    this.props.router.push('/');
+  }
+
   render() {
     let bankItems;
     const { data } = this.props;
+    const contentIsReady = !data.loading && !data.error && data.all_saltedge_providers;
 
-    if (data.loading) {
-      return <p>Loading...</p>;
-    }
-    if (data.error) {
-      return <p>Error!</p>;
-    }
-
-    if (this.props.bankName && this.props.bankName.length >= 2) {
-      const regex = new RegExp(this.props.bankName, 'i');
-      const filteredProviders = _.filter(data.all_saltedge_providers,
-                                  sp => (regex.test(sp.name)));
-      const groupedProviders = _.groupBy(filteredProviders, 'country_code');
-      bankItems = Object.keys(groupedProviders).map(countryCode => (
-        <div key={countryCode}>
-          <h2>{getCountryName(countryCode)}</h2>
-          <ul className={styles.bankList}>
-            { groupedProviders[countryCode].map(
-                sp => <BankItem key={sp.id} saltedgeProvider={sp} />
-              )
-            }
-          </ul>
-        </div>
-      ));
+    if (contentIsReady) {
+      if (this.props.bankName && this.props.bankName.length >= 2) {
+        const regex = new RegExp(this.props.bankName, 'i');
+        const filteredProviders = _.filter(data.all_saltedge_providers,
+                                    sp => (regex.test(sp.name)));
+        const groupedProviders = _.groupBy(filteredProviders, 'country_code');
+        bankItems = Object.keys(groupedProviders).map(countryCode => (
+          <div key={countryCode}>
+            <h2>{getCountryName(countryCode)}</h2>
+            <ul className={styles.bankList}>
+              { groupedProviders[countryCode].map(
+                  sp => <BankItem key={sp.id} saltedgeProvider={sp} />
+                )
+              }
+            </ul>
+          </div>
+        ));
+      }
     }
 
     return (
       <Grid fluid className={gridStyles.mainGrid}>
+        <Header
+          title="Search your bank"
+          rightButton={<Button
+            id="logoutButton"
+            text="Log out"
+            color="transparent"
+            onClick={(e) => { this.onLogout(e); }}
+          />}
+        />
         <Row>
-          <Col xs={12}>
-            <h1>Search for your bank</h1>
-            <Field
-              name="bankName"
-              type="text"
-              component={BankNameInput}
-            />
-            <hr />
-            {
-              bankItems &&
-                <ul className={styles.bankList}>{bankItems}</ul>
-            }
-          </Col>
+          {
+            contentIsReady ?
+              <Col xs={12}>
+                <Field
+                  name="bankName"
+                  type="text"
+                  component={BankNameInput}
+                />
+                <hr />
+                { bankItems && <ul className={styles.bankList}>{bankItems}</ul> }
+              </Col> :
+              <QueryLoading error={data.error} />
+          }
         </Row>
       </Grid>
     );
@@ -99,6 +118,15 @@ SelectProvider.propTypes = {
     ),
   }).isRequired,
   bankName: PropTypes.string,
+  client: PropTypes.shape({
+    resetStore: PropTypes.func.isRequired,
+  }),
+  router: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  route: PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+  }),
 };
 SelectProvider.wrappedComponent.propTypes = {
   mixpanel: PropTypes.shape({
@@ -107,6 +135,9 @@ SelectProvider.wrappedComponent.propTypes = {
     people: PropTypes.shape({
       set: PropTypes.func.isRequired,
     }),
+  }).isRequired,
+  viewStore: PropTypes.shape({
+    reset: PropTypes.func.isRequired,
   }).isRequired,
 };
 
@@ -125,4 +156,4 @@ const ConnectedSelectProvider = connect(state => ({
   bankName: selector(state, 'bankName'),
 }))(SelectProviderWithGraphQLReduxForm);
 
-export default ConnectedSelectProvider;
+export default withApollo(ConnectedSelectProvider);

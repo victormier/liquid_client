@@ -7,8 +7,9 @@ import Button from 'components/common/Button';
 import { Link } from 'react-router';
 import Nav from 'modules/main/components/Nav';
 import PercentageRuleForm from 'modules/main/forms/PercentageRule';
+import Header from 'components/common/Header';
+import QueryLoading from 'components/common/QueryLoading';
 import FormInput from 'components/common/FormInput';
-import SpinnerBlock from 'components/common/SpinnerBlock';
 import ErrorBar from 'components/layout/ErrorBar';
 import { queryUser, queryPercentageRule, updatePercentageRule } from 'qql';
 import gridStyles from 'styles/base/grid.scss';
@@ -43,92 +44,96 @@ export class Settings extends Component {
 
   render() {
     const { userQuery, percentageRuleQuery } = this.props;
-    if (userQuery.loading || percentageRuleQuery.loading) return <SpinnerBlock />;
-    if (userQuery.error || percentageRuleQuery.error) return <div>Error!</div>;
+    const contentIsReady = !(userQuery.loading || percentageRuleQuery.loading) &&
+                           !(userQuery.error || percentageRuleQuery.error);
 
     return (
-      <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav} ${gridStyles.basePadding}`}>
+      <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav}`}>
         <ErrorBar />
-        <Row end="xs">
-          <Col xs={6} sm={4}>
-            <Button
-              id="logoutButton"
-              text="Log out"
-              color="transparent"
-              onClick={(e) => { this.onLogout(e); }}
-            />
-          </Col>
-        </Row>
+        <Header
+          title="Account"
+          rightButton={<Button
+            id="logoutButton"
+            text="Log out"
+            color="transparent"
+            onClick={(e) => { this.onLogout(e); }}
+          />}
+        />
         <Row>
           <Col xs={12}>
-            <h1>Account</h1>
-            { userQuery &&
-            <FormInput
-              value={userQuery.user.email}
-              type="text"
-              placeholder="Email"
-              disabled
-            />
-            }
-            <hr />
             {
-              percentageRuleQuery.percentage_rule &&
+              contentIsReady ?
                 <div>
-                  <h2>Tax settings</h2>
-                  <PercentageRuleForm
-                    onSubmit={formData => this.handleUpdatePercentageRule(formData)}
-                    initialValues={{
-                      minimumAmount: percentageRuleQuery.percentage_rule.minimum_amount,
-                      percentage: percentageRuleQuery.percentage_rule.percentage,
-                      active: percentageRuleQuery.percentage_rule.active.toString(),
-                    }}
+                  { userQuery &&
+                  <FormInput
+                    value={userQuery.user.email}
+                    type="text"
+                    placeholder="Email"
+                    disabled
                   />
-                </div>
-            }
-            {
-              userQuery &&
-                <div>
-                  <h2>Bank connection</h2>
-                  <div>
-                    {
-                      userQuery.user.saltedge_logins.map((saltedgeLogin) => {
-                        if (!saltedgeLogin.killed) {
-                          return (
-                            <div className={baseStyles.baseMarginBottomSmall}>
-                              <div className={baseStyles.baseMarginBottomSmall}>
-                                <FormInput
-                                  value={saltedgeLogin.saltedge_provider.name}
-                                  type="text"
-                                  disabled
-                                />
-                              </div>
-                              {
-                                saltedgeLogin.needs_reconnection &&
-                                  <div>
+                  }
+                  <hr />
+                  {
+                    percentageRuleQuery.percentage_rule &&
+                      <div>
+                        <h2>Tax settings</h2>
+                        <PercentageRuleForm
+                          onSubmit={formData => this.handleUpdatePercentageRule(formData)}
+                          initialValues={{
+                            minimumAmount: percentageRuleQuery.percentage_rule.minimum_amount,
+                            percentage: percentageRuleQuery.percentage_rule.percentage,
+                            active: percentageRuleQuery.percentage_rule.active.toString(),
+                          }}
+                        />
+                      </div>
+                  }
+                  {
+                    userQuery &&
+                      <div>
+                        <h2>Bank connection</h2>
+                        <div>
+                          {
+                            userQuery.user.saltedge_logins.map((saltedgeLogin) => {
+                              if (!saltedgeLogin.killed) {
+                                return (
+                                  <div className={baseStyles.baseMarginBottomSmall}>
                                     <div className={baseStyles.baseMarginBottomSmall}>
-                                      <Link to={`/connect/providers/${saltedgeLogin.saltedge_provider.id}`}><Button text="Reconnect Bank" color="transparent" /></Link>
+                                      <FormInput
+                                        value={saltedgeLogin.saltedge_provider.name}
+                                        type="text"
+                                        disabled
+                                      />
                                     </div>
-                                    <Row className={baseStyles.baseMarginBottomSmall}>
-                                      <Col xsOffset={1} xs={1} className={baseStyles.textCentered}><div className={circleType}>!</div></Col>
-                                      <Col xs={9}>Your bank stopped responding. You need to reconnect with your bank.</Col>
-                                    </Row>
+                                    {
+                                      saltedgeLogin.needs_reconnection &&
+                                        <div>
+                                          <div className={baseStyles.baseMarginBottomSmall}>
+                                            <Link to={`/connect/providers/${saltedgeLogin.saltedge_provider.id}`}><Button text="Reconnect Bank" color="transparent" /></Link>
+                                          </div>
+                                          <Row className={baseStyles.baseMarginBottomSmall}>
+                                            <Col xsOffset={1} xs={1} className={baseStyles.textCentered}><div className={circleType}>!</div></Col>
+                                            <Col xs={9}>Your bank stopped responding. You need to reconnect with your bank.</Col>
+                                          </Row>
+                                        </div>
+                                    }
                                   </div>
+                                );
                               }
-                            </div>
-                          );
-                        }
-                        return null;
-                      })
-                    }
+                              return null;
+                            })
+                          }
+                        </div>
+                      </div>
+                  }
+                  <div>
+                    <h2>Liquid account</h2>
+                    <div className={baseStyles.baseMarginBottomSmall}>
+                      <Link to={'/settings/delete_account'}><Button text="Delete Liquid Account" color="transparent" /></Link>
+                    </div>
                   </div>
-                </div>
+                </div> :
+                <QueryLoading error={userQuery.error} />
             }
-            <div>
-              <h2>Liquid account</h2>
-              <div className={baseStyles.baseMarginBottomSmall}>
-                <Link to={'/settings/delete_account'}><Button text="Delete Liquid Account" color="transparent" /></Link>
-              </div>
-            </div>
           </Col>
         </Row>
         <Nav />

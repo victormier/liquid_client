@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { graphql, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { queryAllInsights } from 'qql';
-// import moment from 'moment/src/moment';
-import SpinnerBlock from 'components/common/SpinnerBlock';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { toCurrency } from 'utils/currencies';
@@ -30,8 +28,6 @@ class Insights extends Component {
 
   render() {
     const { data } = this.props;
-    if (data.loading) return <SpinnerBlock />;
-    if (data.error) return <p>Error!</p>;
     const contentIsReady = !data.loading && !data.error && data.all_insights;
     let selectedStartDate;
 

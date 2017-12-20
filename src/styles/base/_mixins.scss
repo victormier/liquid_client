@@ -10,9 +10,11 @@
 }
 
 @mixin transparentBackground {
-  background: transparentize(white,
-  0.7);
+  background: transparentize(black,
+  0.8);
 }
+
+
 
 $gradientTransparentDarkBlue: rgba(0,23,52,0.15);
 $gradientTransparentLightBlue: rgba(1,184,204,0.15);

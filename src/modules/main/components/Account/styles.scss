@@ -5,21 +5,33 @@
   display: block;
   overflow: auto;
   margin-bottom: $base-grid-gutter/4;
+  padding: 1.5rem 2rem;
 }
 .accountInfo {
   float: left;
   text-align: left;
 }
 .accountBalance {
+  display: table;
   float: right;
   font-size: $font-size-large;
   font-weight: bold;
 }
+.accountDataBlock {
+  display: table;
+  height: 5rem;
+}
+.accountDataContent {
+  display: table-cell;
+  vertical-align: middle;
+}
 .accountName {
   color: white;
   font-weight: bold;
+  font-size: $font-size-large;
+  line-height: 1;
+  margin-bottom: $base-grid-gutter/4;
 }
 .accountBank {
-  color: $blueLight;
   font-size: $font-size-small;
 }

@@ -24,6 +24,7 @@ export const virtualAccountFieldsFragment = gql`
     is_mirror_account
     last_updated
     is_refreshing
+    provider_name
   }
 `;
 
@@ -131,13 +132,10 @@ export const queryAccount = gql`
 export const queryAllAccounts = gql`
   query allAccounts{
     all_accounts {
-      id,
-      name,
-      balance,
-      currency_code,
-      is_mirror_account
+      ...virtualAccountFields
     }
   }
+  ${virtualAccountFieldsFragment}
 `;
 
 export const queryAllSaltedgeAccounts = gql`

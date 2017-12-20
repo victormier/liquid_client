@@ -1,11 +1,15 @@
 @import 'base/variables';
 @import 'base/colors';
+@import 'base/mixins';
 
+.accountContainer {
+  @include blockDisplaced;
+}
 .account {
   display: block;
   overflow: auto;
   margin-bottom: $base-grid-gutter/4;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 20px;
 }
 .accountInfo {
   float: left;

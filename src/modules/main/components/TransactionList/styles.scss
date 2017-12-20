@@ -11,19 +11,46 @@
   @include squareRoundedBlock;
   @include transparentBlueBackground;
   margin-bottom: $base-grid-gutter/4;
+  padding-left: 10px;
+  padding-right: 10px;
 
   &:hover {
     @include moreTransparentBlueBackground;
   }
 }
+.dataBlock {
+  display: table;
+  height: 44px;
+  width: 100%;
+}
+.dataContent {
+  display: table-cell;
+  vertical-align: middle;
+}
 
+.date {
+  color: $transparentWhite;
+  line-height: 1.2;
+}
 .transactionCategory {
   font-size: $font-size-small;
   color: $green;
+
+  img {
+    margin-left: $base-grid-gutter/4;
+  }
 }
 
 a.transactionLink {
+  display: block;
+  @include blockDisplaced;
+
   &:hover {
     text-decoration: none;
   }
+}
+
+.amount {
+  font-size: $font-size-large;
+  padding-right: $base-grid-gutter - 5;
 }

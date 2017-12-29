@@ -9,9 +9,9 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import { queryTransaction, queryAllCategories, updateMirrorTransactionCategory } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
-import GoBackArrow from 'components/common/GoBackArrow';
 import FormInput from 'components/common/FormInput';
 import ErrorBar from 'components/layout/ErrorBar';
+import Header from 'components/common/Header';
 import styles from './styles.scss';
 
 const CategoryInput = componentProps => (
@@ -64,10 +64,12 @@ class EditTransactionCategory extends Component {
     return (
       <Grid fluid className={gridStyles.mainGrid}>
         <ErrorBar />
-        <GoBackArrow to={`/accounts/${params.accountId}/transactions/${params.transactionId}`} />
+        <Header
+          title="Transaction Category"
+          backTo={`/accounts/${params.accountId}/transactions/${params.transactionId}`}
+        />
         <Row>
           <Col xs={12}>
-            <h1>Transaction Category</h1>
             <FormInput
               value={transactionQuery.transaction.category_name}
               type="text"

@@ -7,8 +7,8 @@ import { queryAllAccounts, createTransaction } from 'qql';
 import { graphql, compose } from 'react-apollo';
 import _ from 'lodash';
 import { autobind } from 'core-decorators';
+import Header from 'components/common/Header';
 import SpinnerBlock from 'components/common/SpinnerBlock';
-import GoBackArrow from 'components/common/GoBackArrow';
 import ErrorBar from 'components/layout/ErrorBar';
 import TransactionForm from '../../forms/Transaction';
 
@@ -42,7 +42,10 @@ class NewTransactionStep2 extends Component {
     return (
       <Grid fluid className={`${gridStyles.mainGrid}`}>
         <ErrorBar />
-        <GoBackArrow />
+        <Header
+          backTo="/transactions/new"
+          mini
+        />
         <Row>
           <Col xs={12}>
             <TransactionForm

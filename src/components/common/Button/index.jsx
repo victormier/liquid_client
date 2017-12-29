@@ -19,9 +19,9 @@ const Button = props => (
 );
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   color: PropTypes.oneOf(['blue', 'transparent', 'red', 'lightBlueGradient']),
-  shape: PropTypes.oneOf(['round', 'circle']),
+  shape: PropTypes.oneOf(['round', 'circle', 'squareRounded']),
   children: PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.node),
     React.PropTypes.node,

@@ -1,0 +1,22 @@
+@import 'base/variables';
+
+.title {
+  margin-bottom: $base-grid-gutter/4;
+  min-height: 3.5rem;
+}
+
+.subtitle {
+  line-height: 1.4;
+  min-height: 1.9rem;
+  font-size: $font-size-small;
+  color: transparentize(white, 0.5);
+}
+
+.topRow {
+  padding-top: $base-grid-gutter*1.5;
+}
+
+.titleRight {
+  text-align: right;
+  float: right;
+}

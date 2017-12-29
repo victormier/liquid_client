@@ -3,19 +3,15 @@ import { graphql, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { queryAllAccounts } from 'qql';
 import { Link } from 'react-router';
-import SpinnerBlock from 'components/common/SpinnerBlock';
-import GoBackArrow from 'components/common/GoBackArrow';
+import QueryLoading from 'components/common/QueryLoading';
+import Header from 'components/common/Header';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import Account from '../../components/Account';
 import styles from './styles.scss';
 
-const NewTransaction = (props) => {
-  const { data } = props;
-  if (data.loading) return <SpinnerBlock />;
-  if (data.error) return <p>Error!</p>;
-
-  const accounts = data.all_accounts.map(account => (
+const accounts = accountsData => (
+  accountsData.map(account => (
     <Link
       to={`/transactions/new/${account.id}`}
       key={account.id}
@@ -23,15 +19,25 @@ const NewTransaction = (props) => {
     >
       <Account account={account} />
     </Link>
-  ));
+  ))
+);
+
+const NewTransaction = (props) => {
+  const { data } = props;
+  const contentIsReady = !data.loading && !data.error && data.all_accounts;
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <GoBackArrow to="/accounts" />
+      <Header
+        title="Select origin account"
+        backTo="/accounts"
+      />
       <Row>
         <Col xs={12}>
-          <h1>Select origin account</h1>
-          { accounts }
+          { contentIsReady ?
+              accounts(data.all_accounts) :
+              <QueryLoading error={data.error} />
+          }
         </Col>
       </Row>
     </Grid>

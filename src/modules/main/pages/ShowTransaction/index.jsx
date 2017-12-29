@@ -1,65 +1,85 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, withApollo } from 'react-apollo';
+import { Link } from 'react-router';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
-import { queryTransaction } from 'qql';
-import { Link } from 'react-router';
-import SpinnerBlock from 'components/common/SpinnerBlock';
-import GoBackArrow from 'components/common/GoBackArrow';
+import { queryTransaction, transactionFieldsFragment, virtualAccountFieldsFragment } from 'qql';
 import { toCurrency } from 'utils/currencies';
 import { dateFromSeconds } from 'utils/dates';
+import Header from 'components/common/Header';
+import QueryLoading from 'components/common/QueryLoading';
 import styles from './styles.scss';
 
-const ShowTransaction = ({ data, location, params }) => {
-  if (data.loading) return <SpinnerBlock />;
-  if (data.error) return <div>Error!</div>;
+const ShowTransaction = ({ data, location, params, client }) => {
+  const contentIsReady = !data.loading && !data.error && data.transaction;
 
-  const date = dateFromSeconds(data.transaction.made_on);
-  const backTo = (location.state && location.state.backTo) ? location.state.backTo : `/accounts/${params.accountId}`;
+  let title = '';
+  let backTo = `/accounts/${params.accountId}`;
+  let date;
+
+  const cachedTransaction = client.readFragment({
+    id: `Transaction_${params.transactionId}`,
+    fragment: transactionFieldsFragment,
+  });
+  const transaction = contentIsReady ? data.transaction : cachedTransaction;
+  const cachedVirtualAccount = client.readFragment({
+    id: `VirtualAccount_${params.accountId}`,
+    fragment: virtualAccountFieldsFragment,
+  });
+  const virtualAccount = contentIsReady ? data.transaction.virtual_account : cachedVirtualAccount;
+
+  if (transaction) {
+    date = dateFromSeconds(transaction.made_on);
+    if (location.state && location.state.backTo) backTo = location.state.backTo;
+  }
+  if (virtualAccount) {
+    title = virtualAccount.name;
+  }
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <GoBackArrow to={backTo} />
+      <Header
+        title={title}
+        backTo={backTo}
+        subtitle="Account"
+      />
       <Row>
-        <Col xs={12}>
-          <h2>
-            { data.transaction.virtual_account.name }
-            <br />
-            <small>Account</small>
-          </h2>
-          <hr />
-          <h2>
-            { data.transaction.description }
-            <br />
-            <small className={styles.transactionAttributeConcept}>
-              Description
-            </small>
-          </h2>
-          <h2>
-            { toCurrency(data.transaction.amount,
-                         data.transaction.virtual_account.currency_code) }
-            <br />
-            <small className={styles.transactionAttributeConcept}>Amount</small>
-          </h2>
-          <h2>
-            { date.toDateString() }
-            <br />
-            <small className={styles.transactionAttributeConcept}>Date</small>
-          </h2>
-          <div>
-            { data.transaction.type === 'MirrorTransaction' &&
-            <div>
-              <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
-                <div className={styles.category}>{data.transaction.category_name}</div>
-              </Link>
-              <small className={styles.transactionAttributeConcept}>
-                        Category
-              </small>
-            </div>
-            }
-          </div>
-        </Col>
+        {
+          transaction && virtualAccount ?
+            <Col xs={12}>
+              <h2>
+                { transaction.description }
+                <br />
+                <small className={styles.transactionAttributeConcept}>
+                  Description
+                </small>
+              </h2>
+              <h2>
+                { toCurrency(transaction.amount, virtualAccount.currency_code) }
+                <br />
+                <small className={styles.transactionAttributeConcept}>Amount</small>
+              </h2>
+              <h2>
+                { date.toDateString() }
+                <br />
+                <small className={styles.transactionAttributeConcept}>Date</small>
+              </h2>
+              <div>
+                { transaction.type === 'MirrorTransaction' &&
+                <div>
+                  <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
+                    <div className={styles.category}>{transaction.category_name}</div>
+                  </Link>
+                  <small className={styles.transactionAttributeConcept}>
+                    Category
+                  </small>
+                </div>
+                }
+              </div>
+            </Col> :
+            <QueryLoading error={data.error} />
+        }
       </Row>
     </Grid>);
 };
@@ -88,6 +108,9 @@ ShowTransaction.propTypes = {
     state: PropTypes.shape({
       backTo: PropTypes.string,
     }),
+  }),
+  client: PropTypes.shape({
+    readFragment: PropTypes.func.isRequired,
   }),
 };
 

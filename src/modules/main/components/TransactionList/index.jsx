@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import baseStyles from 'styles/base/base.scss';
 import { toCurrency } from 'utils/currencies';
 import { dateFromSeconds, monthNameShortFromNumber } from 'utils/dates';
+import arrow from 'assets/images/arrow.svg';
 import styles from './styles.scss';
 
 const TransactionItem = ({ transaction, currencyCode, accountId }) => {
@@ -23,17 +24,34 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
     >
       <li className={styles.transaction}>
         <Row>
-          <Col xs={2}>
-            <div>{date.getDate()}</div>
-            <div>{monthNameShortFromNumber(date.getMonth())}</div>
-          </Col>
-          <Col xs={7}>
-            <div>{transaction.description}</div>
-            <div className={styles.transactionCategory}>
-              {transaction.category_name}
+          <Col xs={2} className={`${baseStyles.textCentered} ${styles.date}`}>
+            <div className={styles.dataBlock}>
+              <div className={styles.dataContent}>
+                <div>{date.getDate()}</div>
+                <div>{monthNameShortFromNumber(date.getMonth())}</div>
+              </div>
             </div>
           </Col>
-          <Col xs={3} className={baseStyles.textRight}>{amount}</Col>
+          <Col xs={7}>
+            <div className={styles.dataBlock}>
+              <div className={styles.dataContent}>
+                <div>{transaction.description}</div>
+                { transaction.type === 'VirtualTransaction' &&
+                <div className={styles.transactionCategory}>
+                  Manual transfer
+                  <img alt="arrow" src={arrow} />
+                </div>
+                }
+              </div>
+            </div>
+          </Col>
+          <Col xs={3} className={`${baseStyles.textRight} ${styles.amount}`}>
+            <div className={styles.dataBlock}>
+              <div className={styles.dataContent}>
+                {amount}
+              </div>
+            </div>
+          </Col>
         </Row>
       </li>
     </Link>

@@ -8,9 +8,9 @@ import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { querySaltedgeProvider, createSaltedgeLogin,
          reconnectSaltedgeLogin, queryUser } from 'qql';
-import GoBackArrow from 'components/common/GoBackArrow';
+import Header from 'components/common/Header';
+import QueryLoading from 'components/common/QueryLoading';
 import ErrorBar from 'components/layout/ErrorBar';
-import SpinnerBlock from 'components/common/SpinnerBlock';
 import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP, CONNECT_BANK } from 'config/mixpanelEvents';
 import _ from 'lodash';
 import PollProviderLogin from '../../components/PollProviderLogin';
@@ -128,9 +128,15 @@ class NewProviderLogin extends Component {
 
   render() {
     const { saltedgeProviderQuery, userQuery } = this.props;
+    const contentIsReady = !(saltedgeProviderQuery.loading || userQuery.loading) &&
+                             !(saltedgeProviderQuery.error || userQuery.error);
+    let title = 'Connect to your bank';
 
-    if (saltedgeProviderQuery.loading || userQuery.loading) return <SpinnerBlock />;
-    if (saltedgeProviderQuery.error || userQuery.error) return <div>Error!</div>;
+    if (contentIsReady) {
+      title = (this.props.userQuery.user.bank_connection_phase === 'needs_reconnection') ?
+        'Reconnect to your bank' :
+        'Connect to your bank';
+    }
 
     if (this.state.polling) {
       return (<PollProviderLogin
@@ -143,32 +149,31 @@ class NewProviderLogin extends Component {
     return (
       <Grid fluid className={gridStyles.mainGrid}>
         <ErrorBar />
-        <GoBackArrow to="/connect/providers" />
-        <Row>
-          <Col xs={12}>
-            <h1>
-              {
-                (this.props.userQuery.user.bank_connection_phase === 'needs_reconnection') ?
-                  'Reconnect to your account' :
-                  'Connect to your account'
-              }
-            </h1>
-            <div className={styles.bankNameInput}>
-              <FormInput
-                value={saltedgeProviderQuery.saltedge_provider.name}
-                type="text"
-                onChange={this.onChange}
-                disabled
+        <Header
+          title={title}
+          backTo="/connect/providers"
+        />
+        { contentIsReady ?
+          <Row>
+            <Col xs={12}>
+              <div className={styles.bankNameInput}>
+                <FormInput
+                  value={saltedgeProviderQuery.saltedge_provider.name}
+                  type="text"
+                  onChange={this.onChange}
+                  disabled
+                />
+              </div>
+              <hr />
+              <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
+              <ProviderLoginForm
+                onSubmit={formData => this.handleFormSubmit(formData)}
+                fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}
               />
-            </div>
-            <hr />
-            <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
-            <ProviderLoginForm
-              onSubmit={formData => this.handleFormSubmit(formData)}
-              fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}
-            />
-          </Col>
-        </Row>
+            </Col>
+          </Row> :
+          <QueryLoading error={saltedgeProviderQuery.error || userQuery.error} />
+          }
       </Grid>
     );
   }

@@ -3,10 +3,11 @@ import { graphql, compose, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { queryAllAccounts, queryAllSaltedgeLogins } from 'qql';
 import { Link } from 'react-router';
-import SpinnerBlock from 'components/common/SpinnerBlock';
+import QueryLoading from 'components/common/QueryLoading';
 import Button from 'components/common/Button';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid } from 'react-flexbox-grid';
 import _ from 'lodash';
+import Header from 'components/common/Header';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
 import errorStyles from 'components/layout/ErrorBar/styles.scss';
@@ -16,61 +17,55 @@ import Nav from '../../components/Nav';
 
 const ListAccounts = (props) => {
   const { allAccountsQuery, saltedgeLoginsQuery } = props;
+  const contentIsReady = !allAccountsQuery.loading && !allAccountsQuery.error && allAccountsQuery.all_accounts;
   let error;
+  let accounts;
+  let mirrorAccount;
 
-  if (allAccountsQuery.loading && !allAccountsQuery.all_accounts) return <SpinnerBlock />;
-  if (allAccountsQuery.error) return <p>Error!</p>;
+  if (contentIsReady) {
+    if (saltedgeLoginsQuery &&
+        !saltedgeLoginsQuery.loading &&
+        _.find(saltedgeLoginsQuery.all_saltedge_logins, sl => (sl.needs_reconnection))) {
+      error = (
+        <div className={`${errorStyles.staticErrorContainer} ${baseStyles.textCentered}`}>
+          <ul className={errorStyles.errorList} >
+            <li className={errorStyles.errorListItem} >! Your bank stopped responding</li>
+          </ul>
+        </div>
+      );
+    }
 
-  if (saltedgeLoginsQuery &&
-      !saltedgeLoginsQuery.loading &&
-      _.find(saltedgeLoginsQuery.all_saltedge_logins, sl => (sl.needs_reconnection))) {
-    error = (
-      <div className={`${errorStyles.staticErrorContainer} ${baseStyles.textCentered}`}>
-        <ul className={errorStyles.errorList} >
-          <li className={errorStyles.errorListItem} >! Your bank stopped responding</li>
-        </ul>
-      </div>
-    );
+    accounts = allAccountsQuery.all_accounts.map(account => (
+      <Link to={`/accounts/${account.id}`} key={account.id}>
+        <Account account={account} />
+      </Link>
+    ));
+
+    mirrorAccount = _.find(allAccountsQuery.all_accounts, a => a.is_mirror_account);
   }
-
-
-  const accounts = allAccountsQuery.all_accounts.map(account => (
-    <Link to={`/accounts/${account.id}`} key={account.id}>
-      <Account account={account} />
-    </Link>
-  ));
-
-  const mirrorAccount = _.find(allAccountsQuery.all_accounts, a => a.is_mirror_account);
 
   return (
     <div>
       { error }
       <Grid fluid className={gridStyles.mainGrid}>
-        <Row className={baseStyles.topNav}>
-          <Col xs={6}>
-            <Link to="/accounts/new">
-              <Button text="+" color="transparent" shape="circle" />
-            </Link>
-          </Col>
-          <Col xs={2}>
-            { mirrorAccount &&
-              <div className={baseStyles.floatRight}>
-                <RefreshButton accountId={mirrorAccount.id} />
-              </div>
-            }
-          </Col>
-          <Col xs={4} className={baseStyles.textRight}>
-            <Link to="/transactions/new">
-              <Button text="Transfer" color="transparent" />
-            </Link>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <h1>Your accounts</h1>
-            { accounts }
-          </Col>
-        </Row>
+        <Header
+          title="Your accounts"
+          leftButton={<Link to="/accounts/new">
+            <Button text="+" color="transparent" shape="circle" />
+          </Link>}
+          rightButton={<Link to="/transactions/new">
+            <Button text="Transfer" color="transparent" />
+          </Link>}
+          rightButtonSecondary={
+            contentIsReady ? <RefreshButton accountId={mirrorAccount.id} /> : null
+          }
+        />
+        { contentIsReady ?
+            accounts :
+            <QueryLoading
+              error={allAccountsQuery.error}
+            />
+        }
         <Nav />
       </Grid>
     </div>

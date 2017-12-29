@@ -17,7 +17,7 @@ import Nav from '../../components/Nav';
 
 const ListAccounts = (props) => {
   const { allAccountsQuery, saltedgeLoginsQuery } = props;
-  const contentIsReady = !allAccountsQuery.loading && !allAccountsQuery.error && allAccountsQuery.all_accounts;
+  const contentIsReady = (!allAccountsQuery.loading && !allAccountsQuery.error) || allAccountsQuery.all_accounts;
   let error;
   let accounts;
   let mirrorAccount;

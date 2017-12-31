@@ -15,14 +15,21 @@ class InsightsGraph extends Component {
     const bottomValue = Math.abs(this.props.bottomValue);
 
     const totalValue = this.props.topMaxValue + this.props.bottomMaxValue;
-    const topHeight = (topValue / totalValue) * barHeight;
-    const bottomHeight = (bottomValue / totalValue) * barHeight;
+    let topHeight = (topValue / totalValue) * barHeight;
+    let bottomHeight = (bottomValue / totalValue) * barHeight;
 
     const maxHeightTop = (this.props.topMaxValue / totalValue) * barHeight;
-    const top = maxHeightTop - topHeight;
+    let top = maxHeightTop - topHeight;
     const maxHeightBottom = (this.props.bottomMaxValue / totalValue) * barHeight;
-    const bottom = maxHeightBottom - bottomHeight;
-    const mainClassName = this.props.selected ? `${styles.insightBarContainer} ${styles.active}` : styles.insightBarContainer;
+    let bottom = maxHeightBottom - bottomHeight;
+    let mainClassName = this.props.selected ? `${styles.insightBarContainer} ${styles.active}` : styles.insightBarContainer;
+    if (topValue === 0 && bottomValue === 0) {
+      mainClassName += ` ${styles.insightBarEmptyData}`;
+      top -= 3;
+      bottom -= 3;
+      topHeight = 3;
+      bottomHeight = 3;
+    }
 
     return (
       <div className={mainClassName}>

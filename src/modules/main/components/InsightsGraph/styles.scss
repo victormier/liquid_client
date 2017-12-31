@@ -16,6 +16,18 @@ $barWidth: 40px;
   }
 }
 
+.insightBarEmptyData {
+  .topBar {
+    border-radius: 0;
+  }
+  .bottomBar {
+    border-radius: 0;
+  }
+  &.active .bar {
+    opacity: 0.8;
+  }
+}
+
 .barContainer {
   cursor: pointer;
   position: relative;

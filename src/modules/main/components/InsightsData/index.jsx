@@ -103,7 +103,7 @@ const InsightsData = (props) => {
               <ul className={styles.blockList}>
                 {
                   data.insights.category_insights.map(categoryInsight => (
-                    <li>
+                    <li key={categoryInsight.id}>
                       <Link to={`insights/categories/${categoryInsight.code}/${props.year}/${props.month + 1}`}>
                         <SquareRoundedBlock>
                           <Row>
@@ -159,6 +159,7 @@ InsightsData.propTypes = {
       total_income: PropTypes.number.isRequired,
       category_insights: PropTypes.arrayOf(
         PropTypes.shape({
+          id: PropTypes.string.isRequired,
           code: PropTypes.string.isRequired,
           name: PropTypes.string.isRequired,
           amount: PropTypes.number.isRequired,

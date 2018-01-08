@@ -6,15 +6,18 @@ import FormInput from 'components/common/FormInput';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { autobind } from 'core-decorators';
+import { toCurrency } from 'utils/currencies';
 import formStyles from 'styles/base/form.scss';
 import Account from '../../components/Account';
+import styles from './styles.scss';
 
 const AmountInput = componentProps => (
   <FormInput
     value={componentProps.input.value}
     onChange={componentProps.input.onChange}
     type="text"
-    placeholder="$0.00"
+    placeholder={toCurrency(0.00, componentProps.currencyCode)}
+    className={styles.amountInput}
   />);
 
 const DestinationAccountOption = props => (
@@ -87,7 +90,7 @@ class TransactionForm extends Component {
                 component="input"
               />
               <h2>Amount</h2>
-              <Field name="amount" type="text" component={AmountInput} />
+              <Field name="amount" type="text" component={AmountInput} currencyCode={this.props.originAccount.currency_code} />
             </div> :
             <div>
               <h2>Select destination account</h2>
@@ -121,6 +124,7 @@ TransactionForm.propTypes = {
     id: PropTypes.string.isRequired,
     balance: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    currency_code: PropTypes.string.isRequired,
   }),
   accounts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,

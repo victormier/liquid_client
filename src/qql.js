@@ -33,23 +33,26 @@ export const virtualAccountFieldsFragment = gql`
 export const queryUser = gql`
   query user {
     user {
-      id,
-      email,
-      bank_connection_phase,
+      id
+      email
+      bank_connection_phase
+      total_balance
+      currency_code
+      last_updated
       saltedge_logins {
-        id,
-        active,
-        finished_connecting,
-        needs_reconnection,
-        killed,
+        id
+        active
+        finished_connecting
+        needs_reconnection
+        killed
         saltedge_provider {
-          id,
+          id
           name
         }
-      },
+      }
       accounts {
-        id,
-        balance,
+        id
+        balance
         name
       }
     }

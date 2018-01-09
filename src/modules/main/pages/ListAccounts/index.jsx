@@ -1,22 +1,24 @@
 import React from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { queryAllAccounts, queryAllSaltedgeLogins } from 'qql';
+import { queryAllAccounts, queryAllSaltedgeLogins, queryUser } from 'qql';
 import { Link } from 'react-router';
-import QueryLoading from 'components/common/QueryLoading';
-import Button from 'components/common/Button';
 import { Grid } from 'react-flexbox-grid';
+import { toCurrency } from 'utils/currencies';
 import _ from 'lodash';
+import moment from 'node-moment';
+import Button from 'components/common/Button';
+import QueryLoading from 'components/common/QueryLoading';
 import Header from 'components/common/Header';
+import errorStyles from 'components/layout/ErrorBar/styles.scss';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
-import errorStyles from 'components/layout/ErrorBar/styles.scss';
 import RefreshButton from '../../components/RefreshButton';
 import Account from '../../components/Account';
 import Nav from '../../components/Nav';
 
 const ListAccounts = (props) => {
-  const { allAccountsQuery, saltedgeLoginsQuery } = props;
+  const { allAccountsQuery, saltedgeLoginsQuery, userQuery } = props;
   const contentIsReady = (!allAccountsQuery.loading && !allAccountsQuery.error) || allAccountsQuery.all_accounts;
   let error;
   let accounts;
@@ -49,7 +51,12 @@ const ListAccounts = (props) => {
       { error }
       <Grid fluid className={gridStyles.mainGrid}>
         <Header
-          title="Your accounts"
+          title="Accounts"
+          subtitle={`Updated ${moment.unix(userQuery.user.last_updated).fromNow()}`}
+          titleRight={toCurrency(
+                        userQuery.user.total_balance,
+                        userQuery.user.currency_code
+                      )}
           leftButton={<Link to="/accounts/new">
             <Button text="+" color="transparent" shape="circle" />
           </Link>}
@@ -92,6 +99,13 @@ ListAccounts.propTypes = {
       })
     ),
   }).isRequired,
+  userQuery: PropTypes.shape({
+    user: PropTypes.shape({
+      total_balance: PropTypes.number,
+      currency_code: PropTypes.string,
+      last_updated: PropTypes.number,
+    }).isRequired,
+  }),
 };
 
 const ListAccountsWithGraphQL = compose(
@@ -99,6 +113,7 @@ const ListAccountsWithGraphQL = compose(
     name: 'allAccountsQuery',
     options: { fetchPolicy: 'cache-and-network' },
   }),
+  graphql(queryUser, { name: 'userQuery' }),
   graphql(queryAllSaltedgeLogins, { name: 'saltedgeLoginsQuery' })
 )(ListAccounts);
 

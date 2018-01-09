@@ -23,6 +23,7 @@ const ListAccounts = (props) => {
   let error;
   let accounts;
   let mirrorAccount;
+  let subtitle;
 
   if (contentIsReady) {
     if (saltedgeLoginsQuery &&
@@ -44,6 +45,12 @@ const ListAccounts = (props) => {
     ));
 
     mirrorAccount = _.find(allAccountsQuery.all_accounts, a => a.is_mirror_account);
+
+    if (mirrorAccount.is_refreshing) {
+      subtitle = 'Syncing account...It might take 2 min.';
+    } else if (mirrorAccount.last_updated) {
+      subtitle = `Updated ${moment.unix(mirrorAccount.last_updated).fromNow()}`;
+    }
   }
 
   return (
@@ -52,7 +59,7 @@ const ListAccounts = (props) => {
       <Grid fluid className={gridStyles.mainGrid}>
         <Header
           title="Accounts"
-          subtitle={`Updated ${moment.unix(userQuery.user.last_updated).fromNow()}`}
+          subtitle={subtitle}
           titleRight={toCurrency(
                         userQuery.user.total_balance,
                         userQuery.user.currency_code
@@ -103,7 +110,6 @@ ListAccounts.propTypes = {
     user: PropTypes.shape({
       total_balance: PropTypes.number,
       currency_code: PropTypes.string,
-      last_updated: PropTypes.number,
     }).isRequired,
   }),
 };

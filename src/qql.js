@@ -38,7 +38,6 @@ export const queryUser = gql`
       bank_connection_phase
       total_balance
       currency_code
-      last_updated
       saltedge_logins {
         id
         active
@@ -54,6 +53,9 @@ export const queryUser = gql`
         id
         balance
         name
+        ... on VirtualAccount {
+          last_updated
+        }
       }
     }
   }

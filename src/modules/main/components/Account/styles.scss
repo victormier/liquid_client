@@ -4,6 +4,7 @@
 
 .accountContainer {
   @include blockDisplaced;
+  margin-bottom: 1rem;
 }
 .account {
   display: block;

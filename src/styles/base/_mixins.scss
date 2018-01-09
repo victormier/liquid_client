@@ -13,6 +13,14 @@
   background: transparentize(black,
   0.8);
 }
+@mixin transparentBackground2 {
+  background: transparentize(black,
+  0.9);
+}
+@mixin transparentBackground3 {
+  background: transparentize(black,
+  0.95);
+}
 
 
 

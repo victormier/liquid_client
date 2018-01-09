@@ -46,7 +46,7 @@ const TransactionItem = ({ transaction, currencyCode, accountId }) => {
             </div>
           </Col>
           <Col xs={3} className={`${baseStyles.textRight} ${styles.amount}`}>
-            <div className={styles.dataBlock}>
+            <div className={`${styles.dataBlock} ${baseStyles.floatRight}`}>
               <div className={styles.dataContent}>
                 {amount}
               </div>

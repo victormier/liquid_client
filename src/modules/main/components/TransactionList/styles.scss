@@ -9,13 +9,13 @@
 
 .transaction {
   @include squareRoundedBlock;
-  @include transparentBlueBackground;
+  @include transparentBackground2;
   margin-bottom: $base-grid-gutter/4;
   padding-left: 10px;
   padding-right: 10px;
 
   &:hover {
-    @include moreTransparentBlueBackground;
+    @include transparentBackground3;
   }
 }
 .dataBlock {

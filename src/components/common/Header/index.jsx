@@ -31,14 +31,16 @@ const Header = props => (
     </Row>
     { !props.mini &&
     <Row>
-      <Col xs={8}>
+      <Col xs={props.titleRight ? 8 : 12}>
         <h1 className={styles.title}>{props.title}</h1>
       </Col>
+      { props.titleRight &&
       <Col xs={4}>
         <h2 className={styles.titleRight}>
           { props.titleRight }
         </h2>
       </Col>
+      }
       <Col xs={12}>
         <div className={styles.subtitle}>{props.subtitle}</div>
         <hr />

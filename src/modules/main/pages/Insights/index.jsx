@@ -39,24 +39,36 @@ class Insights extends Component {
       <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.withBottomNav} ${gridStyles.basePadding}`}>
         { contentIsReady ?
           <div>
-            <Row className={styles.balances} center="xs">
-              <Col xs={3} className={styles.mainStats}>
+            <Row className={styles.balances}>
+              <Col xs={4} className={styles.mainStats}>
+                <div className={styles.amountData}>
+                  {toCurrency(
+                    Math.round(data.all_insights[this.state.selectedInsight].total_balance),
+                    data.all_insights[this.state.selectedInsight].mirror_account.currency_code,
+                    0
+                  )}
+                </div>
                 <div className={styles.amountTitle}>Current balance</div>
-                <div className={styles.amountData}>
-                  {toCurrency(data.all_insights[this.state.selectedInsight].total_balance, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
-                </div>
               </Col>
-              <Col xs={3} className={styles.totalIncome}>
+              <Col xs={4} className={styles.totalIncome}>
+                <div className={styles.amountData}>
+                  {toCurrency(
+                    Math.round(data.all_insights[this.state.selectedInsight].total_income),
+                    data.all_insights[this.state.selectedInsight].mirror_account.currency_code,
+                    0
+                  )}
+                </div>
                 <div className={styles.amountTitle}>Income</div>
-                <div className={styles.amountData}>
-                  {toCurrency(data.all_insights[this.state.selectedInsight].total_income, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
-                </div>
               </Col>
-              <Col xs={3} className={styles.totalExpense}>
-                <div className={styles.amountTitle}>Expenses</div>
+              <Col xs={4} className={styles.totalExpense}>
                 <div className={styles.amountData}>
-                  {toCurrency(data.all_insights[this.state.selectedInsight].total_expense, data.all_insights[this.state.selectedInsight].mirror_account.currency_code)}
+                  {toCurrency(
+                    Math.round(data.all_insights[this.state.selectedInsight].total_expense),
+                    data.all_insights[this.state.selectedInsight].mirror_account.currency_code,
+                    0
+                  )}
                 </div>
+                <div className={styles.amountTitle}>Expenses</div>
               </Col>
             </Row>
             <Row>

@@ -13,8 +13,6 @@ import styles from './styles.scss';
 
 const ShowTransaction = ({ data, location, params, client }) => {
   const contentIsReady = !data.loading && !data.error && data.transaction;
-
-  let title = '';
   let backTo = `/accounts/${params.accountId}`;
   let date;
 
@@ -33,48 +31,42 @@ const ShowTransaction = ({ data, location, params, client }) => {
     date = dateFromSeconds(transaction.made_on);
     if (location.state && location.state.backTo) backTo = location.state.backTo;
   }
-  if (virtualAccount) {
-    title = virtualAccount.name;
-  }
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
       <Header
-        title={title}
+        title="Details"
         backTo={backTo}
-        subtitle="Account"
       />
       <Row>
         {
           transaction && virtualAccount ?
             <Col xs={12}>
-              <h2>
-                { transaction.description }
-                <br />
-                <small className={styles.transactionAttributeConcept}>
-                  Description
-                </small>
-              </h2>
-              <h2>
-                { toCurrency(transaction.amount, virtualAccount.currency_code) }
-                <br />
-                <small className={styles.transactionAttributeConcept}>Amount</small>
-              </h2>
-              <h2>
-                { date.toDateString() }
-                <br />
-                <small className={styles.transactionAttributeConcept}>Date</small>
-              </h2>
+              <div className={`${styles.attribute} ${styles.accountName}`}>
+                <div className={styles.attributeValue}>{ virtualAccount.name }</div>
+                <div>Account</div>
+              </div>
+              <hr />
+              <div className={styles.attribute}>
+                <div className={styles.attributeValue}>{ transaction.description }</div>
+                <div>Description</div>
+              </div>
+              <div className={styles.attribute}>
+                <div className={styles.attributeValue}>{ toCurrency(transaction.amount, virtualAccount.currency_code) }</div>
+                <div>Amount</div>
+              </div>
+              <div className={styles.attribute}>
+                <div className={styles.attributeValue}>{ date.toDateString() }</div>
+                <div>Date</div>
+              </div>
               <div>
                 { transaction.type === 'MirrorTransaction' &&
-                <div>
-                  <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
-                    <div className={styles.category}>{transaction.category_name}</div>
-                  </Link>
-                  <small className={styles.transactionAttributeConcept}>
-                    Category
-                  </small>
-                </div>
+                  <div className={styles.attribute}>
+                    <Link to={`/accounts/${params.accountId}/transactions/${params.transactionId}/category`}>
+                      <div className={styles.category}>{transaction.category_name}</div>
+                    </Link>
+                    <div>Category</div>
+                  </div>
                 }
               </div>
             </Col> :

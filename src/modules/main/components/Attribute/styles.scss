@@ -1,0 +1,13 @@
+@import 'base/variables';
+
+.attribute {
+  margin-bottom: $base-grid-gutter;
+}
+.attributeValue {
+  font-size: $font-size-xlarge;
+  line-height: 1;
+
+  &.attributeValueBold {
+    font-weight: 600;
+  }
+}

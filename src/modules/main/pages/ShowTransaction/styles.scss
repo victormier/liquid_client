@@ -1,7 +1,7 @@
 @import 'base/mixins';
 @import 'base/variables';
 
-h2.accountName {
+.accountName {
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -14,12 +14,4 @@ h2.accountName {
   &:hover {
     @include moreTransparentBlueBackground;
   }
-}
-
-.attribute {
-  margin-bottom: $base-grid-gutter;
-}
-.attributeValue {
-  font-size: $font-size-xlarge;
-  line-height: 1;
 }

@@ -10,6 +10,7 @@ import SquareRoundedBlock from 'components/common/SquareRoundedBlock';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import baseStyles from 'styles/base/base.scss';
 import Transaction from '../../components/Transaction';
+import Attribute from '../../components/Attribute';
 import styles from './styles.scss';
 
 const InsightsData = (props) => {
@@ -20,13 +21,11 @@ const InsightsData = (props) => {
 
   return (
     <Grid>
-      <Row>
+      <Row className={styles.block}>
         <Col xs={4}>
-          <h2>
-            <span className={styles.blockTitle}>Income</span>
-            <br />
-            <small>{monthNameLongFromNumber(props.month)}</small>
-          </h2>
+          <div>
+            <Attribute title="Income" subtitle={monthNameLongFromNumber(props.month)} bold />
+          </div>
         </Col>
         <Col xs={8} className={baseStyles.textRight}>
           <h2>
@@ -61,13 +60,11 @@ const InsightsData = (props) => {
           }
         </Col>
       </Row>
-      <Row>
+      <Row className={styles.block}>
         <Col xs={4}>
-          <h2>
-            <span className={styles.blockTitle}>Expenses</span>
-            <br />
-            <small>{monthNameLongFromNumber(props.month)}</small>
-          </h2>
+          <div>
+            <Attribute title="Expenses" subtitle={monthNameLongFromNumber(props.month)} bold />
+          </div>
         </Col>
         <Col xs={8} className={baseStyles.textRight}>
           <h2>

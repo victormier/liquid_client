@@ -9,6 +9,7 @@ import { toCurrency } from 'utils/currencies';
 import { dateFromSeconds } from 'utils/dates';
 import Header from 'components/common/Header';
 import QueryLoading from 'components/common/QueryLoading';
+import Attribute from '../../components/Attribute';
 import styles from './styles.scss';
 
 const ShowTransaction = ({ data, location, params, client }) => {
@@ -42,23 +43,13 @@ const ShowTransaction = ({ data, location, params, client }) => {
         {
           transaction && virtualAccount ?
             <Col xs={12}>
-              <div className={`${styles.attribute} ${styles.accountName}`}>
-                <div className={styles.attributeValue}>{ virtualAccount.name }</div>
-                <div>Account</div>
+              <div className={styles.accountName}>
+                <Attribute title={virtualAccount.name} subtitle="Account" bold />
               </div>
               <hr />
-              <div className={styles.attribute}>
-                <div className={styles.attributeValue}>{ transaction.description }</div>
-                <div>Description</div>
-              </div>
-              <div className={styles.attribute}>
-                <div className={styles.attributeValue}>{ toCurrency(transaction.amount, virtualAccount.currency_code) }</div>
-                <div>Amount</div>
-              </div>
-              <div className={styles.attribute}>
-                <div className={styles.attributeValue}>{ date.toDateString() }</div>
-                <div>Date</div>
-              </div>
+              <Attribute title={transaction.description} subtitle="Description" />
+              <Attribute title={toCurrency(transaction.amount, virtualAccount.currency_code)} subtitle="Amount" />
+              <Attribute title={date.toDateString()} subtitle="Date" />
               <div>
                 { transaction.type === 'MirrorTransaction' &&
                   <div className={styles.attribute}>

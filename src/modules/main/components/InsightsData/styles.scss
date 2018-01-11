@@ -5,8 +5,8 @@
   list-style: none;
   margin: 0;
 }
-.blockTitle {
-  font-weight: 600;
+.block {
+  margin-top: $base-grid-gutter*2;
 }
 .itemTitle {
   font-size: $font-size-normal;

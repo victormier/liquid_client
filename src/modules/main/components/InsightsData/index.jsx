@@ -5,34 +5,34 @@ import { queryInsights } from 'qql';
 import { Link } from 'react-router';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import { toCurrency } from 'utils/currencies';
-import { monthNameLongFromNumber,
-         monthNameShortFromNumber,
-         dateFromSeconds } from 'utils/dates';
+import { monthNameLongFromNumber } from 'utils/dates';
 import SquareRoundedBlock from 'components/common/SquareRoundedBlock';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import baseStyles from 'styles/base/base.scss';
+import Transaction from '../../components/Transaction';
 import styles from './styles.scss';
 
 const InsightsData = (props) => {
   const { data } = props;
   if (data.loading) return <SpinnerBlock />;
   if (data.error) return <p>Error!</p>;
+  const currencyCode = data.insights.mirror_account.currency_code;
 
   return (
     <Grid>
       <Row>
-        <Col xs={6}>
+        <Col xs={4}>
           <h2>
-            Income
+            <span className={styles.blockTitle}>Income</span>
             <br />
             <small>{monthNameLongFromNumber(props.month)}</small>
           </h2>
         </Col>
-        <Col xs={6} className={baseStyles.textRight}>
+        <Col xs={8} className={baseStyles.textRight}>
           <h2>
             { toCurrency(
                 data.insights.total_income,
-                data.insights.mirror_account.currency_code)
+                currencyCode)
             }
           </h2>
         </Col>
@@ -50,28 +50,7 @@ const InsightsData = (props) => {
                         state: { backTo: window.location.pathname },
                       }}
                       >
-                        <SquareRoundedBlock>
-                          <Row>
-                            <Col xs={6}>
-                              <div className={styles.itemTitle}>
-                                {transaction.description}
-                              </div>
-                              <div className={styles.itemDetail}>
-                                {
-                                    `${monthNameShortFromNumber(
-                                        dateFromSeconds(transaction.made_on).getMonth() + 1
-                                       )}
-                                     ${dateFromSeconds(transaction.made_on).getDay() + 1}`
-                                  }
-                              </div>
-                            </Col>
-                            <Col xs={6} className={baseStyles.textRight}>
-                              <span className={styles.itemData}>
-                                {toCurrency(transaction.amount, data.insights.mirror_account.currency_code)}
-                              </span>
-                            </Col>
-                          </Row>
-                        </SquareRoundedBlock>
+                        <Transaction transaction={transaction} currencyCode={currencyCode} />
                       </Link>
                     </li>
                   ))
@@ -83,16 +62,16 @@ const InsightsData = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col xs={6}>
+        <Col xs={4}>
           <h2>
-            Expenses
+            <span className={styles.blockTitle}>Expenses</span>
             <br />
             <small>{monthNameLongFromNumber(props.month)}</small>
           </h2>
         </Col>
-        <Col xs={6} className={baseStyles.textRight}>
+        <Col xs={8} className={baseStyles.textRight}>
           <h2>
-            { toCurrency(data.insights.total_expense, data.insights.mirror_account.currency_code) }
+            { toCurrency(data.insights.total_expense, currencyCode) }
           </h2>
         </Col>
       </Row>
@@ -116,7 +95,7 @@ const InsightsData = (props) => {
                                 {
                                   toCurrency(
                                     categoryInsight.amount,
-                                    data.insights.mirror_account.currency_code
+                                    currencyCode
                                   )
                                 }
                               </span>

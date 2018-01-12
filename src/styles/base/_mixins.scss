@@ -74,3 +74,14 @@ $gradientMoreTransparentLightBlue: rgba(1,184,204,0.08);
   width: auto;
   min-width: 100%;
 }
+
+@mixin inputBlock {
+  @include blockDisplaced;
+  margin-bottom: $base-grid-gutter/2;
+
+  label {
+    text-align: left;
+    font-size: $font-size-small;
+    font-weight: 300;
+  }
+}

@@ -4,18 +4,18 @@ import _ from 'lodash';
 import styles from './styles.scss';
 
 const FormInput = (props) => {
-  const formId = props.label ? _.camelCase(props.label) : _.uniqueId('input');
+  const inputId = props.label ? _.camelCase(props.label) : _.uniqueId('input');
 
   return (<div className={styles.inputBlock}>
     <div className={styles.inputContainer}>
       <input
-        id={formId}
+        id={inputId}
         {...props}
         className={styles.input}
       />
     </div>
     { props.label &&
-    <label htmlFor={formId}>{props.label}</label> }
+    <label htmlFor={inputId}>{props.label}</label> }
   </div>);
 };
 

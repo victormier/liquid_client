@@ -2,13 +2,7 @@
 @import 'base/mixins';
 
 .inputBlock {
-  margin-bottom: $base-grid-gutter/2;
-
-  label {
-    text-align: left;
-    font-size: $font-size-small;
-    font-weight: 300;
-  }
+  @include inputBlock;
 }
 
 .inputContainer {

@@ -3,7 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { withApollo } from 'react-apollo';
 import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo.svg';
 import GoBackArrow from 'components/common/GoBackArrow';
 import ResetPasswordForm from '../../forms/ResetPassword';
 import styles from './styles.scss';

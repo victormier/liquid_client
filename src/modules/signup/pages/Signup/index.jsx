@@ -5,7 +5,7 @@ import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo.svg';
 import Header from 'components/common/Header';
 import ErrorBar from 'components/layout/ErrorBar';
 import { INPUT_SIGNUP_EMAIL, mixpanelEventProps } from 'config/mixpanelEvents';

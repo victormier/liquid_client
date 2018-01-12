@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo.svg';
 
 const PrivacyPolicy = () => (
   <Grid fluid className={gridStyles.mainGrid}>

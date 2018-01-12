@@ -6,7 +6,7 @@ import { inject } from 'mobx-react';
 import { Link } from 'react-router';
 import restFetch from 'restApi';
 import gridStyles from 'styles/base/grid.scss';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo.svg';
 import ErrorBar from 'components/layout/ErrorBar';
 import Header from 'components/common/Header';
 import SessionForm from '../../forms/Session';

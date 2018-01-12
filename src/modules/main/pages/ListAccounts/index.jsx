@@ -24,6 +24,7 @@ const ListAccounts = (props) => {
   let accounts;
   let mirrorAccount;
   let subtitle;
+  let totalBalance;
 
   if (contentIsReady) {
     if (saltedgeLoginsQuery &&
@@ -51,6 +52,8 @@ const ListAccounts = (props) => {
     } else if (mirrorAccount.last_updated) {
       subtitle = `Updated ${moment.unix(mirrorAccount.last_updated).fromNow()}`;
     }
+
+    totalBalance = toCurrency(userQuery.user.total_balance, userQuery.user.currency_code);
   }
 
   return (
@@ -60,10 +63,7 @@ const ListAccounts = (props) => {
         <Header
           title="Accounts"
           subtitle={subtitle}
-          titleRight={toCurrency(
-                        userQuery.user.total_balance,
-                        userQuery.user.currency_code
-                      )}
+          titleRight={totalBalance}
           leftButton={<Link to="/accounts/new">
             <Button text="+" color="transparent" shape="circle" />
           </Link>}

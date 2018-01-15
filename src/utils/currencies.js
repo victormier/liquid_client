@@ -4,7 +4,7 @@ export const toCurrency = (amount, currencyCode, fractionDigits = 2) =>
     currency: currencyCode,
     minimumFractionDigits: fractionDigits,
     maximumFractionDigits: fractionDigits,
-  });
+  }).replace('-', '\u2011');
 
 export default {
   toCurrency,

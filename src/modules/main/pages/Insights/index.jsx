@@ -28,7 +28,7 @@ class Insights extends Component {
 
   render() {
     const { data } = this.props;
-    const contentIsReady = !data.loading && !data.error && data.all_insights;
+    const contentIsReady = !data.loading && !data.error && data.all_insights.length;
     let selectedStartDate;
 
     if (contentIsReady) {

@@ -76,7 +76,6 @@ $gradientMoreTransparentLightBlue: rgba(1,184,204,0.08);
 }
 
 @mixin inputBlock {
-  @include blockDisplaced;
   margin-bottom: $base-grid-gutter/2;
 
   label {

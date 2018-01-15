@@ -108,7 +108,7 @@ export class Settings extends Component {
                                       saltedgeLogin.needs_reconnection &&
                                         <div>
                                           <div className={baseStyles.baseMarginBottomSmall}>
-                                            <Link to={`/connect/providers/${saltedgeLogin.saltedge_provider.id}`}><Button text="Reconnect Bank" color="transparent" /></Link>
+                                            <Link to={`/connect/providers/${saltedgeLogin.saltedge_provider.id}`}><Button text="Reconnect Bank" /></Link>
                                           </div>
                                           <Row className={baseStyles.baseMarginBottomSmall}>
                                             <Col xsOffset={1} xs={1} className={baseStyles.textCentered}><div className={circleType}>!</div></Col>
@@ -128,7 +128,7 @@ export class Settings extends Component {
                   <div>
                     <h2>Liquid account</h2>
                     <div className={baseStyles.baseMarginBottomSmall}>
-                      <Link to={'/settings/delete_account'}><Button text="Delete Liquid Account" color="transparent" /></Link>
+                      <Link to={'/settings/delete_account'}><Button text="Delete Liquid Account" /></Link>
                     </div>
                   </div>
                 </div> :

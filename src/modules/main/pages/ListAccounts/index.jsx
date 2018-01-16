@@ -47,10 +47,12 @@ const ListAccounts = (props) => {
 
     mirrorAccount = _.find(allAccountsQuery.all_accounts, a => a.is_mirror_account);
 
-    if (mirrorAccount.is_refreshing) {
-      subtitle = 'Syncing account...It might take 2 min.';
-    } else if (mirrorAccount.last_updated) {
-      subtitle = `Updated ${moment.unix(mirrorAccount.last_updated).fromNow()}`;
+    if (mirrorAccount) {
+      if (mirrorAccount.is_refreshing) {
+        subtitle = 'Syncing account...It might take 2 min.';
+      } else if (mirrorAccount.last_updated) {
+        subtitle = `Updated ${moment.unix(mirrorAccount.last_updated).fromNow()}`;
+      }
     }
 
     totalBalance = toCurrency(userQuery.user.total_balance, userQuery.user.currency_code);

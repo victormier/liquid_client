@@ -9,8 +9,6 @@
 .round {
   @include roundedBlock;
   line-height: 1rem;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .circle {
@@ -27,8 +25,6 @@
 .squareRounded {
   @include squareRoundedBlock;
   line-height: 1rem;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .blue {

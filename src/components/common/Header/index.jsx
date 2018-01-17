@@ -18,14 +18,14 @@ const Header = props => (
             }
         </div>
       </Col>
-      <Col xs={2}>
-        <div className={baseStyles.floatRight}>
-          {props.rightButtonSecondary}
-        </div>
-      </Col>
-      <Col xs={4} className={baseStyles.textRight}>
+      <Col xs={6} className={baseStyles.textRight}>
         <div className={gridStyles.gridDisplacedRight}>
-          {props.rightButton}
+          <div className={styles.rightButton}>
+            {props.rightButton}
+          </div>
+          <div className={baseStyles.floatRight}>
+            {props.rightButtonSecondary}
+          </div>
         </div>
       </Col>
     </Row>

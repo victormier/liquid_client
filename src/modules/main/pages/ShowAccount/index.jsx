@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
-import { queryAccount } from 'qql';
+import { queryAccount, queryUser } from 'qql';
 import { Link } from 'react-router';
 import moment from 'node-moment';
 import Header from 'components/common/Header';
@@ -16,11 +16,11 @@ import RefreshButton from '../../components/RefreshButton';
 import TransactionList from '../../components/TransactionList';
 
 const checkPolling = (props) => {
-  if (!props.data.loading && !props.data.error) {
-    if (props.data.account.is_refreshing) {
-      props.data.startPolling(5000);
+  if (!props.accountQuery.loading && !props.accountQuery.error) {
+    if (props.accountQuery.account.is_refreshing) {
+      props.accountQuery.startPolling(5000);
     } else {
-      props.data.stopPolling();
+      props.accountQuery.stopPolling();
     }
   }
 };
@@ -35,8 +35,8 @@ class ShowAccount extends Component {
   }
 
   render() {
-    const { data, params } = this.props;
-    const contentIsReady = !data.loading && !data.error && data.account;
+    const { accountQuery, userQuery, params } = this.props;
+    const contentIsReady = !accountQuery.loading && !accountQuery.error && accountQuery.account;
 
     let title = '';
     let subtitle;
@@ -45,14 +45,14 @@ class ShowAccount extends Component {
     let cachedAccount;
 
     if (contentIsReady) {
-      if (data.account.is_refreshing) {
+      if (accountQuery.account.is_refreshing) {
         subtitle = 'Syncing account...It might take 2 min.';
-      } else if (data.account.is_mirror_account && data.account.last_updated) {
-        subtitle = `Updated ${moment.unix(data.account.last_updated).fromNow()}`;
+      } else if (accountQuery.account.is_mirror_account && accountQuery.account.last_updated) {
+        subtitle = `Updated ${moment.unix(accountQuery.account.last_updated).fromNow()}`;
       }
-      title = data.account.name;
-      if (data.account.is_mirror_account) rightButtonSecondary = <RefreshButton accountId={data.account.id} />;
-      titleRight = toCurrency(data.account.balance, data.account.currency_code);
+      title = accountQuery.account.name;
+      if (accountQuery.account.is_mirror_account) rightButtonSecondary = <RefreshButton accountId={accountQuery.account.id} />;
+      titleRight = toCurrency(accountQuery.account.balance, accountQuery.account.currency_code);
     } else {
       cachedAccount = this.props.client.readFragment({
         id: `VirtualAccount_${params.accountId}`,
@@ -81,7 +81,7 @@ class ShowAccount extends Component {
           subtitle={subtitle}
           backTo="/accounts"
           rightButtonSecondary={rightButtonSecondary}
-          rightButton={<Link to={`/transactions/new/${params.accountId}`}>
+          rightButton={(userQuery.user.accounts && userQuery.user.accounts.length >= 2) && <Link to={`/transactions/new/${params.accountId}`}>
             <Button text="Transfer" color="transparent" />
           </Link>}
           titleRight={titleRight}
@@ -90,11 +90,11 @@ class ShowAccount extends Component {
           <Col xs={12}>
             { contentIsReady ?
               <TransactionList
-                items={data.account.transactions}
-                currencyCode={data.account.currency_code}
-                accountId={data.account.id}
+                items={accountQuery.account.transactions}
+                currencyCode={accountQuery.account.currency_code}
+                accountId={accountQuery.account.id}
               /> :
-              <QueryLoading error={data.error} />
+              <QueryLoading error={accountQuery.error} />
             }
           </Col>
         </Row>
@@ -106,7 +106,7 @@ ShowAccount.propTypes = {
   params: PropTypes.shape({
     accountId: PropTypes.string.isRequired,
   }),
-  data: PropTypes.shape({
+  accountQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     account: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -124,6 +124,12 @@ ShowAccount.propTypes = {
       ),
     }),
   }),
+  userQuery: PropTypes.shape({
+    user: PropTypes.shape({
+      total_balance: PropTypes.number,
+      currency_code: PropTypes.string,
+    }).isRequired,
+  }),
   client: PropTypes.shape({
     readFragment: PropTypes.func.isRequired,
   }),
@@ -131,10 +137,12 @@ ShowAccount.propTypes = {
 
 const ShowAccountWithGraphQL = compose(
   graphql(queryAccount, {
+    name: 'accountQuery',
     options: ownProps => ({
       variables: { id: ownProps.params.accountId },
     }),
-  })
+  }),
+  graphql(queryUser, { name: 'userQuery' })
 )(ShowAccount);
 
 export default withApollo(ShowAccountWithGraphQL);

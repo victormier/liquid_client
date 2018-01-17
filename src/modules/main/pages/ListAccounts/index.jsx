@@ -55,7 +55,9 @@ const ListAccounts = (props) => {
       }
     }
 
-    totalBalance = toCurrency(userQuery.user.total_balance, userQuery.user.currency_code);
+    if (userQuery.user.currency_code) {
+      totalBalance = toCurrency(userQuery.user.total_balance, userQuery.user.currency_code);
+    }
   }
 
   return (
@@ -73,7 +75,7 @@ const ListAccounts = (props) => {
             <Button text="Transfer" color="transparent" />
           </Link>}
           rightButtonSecondary={
-            contentIsReady ? <RefreshButton accountId={mirrorAccount.id} /> : null
+            (contentIsReady && mirrorAccount) ? <RefreshButton accountId={mirrorAccount.id} /> : null
           }
         />
         { contentIsReady ?

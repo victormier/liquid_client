@@ -88,7 +88,11 @@ const ListAccounts = (props) => {
         {
           (accounts && accounts.length === 1) &&
             <div className={styles.newAccountMessage}>
-              Hey! not much here yet.<br />You can start by <Link to="/accounts/new">creating a new account</Link>.
+              <br />
+              <p>Hey! Welcome to Liquid.</p>
+              <p>Liquid accounts work like folders for your money. Create one to start saving.</p>
+              <br />
+              <Link to="/accounts/new"><Button text="Create a new account" small /></Link>
             </div>
         }
         <Nav />

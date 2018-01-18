@@ -16,6 +16,7 @@ import baseStyles from 'styles/base/base.scss';
 import RefreshButton from '../../components/RefreshButton';
 import Account from '../../components/Account';
 import Nav from '../../components/Nav';
+import styles from './styles.scss';
 
 const ListAccounts = (props) => {
   const { allAccountsQuery, saltedgeLoginsQuery, userQuery } = props;
@@ -83,6 +84,12 @@ const ListAccounts = (props) => {
             <QueryLoading
               error={allAccountsQuery.error}
             />
+        }
+        {
+          (accounts && accounts.length === 1) &&
+            <div className={styles.newAccountMessage}>
+              Hey! not much here yet.<br />You can start by <Link to="/accounts/new">creating a new account</Link>.
+            </div>
         }
         <Nav />
       </Grid>

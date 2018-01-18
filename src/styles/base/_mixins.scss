@@ -13,8 +13,14 @@
   background: transparentize(black,
   0.8);
 }
-
-
+@mixin transparentBackground2 {
+  background: transparentize(black,
+  0.9);
+}
+@mixin transparentBackground3 {
+  background: transparentize(black,
+  0.95);
+}
 
 $gradientTransparentDarkBlue: rgba(0,23,52,0.15);
 $gradientTransparentLightBlue: rgba(1,184,204,0.15);
@@ -47,13 +53,13 @@ $gradientMoreTransparentLightBlue: rgba(1,184,204,0.08);
   border: none;
   width: 100%;
   border-radius: 50px;
-  padding: 2.5rem 2.5rem;
+  padding: 1.75rem 2.5rem;
 }
 
 @mixin circleBlock {
   border: none;
-  width: 6rem;
-  height: 6rem;
+  width: 4.5rem;
+  height: 4.5rem;
   border-radius: 50%;
 }
 
@@ -67,4 +73,14 @@ $gradientMoreTransparentLightBlue: rgba(1,184,204,0.08);
   margin-right: -10px;
   width: auto;
   min-width: 100%;
+}
+
+@mixin inputBlock {
+  margin-bottom: $base-grid-gutter/2;
+
+  label {
+    text-align: left;
+    font-size: $font-size-small;
+    font-weight: 300;
+  }
 }

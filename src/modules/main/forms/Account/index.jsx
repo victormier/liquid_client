@@ -11,7 +11,7 @@ const NameInput = componentProps => (
     value={componentProps.input.value}
     onChange={componentProps.input.onChange}
     type="text"
-    placeholder="Account Name"
+    placeholder="Account Name (Taxes, Summer Trip, Savings...)"
   />);
 
 const AccountForm = (props) => {

@@ -1,9 +1,17 @@
 @import 'base/variables';
 @import 'base/mixins';
 
+.inputBlock {
+  @include inputBlock;
+}
+
+.inputContainer {
+  @include blockDisplaced;
+}
+
 .input {
-  @include roundedBlock;
-  @include transparentBlueBackground;
+  @include squareRoundedBlock;
+  @include transparentBackground;
   margin-bottom: $base-grid-gutter/4;
   color: white;
 
@@ -14,5 +22,9 @@
   &:disabled {
     background: transparent;
     border: 1px solid transparentize(white, 0.5);
+    padding-top: 1.65rem;
+    padding-bottom: 1.65rem;
+    -webkit-text-fill-color: white;
+    -webkit-opacity: 1;
   }
 }

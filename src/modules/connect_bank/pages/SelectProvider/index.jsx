@@ -23,6 +23,7 @@ const BankNameInput = componentProps => (
     onChange={componentProps.input.onChange}
     type="text"
     placeholder="Your Bank"
+    label="Bank"
   />);
 
 @inject(

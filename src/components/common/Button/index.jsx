@@ -6,7 +6,7 @@ import styles from './styles.scss';
 const Button = props => (
   <button
     {..._.omit(props, ['text'])}
-    className={`${styles[props.color || 'default']} ${styles[props.shape || 'round']} ${props.className}`}
+    className={`${styles[props.color || 'default']} ${styles[props.shape || 'round']} ${props.small ? styles.small : ''} ${props.className ? props.className : ''}`}
   >
     <span>
       {
@@ -27,6 +27,7 @@ Button.propTypes = {
     React.PropTypes.node,
   ]),
   className: PropTypes.string,
+  small: PropTypes.boolean,
 };
 
 export default Button;

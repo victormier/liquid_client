@@ -12,6 +12,7 @@ const EmailInput = componentProps => (
     onChange={componentProps.input.onChange}
     type="text"
     placeholder="Email"
+    label="Email"
   />);
 
 const PasswordInput = componentProps => (
@@ -20,6 +21,7 @@ const PasswordInput = componentProps => (
     onChange={componentProps.input.onChange}
     type="password"
     placeholder="Password"
+    label="Password"
   />);
 
 const SessionForm = (props) => {

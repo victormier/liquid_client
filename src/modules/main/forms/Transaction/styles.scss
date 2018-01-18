@@ -1,0 +1,6 @@
+.amountInput {
+  background: red;
+  &:before {
+    content: "€";
+  }
+}

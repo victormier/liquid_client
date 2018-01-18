@@ -13,6 +13,7 @@ const TextInput = componentProps => (
     value={componentProps.input.value}
     onChange={componentProps.input.onChange}
     type="text"
+    label={componentProps.label}
   />);
 
 const PasswordInput = componentProps => (
@@ -20,10 +21,11 @@ const PasswordInput = componentProps => (
     value={componentProps.input.value}
     onChange={componentProps.input.onChange}
     type="password"
+    label={componentProps.label}
   />);
 
 const renderSelect = componentProps => (
-  <SelectInput {...componentProps.input}>
+  <SelectInput {...componentProps.input} label={componentProps.label}>
     {componentProps.children}
   </SelectInput>
 );
@@ -36,7 +38,7 @@ const SelectField = ({ fieldDescription }) => {
   ));
 
   return (
-    <Field component={renderSelect} name={fieldDescription.name}>
+    <Field component={renderSelect} name={fieldDescription.name} label={fieldDescription.localized_name}>
       <option value={null} />
       {options}
     </Field>
@@ -66,6 +68,7 @@ const ProviderLoginForm = (props) => {
         field = (<Field
           name={fieldDescription.name}
           component={PasswordInput}
+          label={fieldDescription.localized_name}
         />);
         break;
       case 'select':
@@ -73,14 +76,11 @@ const ProviderLoginForm = (props) => {
         break;
       case 'text':
       default:
-        field = <Field name={fieldDescription.name} component={TextInput} />;
+        field = <Field name={fieldDescription.name} component={TextInput} label={fieldDescription.localized_name} />;
         break;
     }
     return (
-      <div key={fieldDescription.name}>
-        <label htmlFor={fieldDescription.name}>
-          {fieldDescription.localized_name}
-        </label>
+      <div key={fieldDescription.name} className={baseStyles.baseMarginBottom}>
         { field }
       </div>
     );

@@ -1,5 +1,11 @@
 @import 'base/variables';
 
+.header {
+  hr {
+    margin-top: 1rem;
+  }
+}
+
 .title {
   margin-bottom: $base-grid-gutter/4;
   min-height: 3.5rem;
@@ -17,6 +23,12 @@
 }
 
 .titleRight {
+  margin-bottom: $base-grid-gutter/4;
   text-align: right;
   float: right;
+}
+
+.rightButton {
+  float: right;
+  margin-left: $base-grid-gutter/2;
 }

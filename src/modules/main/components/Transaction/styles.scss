@@ -1,0 +1,54 @@
+@import 'base/mixins';
+@import 'base/variables';
+@import 'base/colors';
+
+.transactionContainer {
+  @include blockDisplaced;
+}
+
+.transaction {
+  @include squareRoundedBlock;
+  @include transparentBackground2;
+  margin-bottom: $base-grid-gutter/4;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  &:hover {
+    @include transparentBackground3;
+  }
+}
+
+.dataBlock {
+  display: table;
+  height: 44px;
+  width: 100%;
+}
+
+.dataContent {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.transactionDate {
+  color: $transparentWhite;
+  line-height: 1.2;
+}
+
+.transactionDescription {
+  font-weight: 500;
+  padding-right: $base-grid-gutter/2;
+}
+
+.transactionCategory {
+  font-size: $font-size-small;
+  color: $green;
+
+  img {
+    margin-left: $base-grid-gutter/4;
+  }
+}
+
+.amount {
+  font-size: $font-size-slarge;
+  padding-right: $base-grid-gutter - 5;
+}

@@ -7,7 +7,7 @@ import restFetch from 'restApi';
 import { mixpanelEventProps, SETUP_SIGNUP_PASSWORD, VIEW_SIGNUP_PASSWORD_PAGE } from 'config/mixpanelEvents';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo.svg';
 import ErrorBar from 'components/layout/ErrorBar';
 import PasswordForm from '../../forms/Password';
 import styles from './styles.scss';

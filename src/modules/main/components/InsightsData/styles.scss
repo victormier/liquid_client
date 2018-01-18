@@ -5,13 +5,20 @@
   list-style: none;
   margin: 0;
 }
+.block {
+  margin-top: $base-grid-gutter*2;
+}
 .itemTitle {
+  padding-left: 1.5rem;
   font-size: $font-size-normal;
 }
 .itemDetail {
+  padding-left: 1.5rem;
   font-size: $font-size-small;
   color: $grayLight;
 }
 .itemData {
-  font-size: $font-size-large;
+  font-size: $font-size-slarge;
+  line-height: 4.2rem;
+  padding-right: 1.5rem;
 }

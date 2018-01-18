@@ -1,26 +1,31 @@
 import React from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { queryAllAccounts, queryAllSaltedgeLogins } from 'qql';
+import { queryAllAccounts, queryAllSaltedgeLogins, queryUser } from 'qql';
 import { Link } from 'react-router';
-import QueryLoading from 'components/common/QueryLoading';
-import Button from 'components/common/Button';
 import { Grid } from 'react-flexbox-grid';
+import { toCurrency } from 'utils/currencies';
 import _ from 'lodash';
+import moment from 'node-moment';
+import Button from 'components/common/Button';
+import QueryLoading from 'components/common/QueryLoading';
 import Header from 'components/common/Header';
+import errorStyles from 'components/layout/ErrorBar/styles.scss';
 import gridStyles from 'styles/base/grid.scss';
 import baseStyles from 'styles/base/base.scss';
-import errorStyles from 'components/layout/ErrorBar/styles.scss';
 import RefreshButton from '../../components/RefreshButton';
 import Account from '../../components/Account';
 import Nav from '../../components/Nav';
+import styles from './styles.scss';
 
 const ListAccounts = (props) => {
-  const { allAccountsQuery, saltedgeLoginsQuery } = props;
-  const contentIsReady = !allAccountsQuery.loading && !allAccountsQuery.error && allAccountsQuery.all_accounts;
+  const { allAccountsQuery, saltedgeLoginsQuery, userQuery } = props;
+  const contentIsReady = (!allAccountsQuery.loading && !allAccountsQuery.error) || allAccountsQuery.all_accounts;
   let error;
   let accounts;
   let mirrorAccount;
+  let subtitle;
+  let totalBalance;
 
   if (contentIsReady) {
     if (saltedgeLoginsQuery &&
@@ -42,6 +47,18 @@ const ListAccounts = (props) => {
     ));
 
     mirrorAccount = _.find(allAccountsQuery.all_accounts, a => a.is_mirror_account);
+
+    if (mirrorAccount) {
+      if (mirrorAccount.is_refreshing) {
+        subtitle = 'Syncing account...It might take 2 min.';
+      } else if (mirrorAccount.last_updated) {
+        subtitle = `Updated ${moment.unix(mirrorAccount.last_updated).fromNow()}`;
+      }
+    }
+
+    if (userQuery.user.currency_code) {
+      totalBalance = toCurrency(userQuery.user.total_balance, userQuery.user.currency_code);
+    }
   }
 
   return (
@@ -49,7 +66,9 @@ const ListAccounts = (props) => {
       { error }
       <Grid fluid className={gridStyles.mainGrid}>
         <Header
-          title="Your accounts"
+          title="Accounts"
+          subtitle={subtitle}
+          titleRight={totalBalance}
           leftButton={<Link to="/accounts/new">
             <Button text="+" color="transparent" shape="circle" />
           </Link>}
@@ -57,7 +76,7 @@ const ListAccounts = (props) => {
             <Button text="Transfer" color="transparent" />
           </Link>}
           rightButtonSecondary={
-            contentIsReady ? <RefreshButton accountId={mirrorAccount.id} /> : null
+            (contentIsReady && mirrorAccount) ? <RefreshButton accountId={mirrorAccount.id} /> : null
           }
         />
         { contentIsReady ?
@@ -65,6 +84,16 @@ const ListAccounts = (props) => {
             <QueryLoading
               error={allAccountsQuery.error}
             />
+        }
+        {
+          (accounts && accounts.length === 1) &&
+            <div className={styles.newAccountMessage}>
+              <br />
+              <p>Hey! Welcome to Liquid.</p>
+              <p>Liquid accounts work like folders for your money. Create one to start saving.</p>
+              <br />
+              <Link to="/accounts/new"><Button text="Create a new account" small /></Link>
+            </div>
         }
         <Nav />
       </Grid>
@@ -92,6 +121,12 @@ ListAccounts.propTypes = {
       })
     ),
   }).isRequired,
+  userQuery: PropTypes.shape({
+    user: PropTypes.shape({
+      total_balance: PropTypes.number,
+      currency_code: PropTypes.string,
+    }).isRequired,
+  }),
 };
 
 const ListAccountsWithGraphQL = compose(
@@ -99,6 +134,7 @@ const ListAccountsWithGraphQL = compose(
     name: 'allAccountsQuery',
     options: { fetchPolicy: 'cache-and-network' },
   }),
+  graphql(queryUser, { name: 'userQuery' }),
   graphql(queryAllSaltedgeLogins, { name: 'saltedgeLoginsQuery' })
 )(ListAccounts);
 

@@ -7,6 +7,7 @@ import QueryLoading from 'components/common/QueryLoading';
 import Header from 'components/common/Header';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import gridStyles from 'styles/base/grid.scss';
+import NewTransactionNoAccounts from '../NewTransactionNoAccounts';
 import Account from '../../components/Account';
 import styles from './styles.scss';
 
@@ -26,6 +27,8 @@ const NewTransaction = (props) => {
   const { data } = props;
   const contentIsReady = !data.loading && !data.error && data.all_accounts;
 
+  if (contentIsReady && (data.all_accounts.length <= 1)) return <NewTransactionNoAccounts backTo="/accounts" />;
+
   return (
     <Grid fluid className={gridStyles.mainGrid}>
       <Header
@@ -35,9 +38,9 @@ const NewTransaction = (props) => {
       <Row>
         <Col xs={12}>
           { contentIsReady ?
-              accounts(data.all_accounts) :
-              <QueryLoading error={data.error} />
-          }
+                accounts(data.all_accounts) :
+                <QueryLoading error={data.error} />
+            }
         </Col>
       </Row>
     </Grid>

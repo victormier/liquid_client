@@ -161,11 +161,16 @@ class NewProviderLogin extends Component {
                   value={saltedgeProviderQuery.saltedge_provider.name}
                   type="text"
                   onChange={this.onChange}
+                  label="Bank"
                   disabled
                 />
               </div>
               <hr />
-              <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
+              { saltedgeProviderQuery.saltedge_provider.instruction &&
+                <div>
+                  <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
+                  <hr />
+                </div> }
               <ProviderLoginForm
                 onSubmit={formData => this.handleFormSubmit(formData)}
                 fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}

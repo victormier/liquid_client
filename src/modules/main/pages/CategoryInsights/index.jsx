@@ -6,11 +6,9 @@ import SpinnerBlock from 'components/common/SpinnerBlock';
 import { toCurrency } from 'utils/currencies';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import _ from 'lodash';
-import GoBackArrow from 'components/common/GoBackArrow';
-import baseStyles from 'styles/base/base.scss';
+import Header from 'components/common/Header';
 import gridStyles from 'styles/base/grid.scss';
 import TransactionList from '../../components/TransactionList';
-import styles from './styles.scss';
 
 const CategoryInsights = (props) => {
   const { data } = props;
@@ -22,23 +20,12 @@ const CategoryInsights = (props) => {
 
   return (
     <Grid fluid className={gridStyles.mainGrid}>
-      <Row className={baseStyles.topNav}>
-        <Col xs={12}>
-          <GoBackArrow to="/insights" />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <h2 className={styles.categoryName}>
-            { category ? category.name : props.params.category }
-          </h2>
-        </Col>
-        <Col xs={6}>
-          <h2 className={baseStyles.textRight}>
-            { toCurrency((category ? category.amount : 0), currencyCode) }
-          </h2>
-        </Col>
-      </Row>
+      <Header
+        title={category ? category.name : props.params.category}
+        subtitle="Category"
+        titleRight={toCurrency((category ? category.amount : 0), currencyCode)}
+        backTo="/insights"
+      />
       <Row>
         <Col xs={12}>
           { category ?

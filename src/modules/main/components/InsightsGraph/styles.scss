@@ -14,6 +14,22 @@ $barWidth: 40px;
       opacity: 1;
     }
   }
+
+  &.active .label {
+    opacity: 1;
+  }
+}
+
+.insightBarEmptyData {
+  .topBar {
+    border-radius: 0;
+  }
+  .bottomBar {
+    border-radius: 0;
+  }
+  &.active .bar {
+    opacity: 0.8;
+  }
 }
 
 .barContainer {
@@ -47,6 +63,8 @@ $barWidth: 40px;
 
 .label {
   text-transform: uppercase;
-  margin-top: $base-grid-gutter*2;
+  margin-top: $base-grid-gutter/2;
   font-weight: bold;
+  opacity: 0.3;
+  font-size: $font-size-small;
 }

@@ -1,6 +1,14 @@
 @import 'base/variables';
 @import 'base/mixins';
 
+.inputBlock {
+  @include inputBlock;
+}
+
+.inputContainer {
+  @include blockDisplaced;
+}
+
 .select {
   @include roundedBlock;
   @include transparentBlueBackground;

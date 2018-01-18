@@ -10,6 +10,7 @@ import { autobind } from 'core-decorators';
 import Header from 'components/common/Header';
 import SpinnerBlock from 'components/common/SpinnerBlock';
 import ErrorBar from 'components/layout/ErrorBar';
+import NewTransactionNoAccounts from '../NewTransactionNoAccounts';
 import TransactionForm from '../../forms/Transaction';
 
 @inject('viewStore')
@@ -38,6 +39,8 @@ class NewTransactionStep2 extends Component {
 
     const originAccount = _.find(data.all_accounts, ['id', params.accountId]);
     const destinationAccounts = _.without(data.all_accounts, originAccount);
+
+    if (!destinationAccounts.length) return <NewTransactionNoAccounts backTo={`/accounts/${originAccount.id}`} />;
 
     return (
       <Grid fluid className={`${gridStyles.mainGrid}`}>

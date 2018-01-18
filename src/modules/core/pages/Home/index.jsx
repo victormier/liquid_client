@@ -3,7 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router';
 import Button from 'components/common/Button';
 import gridStyles from 'styles/base/grid.scss';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/logo.svg';
 import styles from './styles.scss';
 
 const Home = () => (

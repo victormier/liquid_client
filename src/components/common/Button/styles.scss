@@ -3,14 +3,12 @@
 
 .default {
   background: white;
-  color: black;
+  color: $blueLight3;
 }
 
 .round {
   @include roundedBlock;
   line-height: 1rem;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .circle {
@@ -27,8 +25,6 @@
 .squareRounded {
   @include squareRoundedBlock;
   line-height: 1rem;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .blue {
@@ -54,7 +50,10 @@
 
 .lightBlueGradient {
   composes: default;
-
-  background-image: radial-gradient(66% 288%, #00E0F2 13%, #00DAEF 19%, #00D2EC 26%, #0085CF 100%);
+  background-image: radial-gradient(90% 210% at 0 50%, #0085CF 0%, #00E0F2 100%);
   color: white;
+}
+
+.small {
+  width: auto;
 }

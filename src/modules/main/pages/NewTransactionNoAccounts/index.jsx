@@ -19,7 +19,7 @@ const NewTransactionNoAccounts = props => (
         <p>Liquid accounts work like folders for your money. Create a new account so you can start organizing your money.</p>
         <br />
         <br />
-        <Link to="/accounts/new"><Button text="Create a new account" /></Link>
+        <Link to="/accounts/new"><Button text="Create a new account" small /></Link>
       </Col>
     </Row>
   </Grid>

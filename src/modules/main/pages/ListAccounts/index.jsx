@@ -71,7 +71,7 @@ const ListAccounts = (props) => {
           leftButton={<Link to="/accounts/new">
             <Button text="+" color="transparent" shape="circle" />
           </Link>}
-          rightButton={(contentIsReady && allAccountsQuery.all_accounts.length >= 2) && <Link to="/transactions/new">
+          rightButton={<Link to="/transactions/new">
             <Button text="Transfer" color="transparent" />
           </Link>}
           rightButtonSecondary={

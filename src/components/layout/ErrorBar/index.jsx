@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
-@inject('viewStore') @observer
+@observer @inject('viewStore')
 class ErrorBar extends React.Component {
   render() {
     const { errors } = this.props.viewStore;

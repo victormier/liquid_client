@@ -111,7 +111,7 @@ ProviderLoginForm.propTypes = {
       name: PropTypes.string.isRequired,
       position: PropTypes.number.isRequired,
       localized_name: PropTypes.string.isRequired,
-      optional: PropTypes.boolean,
+      optional: PropTypes.bool,
       field_options: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string.isRequired,

@@ -58,7 +58,7 @@ Header.propTypes = {
   rightButton: PropTypes.object,
   rightButtonSecondary: PropTypes.object,
   backTo: PropTypes.string,
-  mini: PropTypes.boolean,
+  mini: PropTypes.bool,
 };
 
 export default Header;

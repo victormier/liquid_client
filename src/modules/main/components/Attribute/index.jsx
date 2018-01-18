@@ -12,7 +12,7 @@ const Attribute = ({ title, subtitle, bold }) => (
 Attribute.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  bold: PropTypes.boolean,
+  bold: PropTypes.bool,
 };
 
 export default Attribute;

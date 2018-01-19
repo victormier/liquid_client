@@ -117,7 +117,7 @@ ListAccounts.propTypes = {
     all_saltedge_logins: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
-        needs_reconnection: PropTypes.string.isRequired,
+        needs_reconnection: PropTypes.bool.isRequired,
       })
     ),
   }).isRequired,

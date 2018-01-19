@@ -70,7 +70,7 @@ const ShowTransaction = ({ data, location, params, client }) => {
 ShowTransaction.propTypes = {
   data: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool,
+    error: PropTypes.object,
     transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,

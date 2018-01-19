@@ -155,7 +155,7 @@ Settings.propTypes = {
   submit: PropTypes.func.isRequired,
   percentageRuleQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool,
+    error: PropTypes.object,
     percentage_rule: PropTypes.shape({
       id: PropTypes.string.isRequired,
       minimum_amount: PropTypes.number.isRequired,
@@ -164,7 +164,7 @@ Settings.propTypes = {
   }),
   userQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool,
+    error: PropTypes.object,
     user: PropTypes.shape({
       email: PropTypes.string.isRequired,
     }),

@@ -14,8 +14,8 @@ const SquareRoundedBlock = (props) => {
 
 SquareRoundedBlock.propTypes = {
   children: PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
   ]),
   className: PropTypes.string,
 };

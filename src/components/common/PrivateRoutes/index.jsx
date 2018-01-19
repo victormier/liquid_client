@@ -91,7 +91,7 @@ PrivateRoutes.propTypes = {
       })),
     }),
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool.isRequired,
+    error: PropTypes.object,
     refetch: PropTypes.func.isRequired,
   }),
 };

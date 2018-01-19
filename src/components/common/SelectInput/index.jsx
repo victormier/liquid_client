@@ -18,8 +18,8 @@ const SelectInput = (props) => {
 };
 SelectInput.propTypes = {
   children: PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
   ]),
   label: PropTypes.string,
 };

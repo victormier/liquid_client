@@ -51,7 +51,7 @@ const Header = props => (
 );
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   titleRight: PropTypes.string,
   subtitle: PropTypes.string,
   leftButton: PropTypes.object,

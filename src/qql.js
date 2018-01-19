@@ -56,6 +56,7 @@ export const queryUser = gql`
         currency_code
         ... on VirtualAccount {
           last_updated
+          is_mirror_account
         }
       }
     }

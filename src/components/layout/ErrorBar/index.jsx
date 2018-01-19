@@ -1,6 +1,6 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
-import PropTypes from 'prop-types';
+import { inject, observer, PropTypes } from 'mobx-react';
+import ReactPropTypes from 'prop-types';
 import styles from './styles.scss';
 
 @inject('viewStore') @observer
@@ -27,10 +27,10 @@ class ErrorBar extends React.Component {
 }
 
 ErrorBar.wrappedComponent.propTypes = {
-  viewStore: PropTypes.shape({
-    errors: PropTypes.array,
+  viewStore: ReactPropTypes.shape({
+    errors: PropTypes.observableArray,
   }).isRequired,
-  errors: PropTypes.array,
+  errors: ReactPropTypes.array,
 };
 
 export default ErrorBar;

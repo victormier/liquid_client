@@ -11,6 +11,7 @@ export const SELECT_BANK = 'Select bank';
 export const CONNECT_BANK_FIRST_STEP = 'Connect bank first step';
 export const CONNECT_BANK_INTERACTIVE = 'Connect bank interactive';
 export const CONNECT_BANK = 'Connect bank';
+export const ATTEMPTED_INTERACTIVE_BANK_CONNECT = 'Attempt connect interactive bank';
 export const VIEW_ACCOUNTS = 'View accounts';
 export const VIEW_ACCOUNT_TRANSACTIONS = 'View account transactions';
 export const VIEW_TRANSACTION_DETAILS = 'View transaction details';

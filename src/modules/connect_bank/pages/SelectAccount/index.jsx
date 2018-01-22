@@ -5,13 +5,23 @@ import { inject } from 'mobx-react';
 import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { queryAllSaltedgeAccounts, selectSaltedgeAccount } from 'qql';
+import Button from 'components/common/Button';
+import Header from 'components/common/Header';
+import QueryLoading from 'components/common/QueryLoading';
 import ErrorBar from 'components/layout/ErrorBar';
-import SpinnerBlock from 'components/common/SpinnerBlock';
 import Account from 'modules/main/components/Account';
 import styles from './styles.scss';
 
 @inject('viewStore')
 class SelectSaltedgeAccount extends Component {
+  onLogout = (e) => {
+    e.preventDefault();
+    this.props.client.resetStore();
+    this.props.viewStore.reset();
+    this.props.route.logout();
+    this.props.router.push('/');
+  }
+
   handleSelectAccount(saltedgeAccountId) {
     return this.props.submit(saltedgeAccountId)
         .then(() => {
@@ -24,32 +34,42 @@ class SelectSaltedgeAccount extends Component {
 
   render() {
     const { data } = this.props;
+    const contentIsReady = !data.loading && !data.error && data.all_saltedge_accounts;
+    let content;
 
-    if (data.loading) return <SpinnerBlock />;
-    if (data.error) return <div>Error!</div>;
-
-    const accounts = data.all_saltedge_accounts.map(account => (
-      <div
-        onClick={() => { this.handleSelectAccount(account.id); }}
-        key={account.id}
-        className={styles.account}
-        role="button"
-        tabIndex="0"
-      >
-        <Account account={account} />
-      </div>
-    ));
+    if (contentIsReady) {
+      const accounts = data.all_saltedge_accounts.map(account => (
+        <div
+          onClick={() => { this.handleSelectAccount(account.id); }}
+          key={account.id}
+          className={styles.account}
+          role="button"
+          tabIndex="0"
+        >
+          <Account account={account} />
+        </div>
+      ));
+      content = accounts.length ?
+        <div>{ accounts }</div> :
+        <div>We could not find any account. Was the bank connection succesful?</div>;
+    }
 
     return (
-      <Grid fluid className={`${gridStyles.mainGrid} ${gridStyles.emptyHeader}`}>
+      <Grid fluid className={gridStyles.mainGrid}>
         <ErrorBar />
+        <Header
+          title="Select account"
+          rightButton={<Button
+            id="logoutButton"
+            text="Log out"
+            color="transparent"
+            onClick={(e) => { this.onLogout(e); }}
+          />}
+        />
         <Row>
           <Col xs={12}>
-            <h1>Select account</h1>
             {
-              data.all_saltedge_accounts.length ?
-                <div>{ accounts }</div> :
-                <div>We could not find any account. Was the bank connection succesful?</div>
+              contentIsReady ? content : <QueryLoading error={data.error} />
             }
           </Col>
         </Row>
@@ -72,11 +92,18 @@ SelectSaltedgeAccount.propTypes = {
     }),
   }),
   submit: PropTypes.func.isRequired,
+  route: PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+  }),
+  client: PropTypes.shape({
+    resetStore: PropTypes.func.isRequired,
+  }),
 };
 
 SelectSaltedgeAccount.wrappedComponent.propTypes = {
   viewStore: PropTypes.shape({
     addError: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
   }).isRequired,
 };
 

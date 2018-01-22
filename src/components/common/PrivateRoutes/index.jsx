@@ -22,8 +22,7 @@ const ensureAuthentication = (props) => {
   }
 };
 
-@observer
-@inject('mixpanel')
+@inject('mixpanel') @observer
 class PrivateRoutes extends Component {
   componentWillMount() {
     ensureAuthentication(this.props);
@@ -92,7 +91,7 @@ PrivateRoutes.propTypes = {
       })),
     }),
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool.isRequired,
+    error: PropTypes.object,
     refetch: PropTypes.func.isRequired,
   }),
 };

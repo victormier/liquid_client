@@ -163,6 +163,7 @@ class AppRouter extends Component {
               />
               <Route
                 path={'/connect/select_account'}
+                logout={this.props.logout}
                 getComponent={
                   (location, cb) => {
                     System.import('modules/connect_bank/pages/SelectAccount')

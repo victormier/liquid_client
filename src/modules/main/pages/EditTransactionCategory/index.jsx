@@ -100,14 +100,14 @@ class EditTransactionCategory extends Component {
 EditTransactionCategory.propTypes = {
   transactionQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool,
+    error: PropTypes.object,
     transaction: PropTypes.shape({
       category_name: PropTypes.string.isRequired,
     }),
   }),
   allCategoriesQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool,
+    error: PropTypes.object,
     all_saltedge_categories: PropTypes.array,
   }),
   params: PropTypes.shape({

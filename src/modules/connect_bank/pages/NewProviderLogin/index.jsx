@@ -202,7 +202,7 @@ NewProviderLogin.propTypes = {
   }),
   userQuery: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool,
+    error: PropTypes.object,
     user: PropTypes.shape({
       saltedge_login: PropTypes.shape({
         id: PropTypes.number,

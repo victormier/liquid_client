@@ -1,0 +1,36 @@
+@import 'base/variables';
+
+.carouselContainer {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+.introCarousel {
+  text-align: center;
+}
+
+.slide {
+  padding: 0 20px;
+}
+
+.initialSlide {
+  text-align: left;
+}
+
+.carouselImage {
+  height: 215px;
+  text-align: center;
+  margin: $base-grid-gutter 0;
+  white-space: nowrap;
+
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 215px;
+  }
+}
+.carouselImageHelper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}

@@ -70,6 +70,7 @@ export const querySaltedgeProvider = gql`
       country_code
       name
       instruction
+      interactive
       required_fields {
         id
         localized_name

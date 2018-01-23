@@ -7,10 +7,10 @@ import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { querySaltedgeLogin } from 'qql';
 import Header from 'components/common/Header';
-import introCarousel1 from 'assets/images/introCarousel1.svg';
-import introCarousel2 from 'assets/images/introCarousel2.svg';
-import introCarousel3 from 'assets/images/introCarousel3.svg';
-import introCarousel4 from 'assets/images/introCarousel4.svg';
+import introCarousel1 from 'assets/images/introCarousel1.png';
+import introCarousel2 from 'assets/images/introCarousel2.png';
+import introCarousel3 from 'assets/images/introCarousel3.png';
+import introCarousel4 from 'assets/images/introCarousel4.png';
 import baseStyles from 'styles/base/base.scss';
 import LoadingDots from '../LoadingDots';
 import styles from './styles.scss';
@@ -139,7 +139,7 @@ const PollProviderLoginWithGraphQL = graphql(querySaltedgeLogin, {
     variables: {
       id: ownProps.saltedgeLoginId,
     },
-    pollInterval: 8000,
+    pollInterval: 6000,
   }),
 })(PollProviderLogin);
 

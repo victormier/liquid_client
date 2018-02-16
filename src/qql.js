@@ -28,6 +28,24 @@ export const virtualAccountFieldsFragment = gql`
   }
 `;
 
+export const providerFieldFieldsFragment = gql`
+  fragment providerFieldFields on SaltedgeProviderFieldDescriptionType {
+    id
+    localized_name
+    name
+    nature
+    optional
+    position
+    field_options {
+      id
+      name
+      localized_name
+      option_value
+      selected
+    }
+  }
+`;
+
 // Queries
 
 export const queryUser = gql`
@@ -72,22 +90,14 @@ export const querySaltedgeProvider = gql`
       instruction
       interactive
       required_fields {
-        id
-        localized_name
-        name
-        nature
-        optional
-        position
-        field_options {
-          id
-          name
-          localized_name
-          option_value
-          selected
-        }
+        ...providerFieldFields
+      }
+      interactive_fields {
+        ...providerFieldFields
       }
     }
   }
+  ${providerFieldFieldsFragment}
 `;
 
 export const queryAllSaltedgeProviders = gql`

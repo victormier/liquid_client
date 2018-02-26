@@ -1,6 +1,10 @@
 @import 'base/colors';
 @import 'base/variables';
 
+html {
+  font-size: 62.5%;
+}
+
 html, body {
   height: 100%;
   background-color: #001734;
@@ -8,11 +12,11 @@ html, body {
   // background-image: url(assets/images/bg.svg);
   // background-repeat: no-repeat;
   // background-attachment: fixed;
-
 }
 
 body {
   color: white;
+  font-size: 16px;
   font-size: 1.6rem;
   font-family: $font-family;
 }

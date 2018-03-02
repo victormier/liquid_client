@@ -118,6 +118,9 @@ export const querySaltedgeLogin = gql`
       finished_connecting
       killed
       error_message
+      interactive_session_active
+      interactive_html
+      interactive_fields
       saltedge_provider {
         id
       }

@@ -15,6 +15,10 @@ class LoadingDots extends Component {
     this.setState({ intervalId });
   }
 
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
   @autobind
   loadingDots() {
     const loadingDots = (this.state.loadingDots.length < 3) ? `${this.state.loadingDots}.` : '';

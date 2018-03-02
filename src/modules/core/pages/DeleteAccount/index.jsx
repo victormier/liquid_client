@@ -26,7 +26,6 @@ class DeleteAccount extends Component {
 
     return this.props.mutate()
       .then(() => {
-        debugger;
         this.props.client.resetStore();
         this.props.viewStore.reset();
         this.props.route.logout();

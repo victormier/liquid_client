@@ -348,4 +348,12 @@ export const killUser = gql`
   }
 `;
 
+export const submitInteractiveFields = gql`
+  mutation submitInteractiveFields($saltedgeLoginId: ID!, $credentials: String!) {
+    submitInteractiveFields(saltedgeLoginId: $saltedgeLoginId, credentials: $credentials) {
+      id
+    }
+  }
+`;
+
 export default queryAllSaltedgeProviders;

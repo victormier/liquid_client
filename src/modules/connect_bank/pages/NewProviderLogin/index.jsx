@@ -3,16 +3,13 @@ import { graphql, compose, withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { autobind } from 'core-decorators';
-import { Link } from 'react-router';
 import FormInput from 'components/common/FormInput';
 import gridStyles from 'styles/base/grid.scss';
-import baseStyles from 'styles/base/base.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { querySaltedgeProvider, createSaltedgeLogin,
          reconnectSaltedgeLogin, queryUser } from 'qql';
 import Header from 'components/common/Header';
 import QueryLoading from 'components/common/QueryLoading';
-import Button from 'components/common/Button';
 import ErrorBar from 'components/layout/ErrorBar';
 import { mixpanelEventProps, CONNECT_BANK_FIRST_STEP,
          CONNECT_BANK, ATTEMPTED_INTERACTIVE_BANK_CONNECT } from 'config/mixpanelEvents';
@@ -67,15 +64,6 @@ class NewProviderLogin extends Component {
         this.props.mixpanel.people.set(eventProps);
       }
     }
-  }
-
-
-  @autobind
-  submitCredentials(data) {
-    const dataParams = JSON.stringify(data);
-    return this.props.userQuery.user.bank_connection_phase === 'needs_reconnection' ?
-      this.submitReconnectSaltedgeLogin(dataParams) :
-      this.submitCreateSaltedgeLogin(dataParams);
   }
 
   @autobind
@@ -138,11 +126,22 @@ class NewProviderLogin extends Component {
     this.props.mixpanel.register(eventProps);
     this.props.mixpanel.people.set(eventProps);
 
-    if (this.props.userQuery.user.bank_connection_phase === 'needs_reconnection') {
-      this.props.router.push('/accounts');
-    } else {
-      this.props.router.push('/connect/select_account');
-    }
+    this.props.userQuery.refetch().then((query) => {
+      if (query.data.user.bank_connection_phase === 'needs_reconnection') {
+        this.props.router.push('/accounts');
+      } else {
+        this.props.router.push('/connect/select_account');
+      }
+    });
+  }
+
+  @autobind
+  handleInteractiveSessionActive() {
+    this.props.userQuery.refetch().then((query) => {
+      if (query.data.user.bank_connection_phase === 'interactive') {
+        this.props.router.push(`/connect/providers/${this.props.params.saltedgeProviderId}/logins/${this.state.saltedgeLoginId}/interactive`);
+      }
+    });
   }
 
   render() {
@@ -162,6 +161,7 @@ class NewProviderLogin extends Component {
         saltedgeLoginId={this.state.saltedgeLoginId}
         onConnectSuccess={this.handleConnectSuccess}
         onConnectError={this.handleConnectError}
+        onInteractiveSessionActive={this.handleInteractiveSessionActive}
       />);
     }
 
@@ -185,26 +185,17 @@ class NewProviderLogin extends Component {
                 />
               </div>
               <hr />
-              { saltedgeProviderQuery.saltedge_provider.interactive ?
-                <div>
-                  <h2 className={baseStyles.thin}>This bank will be available very soon.</h2>
-                  <h2 className={baseStyles.thin}>We&apos;ll let you know when it&apos;s ready.</h2>
-                  <div className={`${baseStyles.textCentered} ${baseStyles.baseMarginTopLarge}`}>
-                    <Link to="/connect/providers"><Button text="Go Back" small /></Link>
-                  </div>
-                </div> :
-                <div>
-                  { saltedgeProviderQuery.saltedge_provider.instruction &&
-                    <div>
-                      <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
-                      <hr />
-                    </div> }
-                  <ProviderLoginForm
-                    onSubmit={formData => this.handleFormSubmit(formData)}
-                    fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}
-                  />
-                </div>
-              }
+              <div>
+                { saltedgeProviderQuery.saltedge_provider.instruction &&
+                  <div>
+                    <p>{saltedgeProviderQuery.saltedge_provider.instruction}</p>
+                    <hr />
+                  </div> }
+                <ProviderLoginForm
+                  onSubmit={formData => this.handleFormSubmit(formData)}
+                  fieldsDescription={saltedgeProviderQuery.saltedge_provider.required_fields}
+                />
+              </div>
             </Col>
           </Row> :
           <QueryLoading error={saltedgeProviderQuery.error || userQuery.error} />
@@ -240,6 +231,7 @@ NewProviderLogin.propTypes = {
       }),
       bank_connection_phase: PropTypes.string.isRequired,
     }),
+    refetch: PropTypes.func.isRequired,
   }),
   reconnectSaltedgeLogin: PropTypes.func.isRequired,
   createSaltedgeLogin: PropTypes.func.isRequired,
@@ -255,6 +247,9 @@ NewProviderLogin.wrappedComponent.propTypes = {
     people: PropTypes.shape({
       set: PropTypes.func.isRequired,
     }),
+  }).isRequired,
+  params: PropTypes.shape({
+    saltedgeProviderId: PropTypes.string.isRequired,
   }).isRequired,
 };
 

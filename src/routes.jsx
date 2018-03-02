@@ -162,6 +162,16 @@ class AppRouter extends Component {
                 }
               />
               <Route
+                path={'/connect/providers/:saltedgeProviderId/logins/:saltedgeLoginId/interactive'}
+                getComponent={
+                  (location, cb) => {
+                    System.import('modules/connect_bank/pages/NewInteractiveLogin')
+                      .then(loadRoute(cb))
+                      .catch(err => errorLoading(err));
+                  }
+                }
+              />
+              <Route
                 path={'/connect/select_account'}
                 logout={this.props.logout}
                 getComponent={

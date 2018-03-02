@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { queryUser } from 'qql';
 import SpinnerBlock from 'components/common/SpinnerBlock';
+import conditionalRoutePush from 'utils/routing';
 import { observer, inject } from 'mobx-react';
 import _ from 'lodash';
 
@@ -22,6 +23,11 @@ const ensureAuthentication = (props) => {
   }
 };
 
+// this paths are always accessible
+const ALWAYS_ACCESSIBLE_PRIVATE_PATHS = [
+  '/settings',
+];
+
 @inject('mixpanel') @observer
 class PrivateRoutes extends Component {
   componentWillMount() {
@@ -30,32 +36,37 @@ class PrivateRoutes extends Component {
 
   componentWillReceiveProps(newProps) {
     ensureAuthentication(newProps);
+    const { location: { pathname }, data, router } = newProps;
+    const { user } = data;
+    const contentIsReady = !data.loading && data.user;
 
-    // refetch user if finished connecting
-    if (this.props.location.pathname.includes('connect') &&
-        !newProps.location.pathname.includes('connect')) {
-      this.props.data.refetch();
-      return;
-    }
-
-    if (!newProps.data.loading &&
-        newProps.data.user &&
-        !newProps.location.pathname.includes('connect') &&
-        !newProps.location.pathname.includes('settings')) {
-      switch (newProps.data.user.bank_connection_phase) {
-        case 'select_account':
-          this.props.router.push('/connect/select_account');
+    // forced redirections
+    if (contentIsReady && !ALWAYS_ACCESSIBLE_PRIVATE_PATHS.includes(pathname)) {
+      switch (user.bank_connection_phase) {
+        case 'new_login':
+          if (!pathname.includes('/connect/providers')) {
+            conditionalRoutePush(router, '/connect/providers');
+          }
           break;
-        case 'login_failed':
-        case 'login_pending': {
-          const saltedgeLogin = _.find(newProps.data.user.saltedge_logins, sl => (!sl.active));
+        case 'interactive': {
+          const saltedgeLogin = _.find(user.saltedge_logins, sl => (!sl.active));
           const providerId = saltedgeLogin.saltedge_provider.id;
-          this.props.router.push(`/connect/providers/${providerId}`);
+          conditionalRoutePush(router, `/connect/providers/${providerId}/logins/${saltedgeLogin.id}/interactive`);
           break;
         }
-        case 'new_login':
-          this.props.router.push('/connect/providers');
+        case 'login_failed':
+        case 'login_pending': {
+          if (!pathname.includes('/connect/providers') || pathname.includes('interactive')) {
+            const saltedgeLogin = _.find(newProps.data.user.saltedge_logins, sl => (!sl.active));
+            const providerId = saltedgeLogin.saltedge_provider.id;
+            conditionalRoutePush(router, `/connect/providers/${providerId}`);
+          }
           break;
+        }
+        case 'select_account':
+          conditionalRoutePush(router, '/connect/select_account');
+          break;
+        case 'needs_reconnection':
         case 'connected':
         default:
           break;
@@ -74,16 +85,16 @@ class PrivateRoutes extends Component {
 
 PrivateRoutes.propTypes = {
   // submit: PropTypes.func,
-  router: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  // router: PropTypes.shape({
+  //   push: PropTypes.func.isRequired,
+  // }).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }),
+  // location: PropTypes.shape({
+  //   pathname: PropTypes.string.isRequired,
+  // }),
   data: PropTypes.shape({
     user: PropTypes.shape({
       accounts: PropTypes.arrayOf(PropTypes.shape({

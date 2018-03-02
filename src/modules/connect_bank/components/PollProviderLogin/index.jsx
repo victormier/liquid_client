@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, withApollo } from 'react-apollo';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import Slider from 'react-slick';
 import gridStyles from 'styles/base/grid.scss';
@@ -93,6 +93,8 @@ class PollProviderLogin extends Component {
         } else {
           that.props.onConnectError(newData.saltedge_login);
         }
+      } else if (newData.saltedge_login && newData.saltedge_login.interactive_session_active) {
+        this.props.onInteractiveSessionActive();
       }
     }
   }
@@ -120,19 +122,9 @@ class PollProviderLogin extends Component {
   }
 }
 
-// PollProviderLogin.propTypes = {
-//   data: PropTypes.shape({
-//     loading: PropTypes.bool,
-//     error: PropTypes.object,
-//     saltedge_login: PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       status: PropTypes.string.isRequired,
-//       active: PropTypes.bool.isRequired,
-//       finished_connecting: PropTypes.bool.isRequired,
-//     }),
-//   }),
-// };
-
+PollProviderLogin.propTypes = {
+  onInteractiveSessionActive: PropTypes.func.isRequired,
+};
 
 const PollProviderLoginWithGraphQL = graphql(querySaltedgeLogin, {
   options: ownProps => ({

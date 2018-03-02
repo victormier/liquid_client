@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import gridStyles from 'styles/base/grid.scss';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { queryAllSaltedgeAccounts, selectSaltedgeAccount } from 'qql';
+import { queryAllSaltedgeAccounts, selectSaltedgeAccount, queryUser } from 'qql';
 import Button from 'components/common/Button';
 import Header from 'components/common/Header';
 import QueryLoading from 'components/common/QueryLoading';
@@ -23,9 +23,15 @@ class SelectSaltedgeAccount extends Component {
   }
 
   handleSelectAccount(saltedgeAccountId) {
+    const that = this;
     return this.props.submit(saltedgeAccountId)
         .then(() => {
-          this.props.router.push('/accounts');
+          that.props.client.query({
+            query: queryUser,
+            fetchPolicy: 'network-only',
+          }).then(() => {
+            that.props.router.push('/accounts');
+          });
         })
         .catch(() => {
           this.props.viewStore.addError('There was a problem');

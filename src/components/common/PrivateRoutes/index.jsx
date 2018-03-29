@@ -49,7 +49,7 @@ class PrivateRoutes extends Component {
           }
           break;
         case 'interactive': {
-          const saltedgeLogin = _.find(user.saltedge_logins, sl => (!sl.active));
+          const saltedgeLogin = _.find(user.saltedge_logins, sl => (sl.interactive_session_active));
           const providerId = saltedgeLogin.saltedge_provider.id;
           conditionalRoutePush(router, `/connect/providers/${providerId}/logins/${saltedgeLogin.id}/interactive`);
           break;

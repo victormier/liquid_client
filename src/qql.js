@@ -62,6 +62,7 @@ export const queryUser = gql`
         finished_connecting
         needs_reconnection
         killed
+        interactive_session_active
         saltedge_provider {
           id
           name
